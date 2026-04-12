@@ -1,0 +1,2729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRACE-AI-FR — Case 32A45333</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface-2: #334155;
+            --border: #475569;
+            --text: #e2e8f0;
+            --text-dim: #94a3b8;
+            --primary: #3b82f6;
+            --primary-dim: #1d4ed8;
+            --accent: #8b5cf6;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #06b6d4;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+        /* --- Top navigation / brand bar --- */
+        .topbar {
+            background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+            border-bottom: 2px solid var(--primary);
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+        }
+        .brand {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+        .brand-name {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        .brand-name .t { color: var(--info); }
+        .brand-name .a { color: var(--warning); }
+        .brand-name .f { color: var(--success); }
+        .brand-version {
+            font-size: 12px;
+            color: var(--text-dim);
+            background: var(--surface-2);
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        .topbar-meta {
+            text-align: right;
+            font-size: 12px;
+            color: var(--text-dim);
+            line-height: 1.4;
+        }
+        /* --- Layout --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 32px 60px;
+        }
+        /* --- Dashboard cards --- */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 24px 0 32px;
+        }
+        .stat-card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 6px 0 2px;
+            color: var(--text-dim);
+        }
+        .stat-detail {
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+        .stat-primary .stat-number { color: var(--primary); }
+        .stat-accent .stat-number { color: var(--accent); }
+        .stat-success .stat-number { color: var(--success); }
+        .stat-info .stat-number { color: var(--info); }
+        /* --- Tabs navigation --- */
+        .tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 2px solid var(--border);
+            margin: 32px 0 0;
+            overflow-x: auto;
+        }
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-dim);
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+            user-select: none;
+        }
+        .tab:hover { color: var(--text); background: var(--surface); }
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background: var(--surface);
+        }
+        .tab-content {
+            display: none;
+            padding: 24px 0;
+            animation: fadeIn 0.3s ease;
+        }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* --- Report body (converted Markdown) --- */
+        .report-body h1 {
+            color: var(--primary);
+            font-size: 22px;
+            font-weight: 700;
+            border-bottom: 2px solid var(--surface-2);
+            padding-bottom: 8px;
+            margin-top: 32px;
+        }
+        .report-body h2 {
+            color: var(--info);
+            font-size: 18px;
+            margin-top: 24px;
+        }
+        .report-body h3 {
+            color: var(--accent);
+            font-size: 15px;
+            margin-top: 18px;
+        }
+        .report-body p {
+            margin: 8px 0;
+        }
+        /* --- Tables --- */
+        .forensic-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 13px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .forensic-table th {
+            background: var(--primary-dim);
+            color: white;
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .forensic-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--surface-2);
+        }
+        .forensic-table tr:nth-child(even) { background: var(--surface); }
+        .forensic-table tr:hover { background: var(--surface-2); }
+        /* --- FRAUE cards --- */
+        .section-fraues { margin-top: 0; }
+        .section-fraues .section-intro {
+            color: var(--text-dim);
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .fraue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 16px;
+        }
+        .fraue-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .fraue-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+        .fraue-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: var(--surface-2);
+            border-bottom: 1px solid var(--border);
+        }
+        .fraue-id {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--accent);
+        }
+        .fraue-badge {
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .conf-high { background: rgba(34,197,94,0.2); color: var(--success); border: 1px solid var(--success); }
+        .conf-moderate { background: rgba(245,158,11,0.2); color: var(--warning); border: 1px solid var(--warning); }
+        .conf-low { background: rgba(239,68,68,0.2); color: var(--danger); border: 1px solid var(--danger); }
+        .conf-insufficient { background: rgba(148,163,184,0.2); color: var(--text-dim); border: 1px solid var(--border); }
+        .fraue-body { padding: 16px; }
+        .fraue-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .fraue-field {
+            display: flex;
+            flex-direction: column;
+        }
+        .field-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+        .field-value {
+            font-size: 13px;
+            color: var(--text);
+        }
+        .fraue-caveats, .fraue-alternatives {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--surface-2);
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+        .fraue-caveats ul, .fraue-alternatives ul {
+            margin: 4px 0 0;
+            padding-left: 18px;
+        }
+        .fraue-caveats li, .fraue-alternatives li {
+            margin: 2px 0;
+        }
+        /* --- Governance section --- */
+        .section-governance { margin-top: 0; }
+        .governance-block {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 16px 0;
+        }
+        .governance-block h2 {
+            color: var(--warning);
+            font-size: 18px;
+            margin: 0 0 12px;
+        }
+        .governance-list {
+            padding-left: 20px;
+        }
+        .governance-list li {
+            margin: 4px 0;
+            color: var(--text-dim);
+        }
+        .scope-text {
+            background: var(--surface-2);
+            border-left: 4px solid var(--warning);
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text);
+        }
+        .governance-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 24px;
+            margin-bottom: 16px;
+            font-size: 13px;
+        }
+        .gov-field { color: var(--text-dim); }
+        .gov-field strong { color: var(--text); }
+        .gov-details {
+            margin: 8px 0;
+            border: 1px solid var(--surface-2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .gov-details summary {
+            padding: 10px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            background: var(--surface-2);
+            color: var(--text);
+            user-select: none;
+        }
+        .gov-details summary:hover { background: var(--border); }
+        .gov-details ul {
+            padding: 8px 16px 12px 32px;
+            margin: 0;
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+        /* --- Code & misc --- */
+        code {
+            background: var(--surface-2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Cascadia Code', 'Fira Code', 'Courier New', monospace;
+            font-size: 12px;
+            color: var(--info);
+        }
+        hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 32px 0;
+        }
+        ul { padding-left: 24px; }
+        li { margin: 3px 0; }
+        strong { color: var(--text); }
+        blockquote {
+            background: var(--surface);
+            border-left: 4px solid var(--accent);
+            padding: 12px 16px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 13px;
+        }
+        .footer {
+            text-align: center;
+            padding: 24px;
+            color: var(--text-dim);
+            font-size: 12px;
+            border-top: 1px solid var(--border);
+            margin-top: 48px;
+        }
+        /* --- Sticky sidebar TOC (large screens) --- */
+        @media (min-width: 1400px) {
+            .container { max-width: 1400px; }
+        }
+        /* --- Print --- */
+        @media print {
+            :root {
+                --bg: #fff;
+                --surface: #f8f8f8;
+                --surface-2: #eee;
+                --border: #ccc;
+                --text: #222;
+                --text-dim: #666;
+            }
+            .topbar { position: static; }
+            .tabs { display: none; }
+            .tab-content { display: block !important; }
+            .stat-card:hover, .fraue-card:hover { transform: none; box-shadow: none; }
+            body { font-size: 11pt; }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="brand">
+            <span class="brand-name">
+                <span class="t">TRACE</span>-<span class="a">AI</span>-<span class="f">FR</span>
+            </span>
+            <span class="brand-version">v2.0.0</span>
+        </div>
+        <div class="topbar-meta">
+            UNCC Forensics Lab &middot; Test<br>
+            Case #32A45333 &middot; 04-07-2026
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <div class="dashboard">
+            <div class="stat-card stat-primary">
+                <div class="stat-number">22</div>
+                <div class="stat-label">Artifacts</div>
+                <div class="stat-detail">11 direct · 11 inferred</div>
+            </div>
+            <div class="stat-card stat-accent">
+                <div class="stat-number">6</div>
+                <div class="stat-label">FRAUEs</div>
+                <div class="stat-detail">Reconstructed Events</div>
+            </div>
+            <div class="stat-card stat-success">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Platforms</div>
+                <div class="stat-detail">ChatGPT, Claude, Gemini</div>
+            </div>
+            <div class="stat-card stat-info">
+                <div class="stat-number">17</div>
+                <div class="stat-label">Timeline Events</div>
+                <div class="stat-detail">10 parsers run</div>
+            </div>
+        </div>
+        
+
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab(event, 'tab-report')">Forensic Report</div>
+            <div class="tab" onclick="switchTab(event, 'tab-fraues')">FRAUEs</div>
+            <div class="tab" onclick="switchTab(event, 'tab-governance')">Governance</div>
+        </div>
+
+        <div id="tab-report" class="tab-content active">
+            <div class="report-body">
+                <p><div style="text-align:right"></p>
+<p>UNCC Forensics Lab<br></p>
+<p>Test<br></p>
+<p>Case #32A45333<br></p>
+<p>04-07-2026</p>
+<p></div></p>
+<h1>Overview</h1>
+<p>On 04/07/2026, the requesting agency provided a forensic evidence directory to the forensic laboratory for analysis. The evidence was received by Test and identified as <strong>demo_evidence</strong>.</p>
+<p>The examiner was instructed to perform a forensic analysis to determine whether AI platforms — specifically ChatGPT-4, Claude, or Google Gemini — were used on the examined Windows endpoint. This analysis includes identification of browser history, cookies, downloads, application traces, cached content, and any other artifacts that indicate AI platform access or usage.</p>
+<h1>Forensic Acquisition & Exam Preparation</h1>
+<p>The forensic analysis was performed using <strong>AI Usage Evidence Analyzer v2.0.0</strong> on the examiner's forensic workstation.</p>
+<p><em>Note: No hash verification was performed on the evidence source. If the evidence was provided as a mounted directory, hash verification may not be applicable.</em></p>
+<p>All evidence was processed in <strong>read-only mode</strong>. SQLite databases within the evidence were copied to temporary storage before querying to avoid WAL lock interference. No modifications were made to the original evidence.</p>
+<p>The following tools and parsers were used for forensic analysis:</p>
+<ul>
+<li>*ChromiumHistoryParser v1.0.0*</li>
+<li>*FirefoxHistoryParser v1.0.0*</li>
+<li>*WindowsPrefetchParser v1.0.0*</li>
+<li>*WindowsRecentFilesParser v1.0.0*</li>
+<li>*WindowsUserAssistParser v1.0.0*</li>
+<li>*WindowsEventLogParser v1.0.0*</li>
+<li>*WindowsRecycleBinParser v1.0.0*</li>
+<li>*WindowsAppDataParser v1.0.0*</li>
+<li>*WindowsRegistryHiveParser v1.0.0*</li>
+<li>*AIContentScanner v1.0.0*</li>
+</ul>
+<h1>Findings and Report (Forensic Analysis)</h1>
+<p>After completing the forensic analysis of the submitted evidence, <strong>22</strong> artifact(s) related to AI platform usage were identified. The following AI platforms were detected: <strong>ChatGPT, Claude, Gemini</strong>.</p>
+<p>Of these, <strong>11</strong> artifact(s) constitute direct evidence and <strong>11</strong> artifact(s) are inferred/indirect evidence. See supporting exhibits below.</p>
+<p><strong>1. AI Platform Detection Summary</strong></p>
+<table class="forensic-table">
+<tr><th>AI Platform</th><th>Artifacts Found</th><th>Direct</th><th>Inferred</th><th>Highest Confidence</th></tr>
+<tr><td>ChatGPT</td><td>11</td><td>5</td><td>6</td><td>Moderate</td></tr>
+<tr><td>Claude</td><td>5</td><td>3</td><td>2</td><td>High</td></tr>
+<tr><td>Gemini</td><td>6</td><td>3</td><td>3</td><td>High</td></tr>
+</table>
+<p><strong>2. Gemini — Detailed Findings</strong></p>
+<p>Forensic analysis of the submitted evidence identified <strong>6</strong> artifact(s) associated with <strong>Gemini</strong> (3 direct, 3 inferred). The overall confidence for this finding is <strong>High</strong>.</p>
+<p>The platform appears to have been accessed via <strong>Browser</strong>.</p>
+<ul>
+<li>Earliest recorded activity: 2024-01-17 23:50:00 UTC</li>
+<li>Latest recorded activity: 2026-04-06 02:22:05 UTC</li>
+<li>Estimated session count: 2</li>
+</ul>
+<p><strong>Supporting Evidence:</strong></p>
+<ul>
+<li><strong>Exhibit 1:</strong> URL Visit artifact indicating Gemini access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></li>
+<li>Confidence: High</li>
+<li><strong>Exhibit 2:</strong> URL Visit artifact indicating Gemini access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></li>
+<li>Confidence: High</li>
+<li><strong>Exhibit 11:</strong> Cookie artifact indicating Gemini access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></li>
+<li>Confidence: Moderate</li>
+<li><strong>Exhibit 20:</strong> AI Export/Download File artifact indicating Gemini access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></li>
+<li>Confidence: Moderate</li>
+<li><strong>Exhibit 21:</strong> Content Indicator artifact indicating Gemini access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></li>
+<li>Confidence: Moderate</li>
+<li><strong>Exhibit 22:</strong> Content Indicator artifact indicating Gemini access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></li>
+<li>Confidence: High</li>
+<li><strong>Exhibit 23:</strong> URL Visit artifact indicating Gemini access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></li>
+<li>Confidence: High</li>
+<li><strong>Exhibit 24:</strong> URL Visit artifact indicating Gemini access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></li>
+<li>Confidence: High</li>
+<li><strong>Exhibit 33:</strong> Cookie artifact indicating Gemini access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></li>
+<li>Confidence: Moderate</li>
+<li><strong>Exhibit 42:</strong> AI Export/Download File artifact indicating Gemini access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></li>
+<li>Confidence: Moderate</li>
+</ul>
+<p><strong>Supporting Evidence Exhibits:</strong></p>
+<p>> <strong>Exhibit 1: Browser History — Gemini</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-18 00:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://gemini.google.com/app/xyz789</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_001.bin](exhibits\exhibit_001.bin)*</p>
+<p>> <strong>Exhibit 2: Browser History — Gemini</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 23:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://gemini.google.com/app</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_002.bin](exhibits\exhibit_002.bin)*</p>
+<p>> <strong>Exhibit 11: Browser Cookies — Gemini</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 23:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .gemini.google.com / NID</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_011.bin](exhibits\exhibit_011.bin)*</p>
+<p>> <strong>Exhibit 20: User Content — Gemini</strong></p>
+<p>></p>
+<p>> AI Export/Download File artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> File: gemini_forensic_notes.md (pattern: gemini.*\.(?:txt|json|md|pdf|html|csv))</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>be1a7926eb1fa559f0a5ccf2542c8e78</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_020.md](exhibits\exhibit_020.md)*</p>
+<p>> <strong>Exhibit 21: User Content — Gemini</strong></p>
+<p>></p>
+<p>> Content Indicator artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> Response indicator: 'Gemini' in gemini_forensic_notes.md</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>be1a7926eb1fa559f0a5ccf2542c8e78</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_021.md](exhibits\exhibit_021.md)*</p>
+<p>> <strong>Exhibit 22: User Content — Gemini</strong></p>
+<p>></p>
+<p>> Content Indicator artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> Model string: Gemini Pro in gemini_forensic_notes.md</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>be1a7926eb1fa559f0a5ccf2542c8e78</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_022.md](exhibits\exhibit_022.md)*</p>
+<p>> <strong>Exhibit 23: Browser History — Gemini</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-18 00:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://gemini.google.com/app/xyz789</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_023.bin](exhibits\exhibit_023.bin)*</p>
+<p>> <strong>Exhibit 24: Browser History — Gemini</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 23:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://gemini.google.com/app</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_024.bin](exhibits\exhibit_024.bin)*</p>
+<p>> <strong>Exhibit 33: Browser Cookies — Gemini</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 23:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .gemini.google.com / NID</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_033.bin](exhibits\exhibit_033.bin)*</p>
+<p>> <strong>Exhibit 42: User Content — Gemini</strong></p>
+<p>></p>
+<p>> AI Export/Download File artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> File: gemini_forensic_notes.md (pattern: gemini.*\.(?:txt|json|md|pdf|html|csv))</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>be1a7926eb1fa559f0a5ccf2542c8e78</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_042.md](exhibits\exhibit_042.md)*</p>
+<p>> <strong>Exhibit 43: User Content — Gemini</strong></p>
+<p>></p>
+<p>> Content Indicator artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> Response indicator: 'Gemini' in gemini_forensic_notes.md</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>be1a7926eb1fa559f0a5ccf2542c8e78</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_043.md](exhibits\exhibit_043.md)*</p>
+<p>> <strong>Exhibit 44: User Content — Gemini</strong></p>
+<p>></p>
+<p>> Content Indicator artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> Model string: Gemini Pro in gemini_forensic_notes.md</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>be1a7926eb1fa559f0a5ccf2542c8e78</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_044.md](exhibits\exhibit_044.md)*</p>
+<p>> <strong>Exhibit 45: Browser History — Gemini</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-18 00:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://gemini.google.com/app/xyz789</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_045.bin](exhibits\exhibit_045.bin)*</p>
+<p>> <strong>Exhibit 46: Browser History — Gemini</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 23:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://gemini.google.com/app</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_046.bin](exhibits\exhibit_046.bin)*</p>
+<p>> <strong>Exhibit 55: Browser Cookies — Gemini</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 23:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .gemini.google.com / NID</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_055.bin](exhibits\exhibit_055.bin)*</p>
+<p>> <strong>Exhibit 64: User Content — Gemini</strong></p>
+<p>></p>
+<p>> AI Export/Download File artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> File: gemini_forensic_notes.md (pattern: gemini.*\.(?:txt|json|md|pdf|html|csv))</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>be1a7926eb1fa559f0a5ccf2542c8e78</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_064.md](exhibits\exhibit_064.md)*</p>
+<p>> <strong>Exhibit 65: User Content — Gemini</strong></p>
+<p>></p>
+<p>> Content Indicator artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> Response indicator: 'Gemini' in gemini_forensic_notes.md</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>be1a7926eb1fa559f0a5ccf2542c8e78</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_065.md](exhibits\exhibit_065.md)*</p>
+<p>> <strong>Exhibit 66: User Content — Gemini</strong></p>
+<p>></p>
+<p>> Content Indicator artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> Model string: Gemini Pro in gemini_forensic_notes.md</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>be1a7926eb1fa559f0a5ccf2542c8e78</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_066.md](exhibits\exhibit_066.md)*</p>
+<p><strong>3. ChatGPT — Detailed Findings</strong></p>
+<p>Forensic analysis of the submitted evidence identified <strong>11</strong> artifact(s) associated with <strong>ChatGPT</strong> (5 direct, 6 inferred). The overall confidence for this finding is <strong>Moderate</strong>.</p>
+<p>The platform appears to have been accessed via <strong>Browser</strong>.</p>
+<ul>
+<li>Earliest recorded activity: 2024-01-17 21:20:00 UTC</li>
+<li>Latest recorded activity: 2026-04-06 02:22:05 UTC</li>
+<li>Estimated session count: 2</li>
+</ul>
+<p><strong>Supporting Evidence:</strong></p>
+<ul>
+<li><strong>Exhibit 3:</strong> URL Visit artifact indicating ChatGPT access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></li>
+<li>Confidence: Moderate</li>
+<li><strong>Exhibit 5:</strong> URL Visit artifact indicating ChatGPT access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></li>
+<li>Confidence: Moderate</li>
+<li><strong>Exhibit 7:</strong> URL Visit artifact indicating ChatGPT access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></li>
+<li>Confidence: Moderate</li>
+<li><strong>Exhibit 8:</strong> Cookie artifact indicating ChatGPT access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></li>
+<li>Confidence: Moderate</li>
+<li><strong>Exhibit 9:</strong> Cookie artifact indicating ChatGPT access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></li>
+<li>Confidence: Moderate</li>
+<li><strong>Exhibit 12:</strong> Local Storage Key artifact indicating ChatGPT access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Local Storage/leveldb\chatgpt_trace.log</code></li>
+<li>Confidence: Unsupported</li>
+<li><strong>Exhibit 13:</strong> Prefetch Reference artifact indicating ChatGPT access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></li>
+<li>Confidence: Moderate</li>
+<li><strong>Exhibit 14:</strong> Prefetch Reference artifact indicating ChatGPT access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></li>
+<li>Confidence: Moderate</li>
+<li><strong>Exhibit 15:</strong> Prefetch Reference artifact indicating ChatGPT access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></li>
+<li>Confidence: Moderate</li>
+<li><strong>Exhibit 16:</strong> Prefetch Reference artifact indicating ChatGPT access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></li>
+<li>Confidence: Moderate</li>
+</ul>
+<p><strong>Caveats:</strong></p>
+<ul>
+<li>Model-level attribution not possible; platform-level only.</li>
+</ul>
+<p><strong>Supporting Evidence Exhibits:</strong></p>
+<p>> <strong>Exhibit 3: Browser History — ChatGPT</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 23:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://chat.openai.com/chat</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_003.bin](exhibits\exhibit_003.bin)*</p>
+<p>> <strong>Exhibit 5: Browser History — ChatGPT</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://chatgpt.com/c/abc123</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_005.bin](exhibits\exhibit_005.bin)*</p>
+<p>> <strong>Exhibit 7: Browser History — ChatGPT</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 21:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://chatgpt.com/</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_007.bin](exhibits\exhibit_007.bin)*</p>
+<p>> <strong>Exhibit 8: Browser Cookies — ChatGPT</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .chatgpt.com / __cf_bm</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_008.bin](exhibits\exhibit_008.bin)*</p>
+<p>> <strong>Exhibit 9: Browser Cookies — ChatGPT</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .openai.com / _cfuvid</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_009.bin](exhibits\exhibit_009.bin)*</p>
+<p>> <strong>Exhibit 12: Browser Local Storage — ChatGPT</strong></p>
+<p>></p>
+<p>> Local Storage Key artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Local Storage/leveldb\chatgpt_trace.log</code></p>
+<p>> - <strong>Indicator:</strong> Key match: 'chatgpt' in chatgpt_trace.log</p>
+<p>> - <strong>Confidence:</strong> Unsupported</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>e6a07a97668a54927b2249c03ebf49f5</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_012.log](exhibits\exhibit_012.log)*</p>
+<p>> <strong>Exhibit 13: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> chatgpt.com in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_013.pf](exhibits\exhibit_013.pf)*</p>
+<p>> <strong>Exhibit 14: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> ChatGPT in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_014.pf](exhibits\exhibit_014.pf)*</p>
+<p>> <strong>Exhibit 15: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> ChatGPT in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_015.pf](exhibits\exhibit_015.pf)*</p>
+<p>> <strong>Exhibit 16: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> chatgpt in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_016.pf](exhibits\exhibit_016.pf)*</p>
+<p>> <strong>Exhibit 17: User Content — ChatGPT</strong></p>
+<p>></p>
+<p>> AI Export/Download File artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\ChatGPT_Crime_Scene_Analysis.pdf</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> File: ChatGPT_Crime_Scene_Analysis.pdf (pattern: chat[-_]?gpt.*\.(?:txt|json|md|pdf|html|csv))</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>4e96f9e5729a4a216cbf044d44ed7b7b</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_017.pdf](exhibits\exhibit_017.pdf)*</p>
+<p>> <strong>Exhibit 25: Browser History — ChatGPT</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 23:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://chat.openai.com/chat</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_025.bin](exhibits\exhibit_025.bin)*</p>
+<p>> <strong>Exhibit 27: Browser History — ChatGPT</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://chatgpt.com/c/abc123</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_027.bin](exhibits\exhibit_027.bin)*</p>
+<p>> <strong>Exhibit 29: Browser History — ChatGPT</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 21:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://chatgpt.com/</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_029.bin](exhibits\exhibit_029.bin)*</p>
+<p>> <strong>Exhibit 30: Browser Cookies — ChatGPT</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .chatgpt.com / __cf_bm</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_030.bin](exhibits\exhibit_030.bin)*</p>
+<p>> <strong>Exhibit 31: Browser Cookies — ChatGPT</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .openai.com / _cfuvid</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_031.bin](exhibits\exhibit_031.bin)*</p>
+<p>> <strong>Exhibit 34: Browser Local Storage — ChatGPT</strong></p>
+<p>></p>
+<p>> Local Storage Key artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Local Storage/leveldb\chatgpt_trace.log</code></p>
+<p>> - <strong>Indicator:</strong> Key match: 'chatgpt' in chatgpt_trace.log</p>
+<p>> - <strong>Confidence:</strong> Unsupported</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>e6a07a97668a54927b2249c03ebf49f5</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_034.log](exhibits\exhibit_034.log)*</p>
+<p>> <strong>Exhibit 35: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> chatgpt.com in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_035.pf](exhibits\exhibit_035.pf)*</p>
+<p>> <strong>Exhibit 36: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> ChatGPT in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_036.pf](exhibits\exhibit_036.pf)*</p>
+<p>> <strong>Exhibit 37: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> ChatGPT in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_037.pf](exhibits\exhibit_037.pf)*</p>
+<p>> <strong>Exhibit 38: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> chatgpt in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_038.pf](exhibits\exhibit_038.pf)*</p>
+<p>> <strong>Exhibit 39: User Content — ChatGPT</strong></p>
+<p>></p>
+<p>> AI Export/Download File artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\ChatGPT_Crime_Scene_Analysis.pdf</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> File: ChatGPT_Crime_Scene_Analysis.pdf (pattern: chat[-_]?gpt.*\.(?:txt|json|md|pdf|html|csv))</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>4e96f9e5729a4a216cbf044d44ed7b7b</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_039.pdf](exhibits\exhibit_039.pdf)*</p>
+<p>> <strong>Exhibit 47: Browser History — ChatGPT</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 23:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://chat.openai.com/chat</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_047.bin](exhibits\exhibit_047.bin)*</p>
+<p>> <strong>Exhibit 49: Browser History — ChatGPT</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://chatgpt.com/c/abc123</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_049.bin](exhibits\exhibit_049.bin)*</p>
+<p>> <strong>Exhibit 51: Browser History — ChatGPT</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 21:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://chatgpt.com/</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_051.bin](exhibits\exhibit_051.bin)*</p>
+<p>> <strong>Exhibit 52: Browser Cookies — ChatGPT</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .chatgpt.com / __cf_bm</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_052.bin](exhibits\exhibit_052.bin)*</p>
+<p>> <strong>Exhibit 53: Browser Cookies — ChatGPT</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .openai.com / _cfuvid</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_053.bin](exhibits\exhibit_053.bin)*</p>
+<p>> <strong>Exhibit 56: Browser Local Storage — ChatGPT</strong></p>
+<p>></p>
+<p>> Local Storage Key artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Local Storage/leveldb\chatgpt_trace.log</code></p>
+<p>> - <strong>Indicator:</strong> Key match: 'chatgpt' in chatgpt_trace.log</p>
+<p>> - <strong>Confidence:</strong> Unsupported</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>e6a07a97668a54927b2249c03ebf49f5</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_056.log](exhibits\exhibit_056.log)*</p>
+<p>> <strong>Exhibit 57: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> chatgpt.com in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_057.pf](exhibits\exhibit_057.pf)*</p>
+<p>> <strong>Exhibit 58: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> ChatGPT in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_058.pf](exhibits\exhibit_058.pf)*</p>
+<p>> <strong>Exhibit 59: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> ChatGPT in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_059.pf](exhibits\exhibit_059.pf)*</p>
+<p>> <strong>Exhibit 60: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> chatgpt in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_060.pf](exhibits\exhibit_060.pf)*</p>
+<p>> <strong>Exhibit 61: User Content — ChatGPT</strong></p>
+<p>></p>
+<p>> AI Export/Download File artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\ChatGPT_Crime_Scene_Analysis.pdf</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> File: ChatGPT_Crime_Scene_Analysis.pdf (pattern: chat[-_]?gpt.*\.(?:txt|json|md|pdf|html|csv))</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>4e96f9e5729a4a216cbf044d44ed7b7b</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_061.pdf](exhibits\exhibit_061.pdf)*</p>
+<p><strong>4. Claude — Detailed Findings</strong></p>
+<p>Forensic analysis of the submitted evidence identified <strong>5</strong> artifact(s) associated with <strong>Claude</strong> (3 direct, 2 inferred). The overall confidence for this finding is <strong>High</strong>.</p>
+<p>The platform appears to have been accessed via <strong>Browser</strong>.</p>
+<ul>
+<li>Earliest recorded activity: 2024-01-17 21:50:00 UTC</li>
+<li>Latest recorded activity: 2026-04-06 02:22:05 UTC</li>
+<li>Estimated session count: 2</li>
+</ul>
+<p><strong>Supporting Evidence:</strong></p>
+<ul>
+<li><strong>Exhibit 4:</strong> URL Visit artifact indicating Claude access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></li>
+<li>Confidence: High</li>
+<li><strong>Exhibit 6:</strong> URL Visit artifact indicating Claude access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></li>
+<li>Confidence: High</li>
+<li><strong>Exhibit 10:</strong> Cookie artifact indicating Claude access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></li>
+<li>Confidence: Moderate</li>
+<li><strong>Exhibit 18:</strong> AI Export/Download File artifact indicating Claude access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt</code></li>
+<li>Confidence: Moderate</li>
+<li><strong>Exhibit 19:</strong> Content Indicator artifact indicating Claude access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt</code></li>
+<li>Confidence: Moderate</li>
+<li><strong>Exhibit 26:</strong> URL Visit artifact indicating Claude access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></li>
+<li>Confidence: High</li>
+<li><strong>Exhibit 28:</strong> URL Visit artifact indicating Claude access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></li>
+<li>Confidence: High</li>
+<li><strong>Exhibit 32:</strong> Cookie artifact indicating Claude access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></li>
+<li>Confidence: Moderate</li>
+<li><strong>Exhibit 40:</strong> AI Export/Download File artifact indicating Claude access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt</code></li>
+<li>Confidence: Moderate</li>
+<li><strong>Exhibit 41:</strong> Content Indicator artifact indicating Claude access</li>
+<li>Source: <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt</code></li>
+<li>Confidence: Moderate</li>
+</ul>
+<p><strong>Supporting Evidence Exhibits:</strong></p>
+<p>> <strong>Exhibit 4: Browser History — Claude</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://claude.ai/chat/def456</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_004.bin](exhibits\exhibit_004.bin)*</p>
+<p>> <strong>Exhibit 6: Browser History — Claude</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 21:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://claude.ai/</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_006.bin](exhibits\exhibit_006.bin)*</p>
+<p>> <strong>Exhibit 10: Browser Cookies — Claude</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .claude.ai / __cf_bm</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_010.bin](exhibits\exhibit_010.bin)*</p>
+<p>> <strong>Exhibit 18: User Content — Claude</strong></p>
+<p>></p>
+<p>> AI Export/Download File artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> File: claude_response_export.txt (pattern: claude.*\.(?:txt|json|md|pdf|html|csv))</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>4f579a1a15f5bdf4285fb087f59fae6e</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_018.txt](exhibits\exhibit_018.txt)*</p>
+<p>> <strong>Exhibit 19: User Content — Claude</strong></p>
+<p>></p>
+<p>> Content Indicator artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> Response indicator: 'Claude' in claude_response_export.txt</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>4f579a1a15f5bdf4285fb087f59fae6e</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_019.txt](exhibits\exhibit_019.txt)*</p>
+<p>> <strong>Exhibit 26: Browser History — Claude</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://claude.ai/chat/def456</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_026.bin](exhibits\exhibit_026.bin)*</p>
+<p>> <strong>Exhibit 28: Browser History — Claude</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 21:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://claude.ai/</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_028.bin](exhibits\exhibit_028.bin)*</p>
+<p>> <strong>Exhibit 32: Browser Cookies — Claude</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .claude.ai / __cf_bm</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_032.bin](exhibits\exhibit_032.bin)*</p>
+<p>> <strong>Exhibit 40: User Content — Claude</strong></p>
+<p>></p>
+<p>> AI Export/Download File artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> File: claude_response_export.txt (pattern: claude.*\.(?:txt|json|md|pdf|html|csv))</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>4f579a1a15f5bdf4285fb087f59fae6e</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_040.txt](exhibits\exhibit_040.txt)*</p>
+<p>> <strong>Exhibit 41: User Content — Claude</strong></p>
+<p>></p>
+<p>> Content Indicator artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> Response indicator: 'Claude' in claude_response_export.txt</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>4f579a1a15f5bdf4285fb087f59fae6e</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_041.txt](exhibits\exhibit_041.txt)*</p>
+<p>> <strong>Exhibit 48: Browser History — Claude</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://claude.ai/chat/def456</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_048.bin](exhibits\exhibit_048.bin)*</p>
+<p>> <strong>Exhibit 50: Browser History — Claude</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 21:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://claude.ai/</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_050.bin](exhibits\exhibit_050.bin)*</p>
+<p>> <strong>Exhibit 54: Browser Cookies — Claude</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .claude.ai / __cf_bm</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_054.bin](exhibits\exhibit_054.bin)*</p>
+<p>> <strong>Exhibit 62: User Content — Claude</strong></p>
+<p>></p>
+<p>> AI Export/Download File artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> File: claude_response_export.txt (pattern: claude.*\.(?:txt|json|md|pdf|html|csv))</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>4f579a1a15f5bdf4285fb087f59fae6e</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_062.txt](exhibits\exhibit_062.txt)*</p>
+<p>> <strong>Exhibit 63: User Content — Claude</strong></p>
+<p>></p>
+<p>> Content Indicator artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> Response indicator: 'Claude' in claude_response_export.txt</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>4f579a1a15f5bdf4285fb087f59fae6e</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_063.txt](exhibits\exhibit_063.txt)*</p>
+<p><strong>5. Browser vs. Native App Analysis</strong></p>
+<ul>
+<li>Browser-based artifacts: <strong>12</strong></li>
+<li>Native app artifacts: <strong>0</strong></li>
+<li>AI platforms appear to have been accessed exclusively via web browser.</li>
+</ul>
+<p><strong>6. Crime-Scene Image Analysis Indicators</strong></p>
+<p>No direct evidence of crime-scene image upload or analysis was identified.</p>
+<p><em>Note: Image-analysis activity should only be concluded when supported by uploads, file references, session records, app traces, screenshots, or timestamp correlation.</em></p>
+<p><strong>7. Timeline of AI-Related Activity</strong></p>
+<table class="forensic-table">
+<tr><th>#</th><th>Timestamp (UTC)</th><th>Platform</th><th>Event</th><th>Confidence</th><th>Exhibit</th></tr>
+<tr><td>1</td><td>2024-01-17 21:20:00</td><td>ChatGPT</td><td>[ChatGPT] [Browser] (Browser History) https://chatgpt.com/</td><td>Moderate</td><td>Ex. 7</td></tr>
+<tr><td>2</td><td>2024-01-17 21:50:00</td><td>Claude</td><td>[Claude] [Browser] (Browser History) https://claude.ai/</td><td>Moderate</td><td>Ex. 6</td></tr>
+<tr><td>3</td><td>2024-01-17 22:20:00</td><td>ChatGPT</td><td>[ChatGPT] [Browser] (Browser History) https://chatgpt.com/c/</td><td>Moderate</td><td>Ex. 5</td></tr>
+<tr><td>4</td><td>2024-01-17 22:20:00</td><td>ChatGPT</td><td>[ChatGPT] [Browser] (Browser Cookies) .chatgpt.com / __cf_bm</td><td>Low</td><td>Ex. 5</td></tr>
+<tr><td>5</td><td>2024-01-17 22:20:00</td><td>ChatGPT</td><td>[ChatGPT] [Browser] (Browser Cookies) .openai.com / _cfuvid</td><td>Low</td><td>Ex. 5</td></tr>
+<tr><td>6</td><td>2024-01-17 22:50:00</td><td>Claude</td><td>[Claude] [Browser] (Browser History) https://claude.ai/chat/</td><td>Moderate</td><td>Ex. 4</td></tr>
+<tr><td>7</td><td>2024-01-17 22:50:00</td><td>Claude</td><td>[Claude] [Browser] (Browser Cookies) .claude.ai / __cf_bm</td><td>Low</td><td>Ex. 4</td></tr>
+<tr><td>8</td><td>2024-01-17 23:20:00</td><td>ChatGPT</td><td>[ChatGPT] [Browser] (Browser History) https://chat.openai.co</td><td>Moderate</td><td>Ex. 3</td></tr>
+<tr><td>9</td><td>2024-01-17 23:50:00</td><td>Gemini</td><td>[Gemini] [Browser] (Browser History) https://gemini.google.c</td><td>Moderate</td><td>Ex. 2</td></tr>
+<tr><td>10</td><td>2024-01-17 23:50:00</td><td>Gemini</td><td>[Gemini] [Browser] (Browser Cookies) .gemini.google.com / NI</td><td>Low</td><td>Ex. 2</td></tr>
+<tr><td>11</td><td>2024-01-18 00:20:00</td><td>Gemini</td><td>[Gemini] [Browser] (Browser History) https://gemini.google.c</td><td>Moderate</td><td>Ex. 1</td></tr>
+<tr><td>12</td><td>2026-04-06 02:22:05</td><td>ChatGPT</td><td>[ChatGPT] (User Content) File: ChatGPT_Crime_Scene_Analysis.</td><td>Low</td><td>Ex. 17</td></tr>
+<tr><td>13</td><td>2026-04-06 02:22:05</td><td>Claude</td><td>[Claude] (User Content) File: claude_response_export.txt (pa</td><td>Low</td><td>Ex. 18</td></tr>
+<tr><td>14</td><td>2026-04-06 02:22:05</td><td>Claude</td><td>[Claude] (User Content) Response indicator: 'Claude' in clau</td><td>Low</td><td>Ex. 18</td></tr>
+<tr><td>15</td><td>2026-04-06 02:22:05</td><td>Gemini</td><td>[Gemini] (User Content) File: gemini_forensic_notes.md (patt</td><td>Low</td><td>Ex. 20</td></tr>
+<tr><td>16</td><td>2026-04-06 02:22:05</td><td>Gemini</td><td>[Gemini] (User Content) Response indicator: 'Gemini' in gemi</td><td>Low</td><td>Ex. 20</td></tr>
+<tr><td>17</td><td>2026-04-06 02:22:05</td><td>Gemini</td><td>[Gemini] (User Content) Model string: Gemini Pro in gemini_f</td><td>Low</td><td>Ex. 20</td></tr>
+</table>
+<p><strong>8. Comparative Artifact Matrix</strong></p>
+<table class="forensic-table">
+<tr><th>Platform</th><th>Artifact Type</th><th>Access Mode</th><th>Evidentiary Value</th><th>Confidence</th><th>Crime Scene Relevance</th></tr>
+<tr><td>Gemini</td><td>URL Visit</td><td>Browser</td><td>Strong</td><td>High</td><td>Moderate - platform visit (does not prov</td></tr>
+<tr><td>Gemini</td><td>URL Visit</td><td>Browser</td><td>Strong</td><td>High</td><td>Moderate - platform visit (does not prov</td></tr>
+<tr><td>ChatGPT</td><td>URL Visit</td><td>Browser</td><td>Moderate</td><td>Moderate</td><td>Moderate - platform visit (does not prov</td></tr>
+<tr><td>Claude</td><td>URL Visit</td><td>Browser</td><td>Strong</td><td>High</td><td>Moderate - platform visit (does not prov</td></tr>
+<tr><td>ChatGPT</td><td>URL Visit</td><td>Browser</td><td>Moderate</td><td>Moderate</td><td>Moderate - platform visit (does not prov</td></tr>
+<tr><td>Claude</td><td>URL Visit</td><td>Browser</td><td>Strong</td><td>High</td><td>Moderate - platform visit (does not prov</td></tr>
+<tr><td>ChatGPT</td><td>URL Visit</td><td>Browser</td><td>Moderate</td><td>Moderate</td><td>Moderate - platform visit (does not prov</td></tr>
+<tr><td>ChatGPT</td><td>Cookie</td><td>Browser</td><td>Moderate</td><td>Moderate</td><td>Low - session/login indicator only</td></tr>
+<tr><td>ChatGPT</td><td>Cookie</td><td>Browser</td><td>Moderate</td><td>Moderate</td><td>Low - session/login indicator only</td></tr>
+<tr><td>Claude</td><td>Cookie</td><td>Browser</td><td>Moderate</td><td>Moderate</td><td>Low - session/login indicator only</td></tr>
+<tr><td>Gemini</td><td>Cookie</td><td>Browser</td><td>Moderate</td><td>Moderate</td><td>Low - session/login indicator only</td></tr>
+<tr><td>ChatGPT</td><td>Local Storage Key</td><td>Browser</td><td>Weak</td><td>Unsupported</td><td>Low - indirect or weak indicator</td></tr>
+<tr><td>ChatGPT</td><td>Prefetch Reference</td><td>Unknown</td><td>Supportive</td><td>Moderate</td><td>Moderate - program execution indicator</td></tr>
+<tr><td>ChatGPT</td><td>Prefetch Reference</td><td>Unknown</td><td>Supportive</td><td>Moderate</td><td>Moderate - program execution indicator</td></tr>
+<tr><td>ChatGPT</td><td>Prefetch Reference</td><td>Unknown</td><td>Supportive</td><td>Moderate</td><td>Moderate - program execution indicator</td></tr>
+<tr><td>ChatGPT</td><td>Prefetch Reference</td><td>Unknown</td><td>Supportive</td><td>Moderate</td><td>Moderate - program execution indicator</td></tr>
+<tr><td>ChatGPT</td><td>AI Export/Download File</td><td>Unknown</td><td>Supportive</td><td>Moderate</td><td>Moderate - AI-related content in user fi</td></tr>
+<tr><td>Claude</td><td>AI Export/Download File</td><td>Unknown</td><td>Supportive</td><td>Moderate</td><td>Moderate - AI-related content in user fi</td></tr>
+<tr><td>Claude</td><td>Content Indicator</td><td>Unknown</td><td>Supportive</td><td>Moderate</td><td>High - possible interactive AI use</td></tr>
+<tr><td>Gemini</td><td>AI Export/Download File</td><td>Unknown</td><td>Supportive</td><td>Moderate</td><td>Moderate - AI-related content in user fi</td></tr>
+<tr><td>Gemini</td><td>Content Indicator</td><td>Unknown</td><td>Supportive</td><td>Moderate</td><td>High - possible interactive AI use</td></tr>
+<tr><td>Gemini</td><td>Content Indicator</td><td>Unknown</td><td>Supportive</td><td>High</td><td>Moderate - AI-related content in user fi</td></tr>
+</table>
+<p><strong>Evidence Coverage Assessment</strong></p>
+<ul>
+<li>Image Type: Full Disk Image</li>
+<li>Full Disk Available: Yes</li>
+<li>Partitions Accessible: 0 / 0</li>
+<li>Encrypted Areas: Not detected</li>
+<li>File Carving: Disabled</li>
+<li>Browsers Detected: Chrome</li>
+<li>Artifact Families Found: Browser Cookies, Browser History, Browser Local Storage, OS Execution Trace, User Content</li>
+<li>Artifact Families Missing: Browser Cache, Browser Downloads, File System, Native Application, OS Event Log, OS Plist, OS Recent Files, OS Registry, OS Unified Log, Screenshot</li>
+</ul>
+<ul>
+<li>*File carving was disabled. Only structured, recoverable artifacts were analyzed.*</li>
+</ul>
+<h1>Forensically Reconstructed AI-Use Events (FRAUEs)</h1>
+<p>Each FRAUE represents a time-bounded, platform-attributed episode of probable AI-system interaction, reconstructed from corroborated endpoint artifacts and reported with explicit confidence and uncertainty.</p>
+<table class="forensic-table">
+<tr><th>FRAUE ID</th><th>Platform</th><th>Activity</th><th>Time Window</th><th>Event Confidence</th><th>Claim Level</th><th>Artifacts</th></tr>
+<tr><td>FRAUE-438358D1</td><td>Gemini</td><td>chat session</td><td>01/17 23:50 — 01/18 00:20</td><td>High</td><td>Level 4 — Governed Forensic Conclusion</td><td>3</td></tr>
+<tr><td>FRAUE-DCB95C4D</td><td>Gemini</td><td>content export</td><td>04/06 02:22 — 04/06 02:22</td><td>Low</td><td>Level 2 — Platform Presence</td><td>3</td></tr>
+<tr><td>FRAUE-7A8D15FB</td><td>ChatGPT</td><td>chat session</td><td>01/17 21:20 — 01/17 23:20</td><td>High</td><td>Level 4 — Governed Forensic Conclusion</td><td>10</td></tr>
+<tr><td>FRAUE-93225555</td><td>ChatGPT</td><td>content export</td><td>04/06 02:22 — 04/06 02:22</td><td>Low</td><td>Level 2 — Platform Presence</td><td>1</td></tr>
+<tr><td>FRAUE-F72217D9</td><td>Claude</td><td>chat session</td><td>01/17 21:50 — 01/17 22:50</td><td>High</td><td>Level 4 — Governed Forensic Conclusion</td><td>3</td></tr>
+<tr><td>FRAUE-4B6EFB6F</td><td>Claude</td><td>content export</td><td>04/06 02:22 — 04/06 02:22</td><td>Low</td><td>Level 2 — Platform Presence</td><td>2</td></tr>
+</table>
+<h3>FRAUE 1: FRAUE-438358D1</h3>
+<ul>
+<li><strong>Platform:</strong> Gemini</li>
+<li><strong>Activity Class:</strong> chat session</li>
+<li><strong>Event Confidence:</strong> High</li>
+<li><strong>Claim Level:</strong> Level 4 — Governed Forensic Conclusion</li>
+<li><strong>Corroboration Met:</strong> Yes</li>
+<li><strong>Persistence State:</strong> Intact</li>
+<li><strong>Artifact Families:</strong> 2</li>
+<li><strong>Source Diversity:</strong> 1 classes</li>
+<li><strong>Caveats:</strong></li>
+<li>Reported time window is approximate and derived from artifact timestamps, not from direct session-start/session-end records.</li>
+<li>Any narrative text in this report is explanatory only; evidentiary facts are the artifacts, exhibits, and scoring decisions (Rule 10).</li>
+</ul>
+<h3>FRAUE 2: FRAUE-DCB95C4D</h3>
+<ul>
+<li><strong>Platform:</strong> Gemini</li>
+<li><strong>Activity Class:</strong> content export</li>
+<li><strong>Event Confidence:</strong> Low</li>
+<li><strong>Claim Level:</strong> Level 2 — Platform Presence</li>
+<li><strong>Corroboration Met:</strong> No</li>
+<li><strong>Persistence State:</strong> Partially Retained</li>
+<li><strong>Artifact Families:</strong> 1</li>
+<li><strong>Source Diversity:</strong> 1 classes</li>
+<li><strong>Caveats:</strong></li>
+<li>Reported time window is approximate and derived from artifact timestamps, not from direct session-start/session-end records.</li>
+<li>Any narrative text in this report is explanatory only; evidentiary facts are the artifacts, exhibits, and scoring decisions (Rule 10).</li>
+<li><strong>Alternative Explanations:</strong></li>
+<li>Single artifact-family evidence could result from automated browser sync, shared device, or background process.</li>
+<li>All evidence is inferred; platform interaction could be explained by third-party redirects or advertising beacons.</li>
+</ul>
+<h3>FRAUE 3: FRAUE-7A8D15FB</h3>
+<ul>
+<li><strong>Platform:</strong> ChatGPT</li>
+<li><strong>Activity Class:</strong> chat session</li>
+<li><strong>Event Confidence:</strong> High</li>
+<li><strong>Claim Level:</strong> Level 4 — Governed Forensic Conclusion</li>
+<li><strong>Corroboration Met:</strong> Yes</li>
+<li><strong>Persistence State:</strong> Intact</li>
+<li><strong>Artifact Families:</strong> 4</li>
+<li><strong>Source Diversity:</strong> 2 classes</li>
+<li><strong>Caveats:</strong></li>
+<li>Reported time window is approximate and derived from artifact timestamps, not from direct session-start/session-end records.</li>
+<li>Any narrative text in this report is explanatory only; evidentiary facts are the artifacts, exhibits, and scoring decisions (Rule 10).</li>
+</ul>
+<h3>FRAUE 4: FRAUE-93225555</h3>
+<ul>
+<li><strong>Platform:</strong> ChatGPT</li>
+<li><strong>Activity Class:</strong> content export</li>
+<li><strong>Event Confidence:</strong> Low</li>
+<li><strong>Claim Level:</strong> Level 2 — Platform Presence</li>
+<li><strong>Corroboration Met:</strong> No</li>
+<li><strong>Persistence State:</strong> Partially Retained</li>
+<li><strong>Artifact Families:</strong> 1</li>
+<li><strong>Source Diversity:</strong> 1 classes</li>
+<li><strong>Caveats:</strong></li>
+<li>Reported time window is approximate and derived from artifact timestamps, not from direct session-start/session-end records.</li>
+<li>Any narrative text in this report is explanatory only; evidentiary facts are the artifacts, exhibits, and scoring decisions (Rule 10).</li>
+<li><strong>Alternative Explanations:</strong></li>
+<li>Single artifact-family evidence could result from automated browser sync, shared device, or background process.</li>
+<li>All evidence is inferred; platform interaction could be explained by third-party redirects or advertising beacons.</li>
+</ul>
+<h3>FRAUE 5: FRAUE-F72217D9</h3>
+<ul>
+<li><strong>Platform:</strong> Claude</li>
+<li><strong>Activity Class:</strong> chat session</li>
+<li><strong>Event Confidence:</strong> High</li>
+<li><strong>Claim Level:</strong> Level 4 — Governed Forensic Conclusion</li>
+<li><strong>Corroboration Met:</strong> Yes</li>
+<li><strong>Persistence State:</strong> Intact</li>
+<li><strong>Artifact Families:</strong> 2</li>
+<li><strong>Source Diversity:</strong> 1 classes</li>
+<li><strong>Caveats:</strong></li>
+<li>Reported time window is approximate and derived from artifact timestamps, not from direct session-start/session-end records.</li>
+<li>Any narrative text in this report is explanatory only; evidentiary facts are the artifacts, exhibits, and scoring decisions (Rule 10).</li>
+</ul>
+<h3>FRAUE 6: FRAUE-4B6EFB6F</h3>
+<ul>
+<li><strong>Platform:</strong> Claude</li>
+<li><strong>Activity Class:</strong> content export</li>
+<li><strong>Event Confidence:</strong> Low</li>
+<li><strong>Claim Level:</strong> Level 2 — Platform Presence</li>
+<li><strong>Corroboration Met:</strong> No</li>
+<li><strong>Persistence State:</strong> Partially Retained</li>
+<li><strong>Artifact Families:</strong> 1</li>
+<li><strong>Source Diversity:</strong> 1 classes</li>
+<li><strong>Caveats:</strong></li>
+<li>Reported time window is approximate and derived from artifact timestamps, not from direct session-start/session-end records.</li>
+<li>Any narrative text in this report is explanatory only; evidentiary facts are the artifacts, exhibits, and scoring decisions (Rule 10).</li>
+<li><strong>Alternative Explanations:</strong></li>
+<li>Single artifact-family evidence could result from automated browser sync, shared device, or background process.</li>
+<li>All evidence is inferred; platform interaction could be explained by third-party redirects or advertising beacons.</li>
+</ul>
+<h1>Functional Requirements Assessment (FR-1 – FR-9)</h1>
+<p>The following assessment evaluates this analysis against 9 functional requirements derived from current AI-forensics research gaps (Magnet AXIOM, NIST Generative AI Profile, C2PA, academic literature).</p>
+<p>> <strong>Research synthesis:</strong> The state of the art has progressed from 'no AI artifact support' to 'partial, app-specific artifact recovery,' but it still lacks an end-to-end AI-forensics evidence model that consistently unifies acquisition, session reconstruction, provenance, detector validation, third-party dependency tracing, and standardized evidentiary export.</p>
+<h2>Assessment Summary</h2>
+<table class="forensic-table">
+<tr><th>FR</th><th>Requirement</th><th>Status</th></tr>
+<tr><td>:---:</td><td>:---</td><td>:---</td></tr>
+<tr><td>FR-1</td><td>Unified AI Evidence Acquisition</td><td>⚠️ Partially Addressed</td></tr>
+<tr><td>FR-2</td><td>Full Session Reconstruction</td><td>⚠️ Partially Addressed</td></tr>
+<tr><td>FR-3</td><td>Model, Version, and Configuration Provenance</td><td>⚠️ Partially Addressed</td></tr>
+<tr><td>FR-4</td><td>Provenance and Authenticity Verification</td><td>⚠️ Partially Addressed</td></tr>
+<tr><td>FR-5</td><td>Detector Validation with Evidentiary Metrics</td><td>⚠️ Partially Addressed</td></tr>
+<tr><td>FR-6</td><td>Resilience to Tamper and Anti-Forensics</td><td>⚠️ Partially Addressed</td></tr>
+<tr><td>FR-7</td><td>Third-Party Tool-Chain and Plugin Visibility</td><td>❌ Gap Identified</td></tr>
+<tr><td>FR-8</td><td>Standardized Evidentiary Export</td><td>✅ Fully Addressed</td></tr>
+<tr><td>FR-9</td><td>Extensible Parser Architecture</td><td>✅ Fully Addressed</td></tr>
+</table>
+<h2>FR-1: Unified AI Evidence Acquisition</h2>
+<p><strong>Status:</strong> Partially Addressed</p>
+<p><em>A mature AI-forensics platform should acquire evidence from desktop apps, browser sessions, mobile apps, cloud exports, memory, logs, and network captures under one case model. Recent research on ChatGPT, Copilot, and Gemini found that conversation recovery was platform-dependent. The real gap is lack of a normalized cross-provider acquisition workflow.</em></p>
+<p><strong>Capability:</strong> Evidence was acquired and parsed, but from a limited subset of available sources.</p>
+<p><strong>Evidence from analysis:</strong></p>
+<ul>
+<li>Evidence acquired from: C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence</li>
+<li>Evidence type: Full Disk Image</li>
+<li>User profiles identified: JohnDoe</li>
+<li>10 parsers executed across browser, OS, and content sources</li>
+<li>Artifact families span: BROWSER COOKIES, BROWSER HISTORY, BROWSER LOCAL STORAGE, OS EXECUTION TRACE, USER CONTENT</li>
+</ul>
+<p><strong>Identified gaps:</strong></p>
+<ul>
+<li>⚠ Memory capture and live RAM analysis not supported</li>
+<li>⚠ Network packet capture (PCAP) integration not implemented</li>
+<li>⚠ Cloud export API integration (provider-side logs) not available</li>
+</ul>
+<h2>FR-2: Full Session Reconstruction</h2>
+<p><strong>Status:</strong> Partially Addressed</p>
+<p><em>The tool should reconstruct the full AI interaction lifecycle: account/user context, device context, timestamps, prompts, responses, edits, deletions, attachments, exports, and surrounding system traces. The missing capability is forensic replay of the full session chain, not just extraction of message text.</em></p>
+<p><strong>Capability:</strong> TRACE-AI-FR reconstructs AI interaction sessions via FRAUEs with temporal windows, correlated timelines, and prompt/response remnant detection. Full conversational replay (turn-by-turn prompts and responses) depends on platform-specific artifact availability.</p>
+<p><strong>Evidence from analysis:</strong></p>
+<ul>
+<li>6 FRAUE(s) reconstructed as atomic events</li>
+<li>  FRAUE: Gemini — chat session</li>
+<li>  FRAUE: Gemini — content export</li>
+<li>  FRAUE: ChatGPT — chat session</li>
+<li>17 timeline events reconstructed with timestamps</li>
+<li>Response remnants found for Gemini</li>
+<li>Response remnants found for Claude</li>
+</ul>
+<p><strong>Identified gaps:</strong></p>
+<ul>
+<li>⚠ Full conversational replay (prompt→response chains) not available from browser artifacts alone</li>
+<li>⚠ Edit and deletion tracking requires platform-specific database access</li>
+<li>⚠ Attachment/file-upload tracing limited to download records and content remnants</li>
+</ul>
+<h2>FR-3: Model, Version, and Configuration Provenance</h2>
+<p><strong>Status:</strong> Partially Addressed</p>
+<p><em>An examiner should be able to say which model or service produced an output, when, under what version or change state, and with what relevant configuration context. NIST's Generative AI Profile stresses logging, metadata, and version history for incident response and governance.</em></p>
+<p><strong>Capability:</strong> TRACE-AI-FR identifies AI models when model-specific strings appear in browser artifacts (URLs, cookies, API responses). Version history, configuration state, and change-management records are not available from client-side endpoint evidence alone.</p>
+<p><strong>Evidence from analysis:</strong></p>
+<ul>
+<li>Platform detected (Gemini) but specific model not determined</li>
+<li>Model identified for ChatGPT: Unknown</li>
+<li>Platform detected (Claude) but specific model not determined</li>
+<li>Artifact-level model indicator: Unknown</li>
+<li>Artifact-level model indicator: Unknown</li>
+<li>Artifact-level model indicator: Unknown</li>
+<li>Artifact-level model indicator: Unknown</li>
+<li>Artifact-level model indicator: Unknown</li>
+<li>Artifact-level model indicator: Unknown</li>
+<li>Artifact-level model indicator: Unknown</li>
+<li>Artifact-level model indicator: Unknown</li>
+<li>Artifact-level model indicator: Unknown</li>
+<li>Artifact-level model indicator: Unknown</li>
+<li>Artifact-level model indicator: Unknown</li>
+<li>Artifact-level model indicator: Unknown</li>
+<li>Artifact-level model indicator: Unknown</li>
+<li>Artifact-level model indicator: Unknown</li>
+<li>Artifact-level model indicator: Unknown</li>
+<li>Artifact-level model indicator: Unknown</li>
+<li>Artifact-level model indicator: Unknown</li>
+<li>Artifact-level model indicator: Unknown</li>
+<li>Artifact-level model indicator: Unknown</li>
+<li>Artifact-level model indicator: Gemini Pro</li>
+</ul>
+<p><strong>Identified gaps:</strong></p>
+<ul>
+<li>⚠ Server-side version/configuration records not accessible from endpoint evidence</li>
+<li>⚠ NIST-recommended logging and change-management metadata requires provider cooperation</li>
+<li>⚠ Model version drift (e.g., GPT-4 updates) not trackable from client artifacts</li>
+</ul>
+<h2>FR-4: Provenance and Authenticity Verification</h2>
+<p><strong>Status:</strong> Partially Addressed</p>
+<p><em>AI-forensics tooling should verify origin, modifications, cryptographic bindings, signatures, hashes, and AI-use assertions where they exist. C2PA's Content Credentials model defines manifests containing assertions about origin, modification history, and AI use, bound into a verifiable unit. What is commonly missing is native forensic integration of provenance verification across evidence types.</em></p>
+<p><strong>Capability:</strong> TRACE-AI-FR provides hash-based integrity verification for evidence files and exhibits, and governance-tracked chain of custody. C2PA Content Credentials verification, cryptographic signature validation, and AI-use assertion parsing are not yet integrated.</p>
+<p><strong>Evidence from analysis:</strong></p>
+<ul>
+<li>Evidence image hash computed for chain-of-custody integrity</li>
+<li>All exhibits include MD5 hashes for file-level verification</li>
+<li>Governance record documents all inference rules and disclosures</li>
+</ul>
+<p><strong>Identified gaps:</strong></p>
+<ul>
+<li>⚠ C2PA manifest parsing and Content Credentials verification not implemented</li>
+<li>⚠ Cryptographic signature validation for AI-generated content not available</li>
+<li>⚠ No integration with external provenance verification services</li>
+</ul>
+<h2>FR-5: Detector Validation with Evidentiary Metrics</h2>
+<p><strong>Status:</strong> Partially Addressed</p>
+<p><em>If a tool labels content as 'AI-generated,' it should report error rates, confidence, thresholds, and limitations. NIST's synthetic-content guidance makes clear that watermarking and verification methods must be evaluated with false positives and false negatives. The requirement is forensic-grade detector validation suitable for evidentiary interpretation.</em></p>
+<p><strong>Capability:</strong> TRACE-AI-FR reports multi-layer confidence scores with explicit thresholds and classification (Direct vs. Inferred evidence). It does not perform AI-content detection (i.e., 'was this text written by AI?'). False-positive/negative rate reporting for detection classifiers is not in scope — the framework detects AI platform *use*, not AI-generated *content*.</p>
+<p><strong>Evidence from analysis:</strong></p>
+<ul>
+<li>7-layer confidence scoring model with per-artifact and per-FRAUE ratings</li>
+<li>Confidence levels reported: HIGH, MODERATE, LOW, UNSUPPORTED/INSUFFICIENT</li>
+<li>FRAUE confidence distribution: 3 HIGH of 6 total</li>
+</ul>
+<p><strong>Identified gaps:</strong></p>
+<ul>
+<li>⚠ AI-content detection (GPTZero, Turnitin-style) not integrated</li>
+<li>⚠ Watermark detection for AI-generated images/text not implemented</li>
+<li>⚠ No false-positive/false-negative rate reporting for content classifiers</li>
+</ul>
+<h2>FR-6: Resilience to Tamper and Anti-Forensics</h2>
+<p><strong>Status:</strong> Partially Addressed</p>
+<p><em>A useful AI-forensics tool should account for metadata stripping, provenance removal, paraphrasing, recompression, and other attempts to weaken attribution. NIST emphasizes that risk reduction relies on multiple technical approaches rather than a single perfect signal. The gap is a shortage of multi-signal correlation frameworks.</em></p>
+<p><strong>Capability:</strong> TRACE-AI-FR uses multi-artifact-family correlation and evidence-source-class tagging to resist single-point spoofing. Governance Rule 6 requires cross-source corroboration. However, active anti-forensic detection (metadata stripping, history wiping, provenance removal) and paraphrase/recompression detection are not directly assessed.</p>
+<p><strong>Evidence from analysis:</strong></p>
+<ul>
+<li>Cross-artifact corroboration across 5 artifact families</li>
+<li>Evidence-source-class tagging enables multi-signal reasoning</li>
+<li>Governance Rule 6 enforces cross-source corroboration for multi-source claims</li>
+<li>11 known blind spots disclosed</li>
+</ul>
+<p><strong>Identified gaps:</strong></p>
+<ul>
+<li>⚠ Active anti-forensic detection (history wiping, timestamp manipulation) not assessed</li>
+<li>⚠ Metadata stripping or provenance removal detection not implemented</li>
+<li>⚠ Paraphrase and recompression detection not in scope</li>
+</ul>
+<h2>FR-7: Third-Party Tool-Chain and Plugin Visibility</h2>
+<p><strong>Status:</strong> Gap Identified</p>
+<p><em>The tool should capture whether the output was shaped by plugins, retrieval sources, external tools, or third-party inputs. NIST highlights documentation and review of third-party inputs as especially important in generative AI incident handling. Public AI-forensics coverage still centers mostly on the chat artifact itself.</em></p>
+<p><strong>Capability:</strong> TRACE-AI-FR focuses on primary AI platform artifacts (browser history, cookies, downloads, OS traces). It does not currently trace third-party plugins, RAG retrieval sources, or tool-chain dependencies behind AI outputs. This is an identified gap consistent with the broader state of the art.</p>
+<p><strong>Evidence from analysis:</strong></p>
+<ul>
+<li>Browser extension artifacts may appear in parsed browser data</li>
+<li>Content parser scans for AI export files and naming patterns</li>
+</ul>
+<p><strong>Identified gaps:</strong></p>
+<ul>
+<li>⚠ Plugin and extension dependency graph not constructed</li>
+<li>⚠ RAG (Retrieval-Augmented Generation) source tracing not implemented</li>
+<li>⚠ Tool-chain provenance (which tools shaped the output) not tracked</li>
+<li>⚠ Third-party API call tracing requires network capture integration</li>
+</ul>
+<h2>FR-8: Standardized Evidentiary Export</h2>
+<p><strong>Status:</strong> Fully Addressed</p>
+<p><em>AI evidence should be exportable with chain-of-custody fields, hashes, timestamps, provenance findings, model/version metadata, and incident context in a normalized structure. NIST states that formal channels to report and document AI incidents are not yet standardized. One of the biggest missing pieces is a common AI evidence schema.</em></p>
+<p><strong>Capability:</strong> TRACE-AI-FR exports evidence in 5 formats (JSON, SQLite, Markdown, HTML, Governance JSON) with structured case metadata, chain-of-custody hashes, FRAUE-level findings, temporal data, confidence scores, governance records, and inference boundaries. This provides a normalized AI evidence schema suitable for cross-tool interoperability.</p>
+<p><strong>Evidence from analysis:</strong></p>
+<ul>
+<li>JSON export with full case metadata, artifacts, FRAUEs, governance</li>
+<li>SQLite normalized database with 7+ relational tables</li>
+<li>Markdown report following SANS/UNCC forensic report standard</li>
+<li>HTML interactive report with FRAUE cards and governance panel</li>
+<li>Governance JSON with 12-rule compliance matrix</li>
+<li>All exports include chain-of-custody fields and hashes</li>
+<li>Governance record includes disclosures and inference boundaries</li>
+</ul>
+<p><strong>Identified gaps:</strong></p>
+<ul>
+<li>⚠ No CASE/UCO (Cyber-investigation Analysis Standard Expression) mapping yet</li>
+<li>⚠ STIX/TAXII incident sharing format not directly supported</li>
+</ul>
+<h2>FR-9: Extensible Parser Architecture</h2>
+<p><strong>Status:</strong> Fully Addressed</p>
+<p><em>Because AI products and storage patterns change quickly, the platform needs rapidly updateable parsers and a stable internal evidence model. Magnet's public documentation says its ChatGPT artifact support was recently introduced and will continue to expand, evidencing that coverage is still incremental rather than complete.</em></p>
+<p><strong>Capability:</strong> TRACE-AI-FR implements a plugin-style parser registry with BaseParser abstract class, OS-aware auto-discovery, and graceful fallbacks (E01 binary scanner when pyewf/pytsk3 are unavailable, binary scan when python-registry is missing). New parsers can be added by subclassing BaseParser and registering with the parser registry.</p>
+<p><strong>Evidence from analysis:</strong></p>
+<ul>
+<li>10 parser results from auto-discovery registry</li>
+<li>BaseParser abstract class with OS-aware registration</li>
+<li>Parsers for: Chrome, Edge, Firefox, Brave, Safari, Prefetch, AmCache, Registry, Plist, Quarantine, iPhone logical, AI content scanning</li>
+<li>E01 binary scanner fallback when libraries unavailable</li>
+<li>3/10 parsers succeeded</li>
+</ul>
+<p><strong>Identified gaps:</strong></p>
+<ul>
+<li>⚠ No hot-reload or runtime parser update mechanism</li>
+<li>⚠ Parser coverage is incremental — new AI apps require new parsers</li>
+</ul>
+<h2>Key Caveats</h2>
+<ul>
+<li>Scope boundary: This assessment is about forensic investigation of AI-system use and AI-generated or AI-edited content as evidence. It does not evaluate separate claims about using AI to help investigators analyze other evidence.</li>
+<li>Capability boundary: 'Missing' does not mean 'universally absent.' It means the capability is not broadly standardized, not consistently documented in public sources, or not shown end-to-end.</li>
+<li>Provenance boundary: C2PA-style provenance can verify that a credentialed manifest is intact and bound to an asset, but it does not by itself prove that every semantic claim in the content is true.</li>
+<li>Detection boundary: Absence of a watermark, provenance record, or detector hit is not conclusive evidence of human authorship, because NIST treats these methods as imperfect and requiring measured interpretation.</li>
+<li>Admissibility boundary: Forensic recoverability is not the same as courtroom admissibility. Legal admissibility also depends on jurisdiction, validation, chain of custody, and expert testimony.</li>
+</ul>
+<h1>Inference Boundaries and Operational Controls</h1>
+<p>The following boundaries constrain all conclusions in this report:</p>
+<ul>
+<li>This analysis reconstructs observable AI-system interaction from endpoint artifacts. It does not infer belief, trust, acceptance, reliance, or investigative intent from those artifacts.</li>
+<li>Reported time windows are approximate and derived from artifact timestamps, not from direct session instrumentation.</li>
+<li>Platform attribution is distinguished from model attribution; model conclusions require preserved model identifiers in exports or metadata.</li>
+<li>Absence of evidence within the examined scope is never treated as evidence of absence.</li>
+<li>Deletion, logout, or cache clearing is reported as a persistence effect, not as concealment or motive.</li>
+</ul>
+<h2>Scope of Conclusion</h2>
+<p>Based on the forensic analysis of the submitted evidence within the TRACE-AI-FR framework, 6 Forensically Reconstructed AI-Use Event(s) were identified involving ChatGPT, Claude, Gemini. These conclusions are limited to reconstructed AI-system interaction within the examined evidence scope, are subject to the inference boundaries documented in this report, and do not constitute opinions regarding investigative intent, cognitive reliance, or evidentiary admissibility. Admissibility remains subject to Rule 702 and applicable legal gatekeeping.</p>
+<h2>Governance Record Summary</h2>
+<ul>
+<li><strong>Framework:</strong> TRACE-AI-FR v2.0.0</li>
+<li><strong>Validation State:</strong> Partially Validated</li>
+<li><strong>Collection Scope:</strong> Evidence source: C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence; Image type: Full Disk Image; Detected OS: Windows; User profiles: JohnDoe; Browsers detected: Chrome; Full disk available: Yes; File carving: Disabled</li>
+<li><strong>Known Blind Spots:</strong></li>
+<li>File carving was disabled; deleted but not overwritten artifacts were not recovered.</li>
+<li>Artifact family 'Browser Cache' was not found in the evidence; conclusions about platform use from that family are not possible.</li>
+<li>Artifact family 'Browser Downloads' was not found in the evidence; conclusions about platform use from that family are not possible.</li>
+<li>Artifact family 'File System' was not found in the evidence; conclusions about platform use from that family are not possible.</li>
+<li>Artifact family 'Native Application' was not found in the evidence; conclusions about platform use from that family are not possible.</li>
+<li>Artifact family 'OS Event Log' was not found in the evidence; conclusions about platform use from that family are not possible.</li>
+<li>Artifact family 'OS Plist' was not found in the evidence; conclusions about platform use from that family are not possible.</li>
+<li>Artifact family 'OS Recent Files' was not found in the evidence; conclusions about platform use from that family are not possible.</li>
+<li>Artifact family 'OS Registry' was not found in the evidence; conclusions about platform use from that family are not possible.</li>
+<li>Artifact family 'OS Unified Log' was not found in the evidence; conclusions about platform use from that family are not possible.</li>
+<li>Artifact family 'Screenshot' was not found in the evidence; conclusions about platform use from that family are not possible.</li>
+<li><strong>Required Disclosures (Rule 11):</strong></li>
+<li>This framework output is a forensic reconstruction. It does not bypass legal gatekeeping under Rule 702 or equivalent standards.</li>
+<li>Narrative text generated by LLM integration is explanatory only; evidentiary facts are the artifacts, exhibits, and scoring decisions.</li>
+<li>Validation of parser accuracy and signature coverage is ongoing; the version-drift register documents the current validation state.</li>
+</ul>
+<h1>Conclusion</h1>
+<p>The forensic analysis strongly supported that <strong>Gemini</strong> was accessed from this endpoint. 6 artifact(s) were identified, of which 3 constitute direct evidence.</p>
+<p>The forensic analysis supported at moderate confidence that <strong>ChatGPT</strong> was accessed from this endpoint. 11 artifact(s) were identified, of which 5 constitute direct evidence.</p>
+<p>The forensic analysis strongly supported that <strong>Claude</strong> was accessed from this endpoint. 5 artifact(s) were identified, of which 3 constitute direct evidence.</p>
+<p><strong>Evidentiary Caveats:</strong></p>
+<ul>
+<li>A domain visit alone is not enough to conclude substantive AI use.</li>
+<li>A cached object alone is not enough to conclude prompt submission.</li>
+<li>A login trace alone is not enough to conclude active investigative use.</li>
+<li>An export file alone is not enough to prove which model generated it unless corroborated.</li>
+<li>Platform attribution, model attribution, and content attribution are separate analytical layers.</li>
+<li>Absence of evidence must not be reported as evidence of absence.</li>
+</ul>
+<p>File carving was disabled. Artifacts in unallocated space were not examined. Additional analysis may yield further findings.</p>
+<p>The forensic evidence and reports are being provided to the requesting party. No further analysis as of this report.</p>
+<h1>Appendix: Evidence Exhibits</h1>
+<p><em>Total exhibits: 66</em></p>
+<table class="forensic-table">
+<tr><th>Exhibit #</th><th>Platform</th><th>Artifact Type</th><th>E01 Source Path</th><th>Confidence</th><th>Timestamp</th></tr>
+<tr><td>1</td><td>Gemini</td><td>Browser History</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History`</td><td>High</td><td>2024-01-18 00:20:00 UTC</td></tr>
+<tr><td>2</td><td>Gemini</td><td>Browser History</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History`</td><td>High</td><td>2024-01-17 23:50:00 UTC</td></tr>
+<tr><td>3</td><td>ChatGPT</td><td>Browser History</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History`</td><td>Moderate</td><td>2024-01-17 23:20:00 UTC</td></tr>
+<tr><td>4</td><td>Claude</td><td>Browser History</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History`</td><td>High</td><td>2024-01-17 22:50:00 UTC</td></tr>
+<tr><td>5</td><td>ChatGPT</td><td>Browser History</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History`</td><td>Moderate</td><td>2024-01-17 22:20:00 UTC</td></tr>
+<tr><td>6</td><td>Claude</td><td>Browser History</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History`</td><td>High</td><td>2024-01-17 21:50:00 UTC</td></tr>
+<tr><td>7</td><td>ChatGPT</td><td>Browser History</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History`</td><td>Moderate</td><td>2024-01-17 21:20:00 UTC</td></tr>
+<tr><td>8</td><td>ChatGPT</td><td>Browser Cookies</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies`</td><td>Moderate</td><td>2024-01-17 22:20:00 UTC</td></tr>
+<tr><td>9</td><td>ChatGPT</td><td>Browser Cookies</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies`</td><td>Moderate</td><td>2024-01-17 22:20:00 UTC</td></tr>
+<tr><td>10</td><td>Claude</td><td>Browser Cookies</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies`</td><td>Moderate</td><td>2024-01-17 22:50:00 UTC</td></tr>
+<tr><td>11</td><td>Gemini</td><td>Browser Cookies</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies`</td><td>Moderate</td><td>2024-01-17 23:50:00 UTC</td></tr>
+<tr><td>12</td><td>ChatGPT</td><td>Browser Local Storage</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Local Storage/leveldb\chatgpt_trace.log`</td><td>Unsupported</td><td>N/A</td></tr>
+<tr><td>13</td><td>ChatGPT</td><td>OS Execution Trace</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf`</td><td>Moderate</td><td>N/A</td></tr>
+<tr><td>14</td><td>ChatGPT</td><td>OS Execution Trace</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf`</td><td>Moderate</td><td>N/A</td></tr>
+<tr><td>15</td><td>ChatGPT</td><td>OS Execution Trace</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf`</td><td>Moderate</td><td>N/A</td></tr>
+<tr><td>16</td><td>ChatGPT</td><td>OS Execution Trace</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf`</td><td>Moderate</td><td>N/A</td></tr>
+<tr><td>17</td><td>ChatGPT</td><td>User Content</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\ChatGPT_Crime_Scene_Analysis.pdf`</td><td>Moderate</td><td>2026-04-06 02:22:05 UTC</td></tr>
+<tr><td>18</td><td>Claude</td><td>User Content</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt`</td><td>Moderate</td><td>2026-04-06 02:22:05 UTC</td></tr>
+<tr><td>19</td><td>Claude</td><td>User Content</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt`</td><td>Moderate</td><td>2026-04-06 02:22:05 UTC</td></tr>
+<tr><td>20</td><td>Gemini</td><td>User Content</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md`</td><td>Moderate</td><td>2026-04-06 02:22:05 UTC</td></tr>
+<tr><td>21</td><td>Gemini</td><td>User Content</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md`</td><td>Moderate</td><td>2026-04-06 02:22:05 UTC</td></tr>
+<tr><td>22</td><td>Gemini</td><td>User Content</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md`</td><td>High</td><td>2026-04-06 02:22:05 UTC</td></tr>
+<tr><td>23</td><td>Gemini</td><td>Browser History</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History`</td><td>High</td><td>2024-01-18 00:20:00 UTC</td></tr>
+<tr><td>24</td><td>Gemini</td><td>Browser History</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History`</td><td>High</td><td>2024-01-17 23:50:00 UTC</td></tr>
+<tr><td>25</td><td>ChatGPT</td><td>Browser History</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History`</td><td>Moderate</td><td>2024-01-17 23:20:00 UTC</td></tr>
+<tr><td>26</td><td>Claude</td><td>Browser History</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History`</td><td>High</td><td>2024-01-17 22:50:00 UTC</td></tr>
+<tr><td>27</td><td>ChatGPT</td><td>Browser History</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History`</td><td>Moderate</td><td>2024-01-17 22:20:00 UTC</td></tr>
+<tr><td>28</td><td>Claude</td><td>Browser History</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History`</td><td>High</td><td>2024-01-17 21:50:00 UTC</td></tr>
+<tr><td>29</td><td>ChatGPT</td><td>Browser History</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History`</td><td>Moderate</td><td>2024-01-17 21:20:00 UTC</td></tr>
+<tr><td>30</td><td>ChatGPT</td><td>Browser Cookies</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies`</td><td>Moderate</td><td>2024-01-17 22:20:00 UTC</td></tr>
+<tr><td>31</td><td>ChatGPT</td><td>Browser Cookies</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies`</td><td>Moderate</td><td>2024-01-17 22:20:00 UTC</td></tr>
+<tr><td>32</td><td>Claude</td><td>Browser Cookies</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies`</td><td>Moderate</td><td>2024-01-17 22:50:00 UTC</td></tr>
+<tr><td>33</td><td>Gemini</td><td>Browser Cookies</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies`</td><td>Moderate</td><td>2024-01-17 23:50:00 UTC</td></tr>
+<tr><td>34</td><td>ChatGPT</td><td>Browser Local Storage</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Local Storage/leveldb\chatgpt_trace.log`</td><td>Unsupported</td><td>N/A</td></tr>
+<tr><td>35</td><td>ChatGPT</td><td>OS Execution Trace</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf`</td><td>Moderate</td><td>N/A</td></tr>
+<tr><td>36</td><td>ChatGPT</td><td>OS Execution Trace</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf`</td><td>Moderate</td><td>N/A</td></tr>
+<tr><td>37</td><td>ChatGPT</td><td>OS Execution Trace</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf`</td><td>Moderate</td><td>N/A</td></tr>
+<tr><td>38</td><td>ChatGPT</td><td>OS Execution Trace</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf`</td><td>Moderate</td><td>N/A</td></tr>
+<tr><td>39</td><td>ChatGPT</td><td>User Content</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\ChatGPT_Crime_Scene_Analysis.pdf`</td><td>Moderate</td><td>2026-04-06 02:22:05 UTC</td></tr>
+<tr><td>40</td><td>Claude</td><td>User Content</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt`</td><td>Moderate</td><td>2026-04-06 02:22:05 UTC</td></tr>
+<tr><td>41</td><td>Claude</td><td>User Content</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt`</td><td>Moderate</td><td>2026-04-06 02:22:05 UTC</td></tr>
+<tr><td>42</td><td>Gemini</td><td>User Content</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md`</td><td>Moderate</td><td>2026-04-06 02:22:05 UTC</td></tr>
+<tr><td>43</td><td>Gemini</td><td>User Content</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md`</td><td>Moderate</td><td>2026-04-06 02:22:05 UTC</td></tr>
+<tr><td>44</td><td>Gemini</td><td>User Content</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md`</td><td>High</td><td>2026-04-06 02:22:05 UTC</td></tr>
+<tr><td>45</td><td>Gemini</td><td>Browser History</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History`</td><td>High</td><td>2024-01-18 00:20:00 UTC</td></tr>
+<tr><td>46</td><td>Gemini</td><td>Browser History</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History`</td><td>High</td><td>2024-01-17 23:50:00 UTC</td></tr>
+<tr><td>47</td><td>ChatGPT</td><td>Browser History</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History`</td><td>Moderate</td><td>2024-01-17 23:20:00 UTC</td></tr>
+<tr><td>48</td><td>Claude</td><td>Browser History</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History`</td><td>High</td><td>2024-01-17 22:50:00 UTC</td></tr>
+<tr><td>49</td><td>ChatGPT</td><td>Browser History</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History`</td><td>Moderate</td><td>2024-01-17 22:20:00 UTC</td></tr>
+<tr><td>50</td><td>Claude</td><td>Browser History</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History`</td><td>High</td><td>2024-01-17 21:50:00 UTC</td></tr>
+<tr><td>51</td><td>ChatGPT</td><td>Browser History</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History`</td><td>Moderate</td><td>2024-01-17 21:20:00 UTC</td></tr>
+<tr><td>52</td><td>ChatGPT</td><td>Browser Cookies</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies`</td><td>Moderate</td><td>2024-01-17 22:20:00 UTC</td></tr>
+<tr><td>53</td><td>ChatGPT</td><td>Browser Cookies</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies`</td><td>Moderate</td><td>2024-01-17 22:20:00 UTC</td></tr>
+<tr><td>54</td><td>Claude</td><td>Browser Cookies</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies`</td><td>Moderate</td><td>2024-01-17 22:50:00 UTC</td></tr>
+<tr><td>55</td><td>Gemini</td><td>Browser Cookies</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies`</td><td>Moderate</td><td>2024-01-17 23:50:00 UTC</td></tr>
+<tr><td>56</td><td>ChatGPT</td><td>Browser Local Storage</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Local Storage/leveldb\chatgpt_trace.log`</td><td>Unsupported</td><td>N/A</td></tr>
+<tr><td>57</td><td>ChatGPT</td><td>OS Execution Trace</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf`</td><td>Moderate</td><td>N/A</td></tr>
+<tr><td>58</td><td>ChatGPT</td><td>OS Execution Trace</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf`</td><td>Moderate</td><td>N/A</td></tr>
+<tr><td>59</td><td>ChatGPT</td><td>OS Execution Trace</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf`</td><td>Moderate</td><td>N/A</td></tr>
+<tr><td>60</td><td>ChatGPT</td><td>OS Execution Trace</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf`</td><td>Moderate</td><td>N/A</td></tr>
+<tr><td>61</td><td>ChatGPT</td><td>User Content</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\ChatGPT_Crime_Scene_Analysis.pdf`</td><td>Moderate</td><td>2026-04-06 02:22:05 UTC</td></tr>
+<tr><td>62</td><td>Claude</td><td>User Content</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt`</td><td>Moderate</td><td>2026-04-06 02:22:05 UTC</td></tr>
+<tr><td>63</td><td>Claude</td><td>User Content</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt`</td><td>Moderate</td><td>2026-04-06 02:22:05 UTC</td></tr>
+<tr><td>64</td><td>Gemini</td><td>User Content</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md`</td><td>Moderate</td><td>2026-04-06 02:22:05 UTC</td></tr>
+<tr><td>65</td><td>Gemini</td><td>User Content</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md`</td><td>Moderate</td><td>2026-04-06 02:22:05 UTC</td></tr>
+<tr><td>66</td><td>Gemini</td><td>User Content</td><td>`demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md`</td><td>High</td><td>2026-04-06 02:22:05 UTC</td></tr>
+</table>
+<p>> <strong>Exhibit 1: Browser History — Gemini</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-18 00:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://gemini.google.com/app/xyz789</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_001.bin](exhibits\exhibit_001.bin)*</p>
+<p>> <strong>Exhibit 2: Browser History — Gemini</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 23:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://gemini.google.com/app</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_002.bin](exhibits\exhibit_002.bin)*</p>
+<p>> <strong>Exhibit 3: Browser History — ChatGPT</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 23:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://chat.openai.com/chat</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_003.bin](exhibits\exhibit_003.bin)*</p>
+<p>> <strong>Exhibit 4: Browser History — Claude</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://claude.ai/chat/def456</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_004.bin](exhibits\exhibit_004.bin)*</p>
+<p>> <strong>Exhibit 5: Browser History — ChatGPT</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://chatgpt.com/c/abc123</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_005.bin](exhibits\exhibit_005.bin)*</p>
+<p>> <strong>Exhibit 6: Browser History — Claude</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 21:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://claude.ai/</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_006.bin](exhibits\exhibit_006.bin)*</p>
+<p>> <strong>Exhibit 7: Browser History — ChatGPT</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 21:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://chatgpt.com/</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_007.bin](exhibits\exhibit_007.bin)*</p>
+<p>> <strong>Exhibit 8: Browser Cookies — ChatGPT</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .chatgpt.com / __cf_bm</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_008.bin](exhibits\exhibit_008.bin)*</p>
+<p>> <strong>Exhibit 9: Browser Cookies — ChatGPT</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .openai.com / _cfuvid</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_009.bin](exhibits\exhibit_009.bin)*</p>
+<p>> <strong>Exhibit 10: Browser Cookies — Claude</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .claude.ai / __cf_bm</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_010.bin](exhibits\exhibit_010.bin)*</p>
+<p>> <strong>Exhibit 11: Browser Cookies — Gemini</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 23:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .gemini.google.com / NID</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_011.bin](exhibits\exhibit_011.bin)*</p>
+<p>> <strong>Exhibit 12: Browser Local Storage — ChatGPT</strong></p>
+<p>></p>
+<p>> Local Storage Key artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Local Storage/leveldb\chatgpt_trace.log</code></p>
+<p>> - <strong>Indicator:</strong> Key match: 'chatgpt' in chatgpt_trace.log</p>
+<p>> - <strong>Confidence:</strong> Unsupported</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>e6a07a97668a54927b2249c03ebf49f5</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_012.log](exhibits\exhibit_012.log)*</p>
+<p>> <strong>Exhibit 13: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> chatgpt.com in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_013.pf](exhibits\exhibit_013.pf)*</p>
+<p>> <strong>Exhibit 14: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> ChatGPT in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_014.pf](exhibits\exhibit_014.pf)*</p>
+<p>> <strong>Exhibit 15: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> ChatGPT in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_015.pf](exhibits\exhibit_015.pf)*</p>
+<p>> <strong>Exhibit 16: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> chatgpt in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_016.pf](exhibits\exhibit_016.pf)*</p>
+<p>> <strong>Exhibit 17: User Content — ChatGPT</strong></p>
+<p>></p>
+<p>> AI Export/Download File artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\ChatGPT_Crime_Scene_Analysis.pdf</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> File: ChatGPT_Crime_Scene_Analysis.pdf (pattern: chat[-_]?gpt.*\.(?:txt|json|md|pdf|html|csv))</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>4e96f9e5729a4a216cbf044d44ed7b7b</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_017.pdf](exhibits\exhibit_017.pdf)*</p>
+<p>> <strong>Exhibit 18: User Content — Claude</strong></p>
+<p>></p>
+<p>> AI Export/Download File artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> File: claude_response_export.txt (pattern: claude.*\.(?:txt|json|md|pdf|html|csv))</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>4f579a1a15f5bdf4285fb087f59fae6e</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_018.txt](exhibits\exhibit_018.txt)*</p>
+<p>> <strong>Exhibit 19: User Content — Claude</strong></p>
+<p>></p>
+<p>> Content Indicator artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> Response indicator: 'Claude' in claude_response_export.txt</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>4f579a1a15f5bdf4285fb087f59fae6e</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_019.txt](exhibits\exhibit_019.txt)*</p>
+<p>> <strong>Exhibit 20: User Content — Gemini</strong></p>
+<p>></p>
+<p>> AI Export/Download File artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> File: gemini_forensic_notes.md (pattern: gemini.*\.(?:txt|json|md|pdf|html|csv))</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>be1a7926eb1fa559f0a5ccf2542c8e78</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_020.md](exhibits\exhibit_020.md)*</p>
+<p>> <strong>Exhibit 21: User Content — Gemini</strong></p>
+<p>></p>
+<p>> Content Indicator artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> Response indicator: 'Gemini' in gemini_forensic_notes.md</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>be1a7926eb1fa559f0a5ccf2542c8e78</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_021.md](exhibits\exhibit_021.md)*</p>
+<p>> <strong>Exhibit 22: User Content — Gemini</strong></p>
+<p>></p>
+<p>> Content Indicator artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> Model string: Gemini Pro in gemini_forensic_notes.md</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>be1a7926eb1fa559f0a5ccf2542c8e78</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_022.md](exhibits\exhibit_022.md)*</p>
+<p>> <strong>Exhibit 23: Browser History — Gemini</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-18 00:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://gemini.google.com/app/xyz789</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_023.bin](exhibits\exhibit_023.bin)*</p>
+<p>> <strong>Exhibit 24: Browser History — Gemini</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 23:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://gemini.google.com/app</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_024.bin](exhibits\exhibit_024.bin)*</p>
+<p>> <strong>Exhibit 25: Browser History — ChatGPT</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 23:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://chat.openai.com/chat</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_025.bin](exhibits\exhibit_025.bin)*</p>
+<p>> <strong>Exhibit 26: Browser History — Claude</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://claude.ai/chat/def456</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_026.bin](exhibits\exhibit_026.bin)*</p>
+<p>> <strong>Exhibit 27: Browser History — ChatGPT</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://chatgpt.com/c/abc123</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_027.bin](exhibits\exhibit_027.bin)*</p>
+<p>> <strong>Exhibit 28: Browser History — Claude</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 21:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://claude.ai/</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_028.bin](exhibits\exhibit_028.bin)*</p>
+<p>> <strong>Exhibit 29: Browser History — ChatGPT</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 21:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://chatgpt.com/</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_029.bin](exhibits\exhibit_029.bin)*</p>
+<p>> <strong>Exhibit 30: Browser Cookies — ChatGPT</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .chatgpt.com / __cf_bm</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_030.bin](exhibits\exhibit_030.bin)*</p>
+<p>> <strong>Exhibit 31: Browser Cookies — ChatGPT</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .openai.com / _cfuvid</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_031.bin](exhibits\exhibit_031.bin)*</p>
+<p>> <strong>Exhibit 32: Browser Cookies — Claude</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .claude.ai / __cf_bm</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_032.bin](exhibits\exhibit_032.bin)*</p>
+<p>> <strong>Exhibit 33: Browser Cookies — Gemini</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 23:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .gemini.google.com / NID</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_033.bin](exhibits\exhibit_033.bin)*</p>
+<p>> <strong>Exhibit 34: Browser Local Storage — ChatGPT</strong></p>
+<p>></p>
+<p>> Local Storage Key artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Local Storage/leveldb\chatgpt_trace.log</code></p>
+<p>> - <strong>Indicator:</strong> Key match: 'chatgpt' in chatgpt_trace.log</p>
+<p>> - <strong>Confidence:</strong> Unsupported</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>e6a07a97668a54927b2249c03ebf49f5</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_034.log](exhibits\exhibit_034.log)*</p>
+<p>> <strong>Exhibit 35: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> chatgpt.com in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_035.pf](exhibits\exhibit_035.pf)*</p>
+<p>> <strong>Exhibit 36: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> ChatGPT in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_036.pf](exhibits\exhibit_036.pf)*</p>
+<p>> <strong>Exhibit 37: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> ChatGPT in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_037.pf](exhibits\exhibit_037.pf)*</p>
+<p>> <strong>Exhibit 38: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> chatgpt in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_038.pf](exhibits\exhibit_038.pf)*</p>
+<p>> <strong>Exhibit 39: User Content — ChatGPT</strong></p>
+<p>></p>
+<p>> AI Export/Download File artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\ChatGPT_Crime_Scene_Analysis.pdf</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> File: ChatGPT_Crime_Scene_Analysis.pdf (pattern: chat[-_]?gpt.*\.(?:txt|json|md|pdf|html|csv))</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>4e96f9e5729a4a216cbf044d44ed7b7b</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_039.pdf](exhibits\exhibit_039.pdf)*</p>
+<p>> <strong>Exhibit 40: User Content — Claude</strong></p>
+<p>></p>
+<p>> AI Export/Download File artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> File: claude_response_export.txt (pattern: claude.*\.(?:txt|json|md|pdf|html|csv))</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>4f579a1a15f5bdf4285fb087f59fae6e</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_040.txt](exhibits\exhibit_040.txt)*</p>
+<p>> <strong>Exhibit 41: User Content — Claude</strong></p>
+<p>></p>
+<p>> Content Indicator artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> Response indicator: 'Claude' in claude_response_export.txt</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>4f579a1a15f5bdf4285fb087f59fae6e</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_041.txt](exhibits\exhibit_041.txt)*</p>
+<p>> <strong>Exhibit 42: User Content — Gemini</strong></p>
+<p>></p>
+<p>> AI Export/Download File artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> File: gemini_forensic_notes.md (pattern: gemini.*\.(?:txt|json|md|pdf|html|csv))</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>be1a7926eb1fa559f0a5ccf2542c8e78</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_042.md](exhibits\exhibit_042.md)*</p>
+<p>> <strong>Exhibit 43: User Content — Gemini</strong></p>
+<p>></p>
+<p>> Content Indicator artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> Response indicator: 'Gemini' in gemini_forensic_notes.md</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>be1a7926eb1fa559f0a5ccf2542c8e78</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_043.md](exhibits\exhibit_043.md)*</p>
+<p>> <strong>Exhibit 44: User Content — Gemini</strong></p>
+<p>></p>
+<p>> Content Indicator artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> Model string: Gemini Pro in gemini_forensic_notes.md</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>be1a7926eb1fa559f0a5ccf2542c8e78</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_044.md](exhibits\exhibit_044.md)*</p>
+<p>> <strong>Exhibit 45: Browser History — Gemini</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-18 00:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://gemini.google.com/app/xyz789</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_045.bin](exhibits\exhibit_045.bin)*</p>
+<p>> <strong>Exhibit 46: Browser History — Gemini</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 23:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://gemini.google.com/app</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_046.bin](exhibits\exhibit_046.bin)*</p>
+<p>> <strong>Exhibit 47: Browser History — ChatGPT</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 23:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://chat.openai.com/chat</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_047.bin](exhibits\exhibit_047.bin)*</p>
+<p>> <strong>Exhibit 48: Browser History — Claude</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://claude.ai/chat/def456</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_048.bin](exhibits\exhibit_048.bin)*</p>
+<p>> <strong>Exhibit 49: Browser History — ChatGPT</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://chatgpt.com/c/abc123</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_049.bin](exhibits\exhibit_049.bin)*</p>
+<p>> <strong>Exhibit 50: Browser History — Claude</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 21:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://claude.ai/</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_050.bin](exhibits\exhibit_050.bin)*</p>
+<p>> <strong>Exhibit 51: Browser History — ChatGPT</strong></p>
+<p>></p>
+<p>> URL Visit artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 21:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> https://chatgpt.com/</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>042d3513943fa64e82d6caba341b3897</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_051.bin](exhibits\exhibit_051.bin)*</p>
+<p>> <strong>Exhibit 52: Browser Cookies — ChatGPT</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .chatgpt.com / __cf_bm</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_052.bin](exhibits\exhibit_052.bin)*</p>
+<p>> <strong>Exhibit 53: Browser Cookies — ChatGPT</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:20:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .openai.com / _cfuvid</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_053.bin](exhibits\exhibit_053.bin)*</p>
+<p>> <strong>Exhibit 54: Browser Cookies — Claude</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 22:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .claude.ai / __cf_bm</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_054.bin](exhibits\exhibit_054.bin)*</p>
+<p>> <strong>Exhibit 55: Browser Cookies — Gemini</strong></p>
+<p>></p>
+<p>> Cookie artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies</code></p>
+<p>> - <strong>Timestamp:</strong> 2024-01-17 23:50:00 UTC</p>
+<p>> - <strong>Indicator:</strong> .gemini.google.com / NID</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>93bdef2905bbce0c933a23f4ade31a95</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_055.bin](exhibits\exhibit_055.bin)*</p>
+<p>> <strong>Exhibit 56: Browser Local Storage — ChatGPT</strong></p>
+<p>></p>
+<p>> Local Storage Key artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Local Storage/leveldb\chatgpt_trace.log</code></p>
+<p>> - <strong>Indicator:</strong> Key match: 'chatgpt' in chatgpt_trace.log</p>
+<p>> - <strong>Confidence:</strong> Unsupported</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>e6a07a97668a54927b2249c03ebf49f5</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_056.log](exhibits\exhibit_056.log)*</p>
+<p>> <strong>Exhibit 57: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> chatgpt.com in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_057.pf](exhibits\exhibit_057.pf)*</p>
+<p>> <strong>Exhibit 58: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> ChatGPT in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_058.pf](exhibits\exhibit_058.pf)*</p>
+<p>> <strong>Exhibit 59: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> ChatGPT in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_059.pf](exhibits\exhibit_059.pf)*</p>
+<p>> <strong>Exhibit 60: OS Execution Trace — ChatGPT</strong></p>
+<p>></p>
+<p>> Prefetch Reference artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf</code></p>
+<p>> - <strong>Indicator:</strong> chatgpt in CHROME.EXE-ABC12345.pf</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>7cc1f97fdd93b20d03ff9332372cf493</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_060.pf](exhibits\exhibit_060.pf)*</p>
+<p>> <strong>Exhibit 61: User Content — ChatGPT</strong></p>
+<p>></p>
+<p>> AI Export/Download File artifact indicating ChatGPT access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\ChatGPT_Crime_Scene_Analysis.pdf</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> File: ChatGPT_Crime_Scene_Analysis.pdf (pattern: chat[-_]?gpt.*\.(?:txt|json|md|pdf|html|csv))</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>4e96f9e5729a4a216cbf044d44ed7b7b</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_061.pdf](exhibits\exhibit_061.pdf)*</p>
+<p>> <strong>Exhibit 62: User Content — Claude</strong></p>
+<p>></p>
+<p>> AI Export/Download File artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> File: claude_response_export.txt (pattern: claude.*\.(?:txt|json|md|pdf|html|csv))</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>4f579a1a15f5bdf4285fb087f59fae6e</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_062.txt](exhibits\exhibit_062.txt)*</p>
+<p>> <strong>Exhibit 63: User Content — Claude</strong></p>
+<p>></p>
+<p>> Content Indicator artifact indicating Claude access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> Response indicator: 'Claude' in claude_response_export.txt</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>4f579a1a15f5bdf4285fb087f59fae6e</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_063.txt](exhibits\exhibit_063.txt)*</p>
+<p>> <strong>Exhibit 64: User Content — Gemini</strong></p>
+<p>></p>
+<p>> AI Export/Download File artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> File: gemini_forensic_notes.md (pattern: gemini.*\.(?:txt|json|md|pdf|html|csv))</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>be1a7926eb1fa559f0a5ccf2542c8e78</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_064.md](exhibits\exhibit_064.md)*</p>
+<p>> <strong>Exhibit 65: User Content — Gemini</strong></p>
+<p>></p>
+<p>> Content Indicator artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> Response indicator: 'Gemini' in gemini_forensic_notes.md</p>
+<p>> - <strong>Confidence:</strong> Moderate</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>be1a7926eb1fa559f0a5ccf2542c8e78</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_065.md](exhibits\exhibit_065.md)*</p>
+<p>> <strong>Exhibit 66: User Content — Gemini</strong></p>
+<p>></p>
+<p>> Content Indicator artifact indicating Gemini access</p>
+<p>></p>
+<p>> - <strong>E01 Source Path:</strong> <code>demo_evidence:/C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md</code></p>
+<p>> - <strong>Timestamp:</strong> 2026-04-06 02:22:05 UTC</p>
+<p>> - <strong>Indicator:</strong> Model string: Gemini Pro in gemini_forensic_notes.md</p>
+<p>> - <strong>Confidence:</strong> High</p>
+<p>> - <strong>Artifact Hash (MD5):</strong> <code>be1a7926eb1fa559f0a5ccf2542c8e78</code></p>
+<p>></p>
+<p>> *See attached: [exhibits\exhibit_066.md](exhibits\exhibit_066.md)*</p>
+<hr>
+<p>Signed:</p>
+<p><em>Test</em></p>
+<p>_________________________</p>
+<p>Test</p>
+<p>Digital Forensics Examiner</p>
+<p>UNCC Forensics Lab</p>
+<hr>
+<p><em>Report generated by TRACE-AI-FR v2.0.0</em></p>
+<p><em>Generated on: 2026-04-07 01:26:44 UTC</em></p>
+            </div>
+        </div>
+
+        <div id="tab-fraues" class="tab-content">
+            
+        <div class="section-fraues">
+            <h1>Forensically Reconstructed AI-Use Events (FRAUEs)</h1>
+            <p class="section-intro">Each FRAUE represents a time-bounded, platform-attributed episode
+            of probable AI-system interaction, reconstructed from corroborated endpoint artifacts and
+            reported with explicit confidence and uncertainty.</p>
+            <div class="fraue-grid">
+            <div class="fraue-card">
+                <div class="fraue-header">
+                    <span class="fraue-id">FRAUE-438358D1</span>
+                    <span class="fraue-badge conf-insufficient">High</span>
+                </div>
+                <div class="fraue-body">
+                    <div class="fraue-meta">
+                        <div class="fraue-field"><span class="field-label">Platform</span><span class="field-value">Gemini</span></div>
+                        <div class="fraue-field"><span class="field-label">Activity</span><span class="field-value">chat session</span></div>
+                        <div class="fraue-field"><span class="field-label">Claim Level</span><span class="field-value">Level 4 — Governed Forensic Conclusion</span></div>
+                        <div class="fraue-field"><span class="field-label">Artifacts</span><span class="field-value">3 (2 families)</span></div>
+                        <div class="fraue-field"><span class="field-label">Time Window</span><span class="field-value">2024-01-17 23:50 — 2024-01-18 00:20 UTC</span></div>
+                        <div class="fraue-field"><span class="field-label">Corroborated</span><span class="field-value">Yes</span></div>
+                        <div class="fraue-field"><span class="field-label">Persistence</span><span class="field-value">Intact</span></div>
+                    </div>
+                    <div class="fraue-caveats"><strong>Caveats:</strong><ul><li>Reported time window is approximate and derived from artifact timestamps, not from direct session-start/session-end records.</li><li>Any narrative text in this report is explanatory only; evidentiary facts are the artifacts, exhibits, and scoring decisions (Rule 10).</li></ul></div>
+                    
+                </div>
+            </div>
+            
+            <div class="fraue-card">
+                <div class="fraue-header">
+                    <span class="fraue-id">FRAUE-DCB95C4D</span>
+                    <span class="fraue-badge conf-insufficient">Low</span>
+                </div>
+                <div class="fraue-body">
+                    <div class="fraue-meta">
+                        <div class="fraue-field"><span class="field-label">Platform</span><span class="field-value">Gemini</span></div>
+                        <div class="fraue-field"><span class="field-label">Activity</span><span class="field-value">content export</span></div>
+                        <div class="fraue-field"><span class="field-label">Claim Level</span><span class="field-value">Level 2 — Platform Presence</span></div>
+                        <div class="fraue-field"><span class="field-label">Artifacts</span><span class="field-value">3 (1 families)</span></div>
+                        <div class="fraue-field"><span class="field-label">Time Window</span><span class="field-value">2026-04-06 02:22 — 2026-04-06 02:22 UTC</span></div>
+                        <div class="fraue-field"><span class="field-label">Corroborated</span><span class="field-value">No</span></div>
+                        <div class="fraue-field"><span class="field-label">Persistence</span><span class="field-value">Partially Retained</span></div>
+                    </div>
+                    <div class="fraue-caveats"><strong>Caveats:</strong><ul><li>Reported time window is approximate and derived from artifact timestamps, not from direct session-start/session-end records.</li><li>Any narrative text in this report is explanatory only; evidentiary facts are the artifacts, exhibits, and scoring decisions (Rule 10).</li></ul></div>
+                    <div class="fraue-alternatives"><strong>Alternative Explanations:</strong><ul><li>Single artifact-family evidence could result from automated browser sync, shared device, or background process.</li><li>All evidence is inferred; platform interaction could be explained by third-party redirects or advertising beacons.</li></ul></div>
+                </div>
+            </div>
+            
+            <div class="fraue-card">
+                <div class="fraue-header">
+                    <span class="fraue-id">FRAUE-7A8D15FB</span>
+                    <span class="fraue-badge conf-insufficient">High</span>
+                </div>
+                <div class="fraue-body">
+                    <div class="fraue-meta">
+                        <div class="fraue-field"><span class="field-label">Platform</span><span class="field-value">ChatGPT</span></div>
+                        <div class="fraue-field"><span class="field-label">Activity</span><span class="field-value">chat session</span></div>
+                        <div class="fraue-field"><span class="field-label">Claim Level</span><span class="field-value">Level 4 — Governed Forensic Conclusion</span></div>
+                        <div class="fraue-field"><span class="field-label">Artifacts</span><span class="field-value">10 (4 families)</span></div>
+                        <div class="fraue-field"><span class="field-label">Time Window</span><span class="field-value">2024-01-17 21:20 — 2024-01-17 23:20 UTC</span></div>
+                        <div class="fraue-field"><span class="field-label">Corroborated</span><span class="field-value">Yes</span></div>
+                        <div class="fraue-field"><span class="field-label">Persistence</span><span class="field-value">Intact</span></div>
+                    </div>
+                    <div class="fraue-caveats"><strong>Caveats:</strong><ul><li>Reported time window is approximate and derived from artifact timestamps, not from direct session-start/session-end records.</li><li>Any narrative text in this report is explanatory only; evidentiary facts are the artifacts, exhibits, and scoring decisions (Rule 10).</li></ul></div>
+                    
+                </div>
+            </div>
+            
+            <div class="fraue-card">
+                <div class="fraue-header">
+                    <span class="fraue-id">FRAUE-93225555</span>
+                    <span class="fraue-badge conf-insufficient">Low</span>
+                </div>
+                <div class="fraue-body">
+                    <div class="fraue-meta">
+                        <div class="fraue-field"><span class="field-label">Platform</span><span class="field-value">ChatGPT</span></div>
+                        <div class="fraue-field"><span class="field-label">Activity</span><span class="field-value">content export</span></div>
+                        <div class="fraue-field"><span class="field-label">Claim Level</span><span class="field-value">Level 2 — Platform Presence</span></div>
+                        <div class="fraue-field"><span class="field-label">Artifacts</span><span class="field-value">1 (1 families)</span></div>
+                        <div class="fraue-field"><span class="field-label">Time Window</span><span class="field-value">2026-04-06 02:22 — 2026-04-06 02:22 UTC</span></div>
+                        <div class="fraue-field"><span class="field-label">Corroborated</span><span class="field-value">No</span></div>
+                        <div class="fraue-field"><span class="field-label">Persistence</span><span class="field-value">Partially Retained</span></div>
+                    </div>
+                    <div class="fraue-caveats"><strong>Caveats:</strong><ul><li>Reported time window is approximate and derived from artifact timestamps, not from direct session-start/session-end records.</li><li>Any narrative text in this report is explanatory only; evidentiary facts are the artifacts, exhibits, and scoring decisions (Rule 10).</li></ul></div>
+                    <div class="fraue-alternatives"><strong>Alternative Explanations:</strong><ul><li>Single artifact-family evidence could result from automated browser sync, shared device, or background process.</li><li>All evidence is inferred; platform interaction could be explained by third-party redirects or advertising beacons.</li></ul></div>
+                </div>
+            </div>
+            
+            <div class="fraue-card">
+                <div class="fraue-header">
+                    <span class="fraue-id">FRAUE-F72217D9</span>
+                    <span class="fraue-badge conf-insufficient">High</span>
+                </div>
+                <div class="fraue-body">
+                    <div class="fraue-meta">
+                        <div class="fraue-field"><span class="field-label">Platform</span><span class="field-value">Claude</span></div>
+                        <div class="fraue-field"><span class="field-label">Activity</span><span class="field-value">chat session</span></div>
+                        <div class="fraue-field"><span class="field-label">Claim Level</span><span class="field-value">Level 4 — Governed Forensic Conclusion</span></div>
+                        <div class="fraue-field"><span class="field-label">Artifacts</span><span class="field-value">3 (2 families)</span></div>
+                        <div class="fraue-field"><span class="field-label">Time Window</span><span class="field-value">2024-01-17 21:50 — 2024-01-17 22:50 UTC</span></div>
+                        <div class="fraue-field"><span class="field-label">Corroborated</span><span class="field-value">Yes</span></div>
+                        <div class="fraue-field"><span class="field-label">Persistence</span><span class="field-value">Intact</span></div>
+                    </div>
+                    <div class="fraue-caveats"><strong>Caveats:</strong><ul><li>Reported time window is approximate and derived from artifact timestamps, not from direct session-start/session-end records.</li><li>Any narrative text in this report is explanatory only; evidentiary facts are the artifacts, exhibits, and scoring decisions (Rule 10).</li></ul></div>
+                    
+                </div>
+            </div>
+            
+            <div class="fraue-card">
+                <div class="fraue-header">
+                    <span class="fraue-id">FRAUE-4B6EFB6F</span>
+                    <span class="fraue-badge conf-insufficient">Low</span>
+                </div>
+                <div class="fraue-body">
+                    <div class="fraue-meta">
+                        <div class="fraue-field"><span class="field-label">Platform</span><span class="field-value">Claude</span></div>
+                        <div class="fraue-field"><span class="field-label">Activity</span><span class="field-value">content export</span></div>
+                        <div class="fraue-field"><span class="field-label">Claim Level</span><span class="field-value">Level 2 — Platform Presence</span></div>
+                        <div class="fraue-field"><span class="field-label">Artifacts</span><span class="field-value">2 (1 families)</span></div>
+                        <div class="fraue-field"><span class="field-label">Time Window</span><span class="field-value">2026-04-06 02:22 — 2026-04-06 02:22 UTC</span></div>
+                        <div class="fraue-field"><span class="field-label">Corroborated</span><span class="field-value">No</span></div>
+                        <div class="fraue-field"><span class="field-label">Persistence</span><span class="field-value">Partially Retained</span></div>
+                    </div>
+                    <div class="fraue-caveats"><strong>Caveats:</strong><ul><li>Reported time window is approximate and derived from artifact timestamps, not from direct session-start/session-end records.</li><li>Any narrative text in this report is explanatory only; evidentiary facts are the artifacts, exhibits, and scoring decisions (Rule 10).</li></ul></div>
+                    <div class="fraue-alternatives"><strong>Alternative Explanations:</strong><ul><li>Single artifact-family evidence could result from automated browser sync, shared device, or background process.</li><li>All evidence is inferred; platform interaction could be explained by third-party redirects or advertising beacons.</li></ul></div>
+                </div>
+            </div>
+            </div>
+        </div>
+        
+        </div>
+
+        <div id="tab-governance" class="tab-content">
+            
+        <div class="section-governance">
+            <h1>Governance & Inference Boundaries</h1>
+            
+            <div class="governance-block">
+                <h2>Inference Boundaries & Operational Controls</h2>
+                <p>The following boundaries constrain all conclusions in this report
+                (TRACE-AI-FR Rules 1, 3, 4, 6, 7):</p>
+                <ul class="governance-list"><li>This analysis reconstructs observable AI-system interaction from endpoint artifacts. It does not infer belief, trust, acceptance, reliance, or investigative intent from those artifacts.</li><li>Reported time windows are approximate and derived from artifact timestamps, not from direct session instrumentation.</li><li>Platform attribution is distinguished from model attribution; model conclusions require preserved model identifiers in exports or metadata.</li><li>Absence of evidence within the examined scope is never treated as evidence of absence.</li><li>Deletion, logout, or cache clearing is reported as a persistence effect, not as concealment or motive.</li></ul>
+            </div>
+            
+            <div class="governance-block">
+                <h2>Scope of Conclusion</h2>
+                <div class="scope-text">Based on the forensic analysis of the submitted evidence within the TRACE-AI-FR framework, 6 Forensically Reconstructed AI-Use Event(s) were identified involving ChatGPT, Claude, Gemini. These conclusions are limited to reconstructed AI-system interaction within the examined evidence scope, are subject to the inference boundaries documented in this report, and do not constitute opinions regarding investigative intent, cognitive reliance, or evidentiary admissibility. Admissibility remains subject to Rule 702 and applicable legal gatekeeping.</div>
+            </div>
+            
+            <div class="governance-block">
+                <h2>Governance Record</h2>
+                <div class="governance-grid">
+                    <div class="gov-field"><strong>Framework:</strong> TRACE-AI-FR v2.0.0</div>
+                    <div class="gov-field"><strong>Validation State:</strong> Partially Validated</div>
+                    <div class="gov-field"><strong>Collection Scope:</strong> Evidence source: C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence; Image type: Full Disk Image; Detected OS: Windows; User profiles: JohnDoe; Browsers detected: Chrome; Full disk available: Yes; File carving: Disabled</div>
+                    <div class="gov-field"><strong>Signature Version:</strong> 2.0.0</div>
+                </div>
+                <details class="gov-details">
+                    <summary>Required Disclosures (Rule 11)</summary>
+                    <ul><li>This framework output is a forensic reconstruction. It does not bypass legal gatekeeping under Rule 702 or equivalent standards.</li><li>Narrative text generated by LLM integration is explanatory only; evidentiary facts are the artifacts, exhibits, and scoring decisions.</li><li>Validation of parser accuracy and signature coverage is ongoing; the version-drift register documents the current validation state.</li></ul>
+                </details>
+                <details class="gov-details">
+                    <summary>Known Blind Spots</summary>
+                    <ul><li>File carving was disabled; deleted but not overwritten artifacts were not recovered.</li><li>Artifact family 'Browser Cache' was not found in the evidence; conclusions about platform use from that family are not possible.</li><li>Artifact family 'Browser Downloads' was not found in the evidence; conclusions about platform use from that family are not possible.</li><li>Artifact family 'File System' was not found in the evidence; conclusions about platform use from that family are not possible.</li><li>Artifact family 'Native Application' was not found in the evidence; conclusions about platform use from that family are not possible.</li><li>Artifact family 'OS Event Log' was not found in the evidence; conclusions about platform use from that family are not possible.</li><li>Artifact family 'OS Plist' was not found in the evidence; conclusions about platform use from that family are not possible.</li><li>Artifact family 'OS Recent Files' was not found in the evidence; conclusions about platform use from that family are not possible.</li><li>Artifact family 'OS Registry' was not found in the evidence; conclusions about platform use from that family are not possible.</li><li>Artifact family 'OS Unified Log' was not found in the evidence; conclusions about platform use from that family are not possible.</li><li>Artifact family 'Screenshot' was not found in the evidence; conclusions about platform use from that family are not possible.</li></ul>
+                </details>
+                <details class="gov-details">
+                    <summary>Framework Rules Applied (12)</summary>
+                    <ul><li>Rule 1: Interaction is reportable; cognition is not.</li><li>Rule 2: Evidence recovery is expected to be uneven.</li><li>Rule 3: Platform attribution is stronger than model attribution.</li><li>Rule 4: Time findings are bounded, not exact.</li><li>Rule 5: Image-review findings are graded.</li><li>Rule 6: Unsupported is not the same as absent.</li><li>Rule 7: Cleanup affects persistence, not motive.</li><li>Rule 8: Evidence classes are not interchangeable.</li><li>Rule 9: Artifact confidence is not event confidence.</li><li>Rule 10: Narrative text is explanatory, not evidentiary.</li><li>Rule 11: Framework output is forensic reconstruction, not automatic admissibility.</li><li>Rule 12: Validation is continuous, not one-time.</li></ul>
+                </details>
+            </div>
+            
+        </div>
+        
+        </div>
+    </div>
+
+    <div class="footer">
+        TRACE-AI-FR v2.0.0 &middot;
+        Generated 2026-04-07 01:26:44 UTC &middot;
+        UNCC Forensics Lab
+    </div>
+
+    <script>
+        function switchTab(e, tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            e.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

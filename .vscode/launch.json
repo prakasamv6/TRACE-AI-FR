@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "TRACE-AI-FR Desktop",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/desktop_app.py",
+            "python": "C:\\Users\\hemal\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

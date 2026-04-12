@@ -1,0 +1,701 @@
+# ai_tool_inventory.yaml
+# Extensible AI Tool Inventory for Forensic Detection
+# Add new tools or update detection rules as needed
+
+tools:
+  - tool_id: chatgpt_desktop
+    tool_name: ChatGPT Desktop
+    vendor: OpenAI
+    category: Native Assistant
+    platform_supported: [Windows, macOS]
+    execution_surface: [DESKTOP_APP]
+    artifact_path_candidates:
+      Windows:
+        - "%LocalAppData%/Programs/ChatGPT"
+        - "%AppData%/Roaming/ChatGPT"
+      macOS:
+        - "~/Library/Application Support/ChatGPT"
+    detection_method: "Install folder, config, binary signature"
+    notes: "Presence does not equal use."
+    rule_version: "1.0.0"
+  - tool_id: ollama
+    tool_name: Ollama
+    vendor: Ollama
+    category: Local LLM
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [TERMINAL, DESKTOP_APP]
+    artifact_path_candidates:
+      Windows:
+        - "%UserProfile%/.ollama"
+        - "%ProgramFiles%/Ollama"
+      macOS:
+        - "~/Library/Application Support/Ollama"
+        - "/usr/local/bin/ollama"
+      Linux:
+        - "~/.ollama"
+        - "/usr/local/bin/ollama"
+    detection_method: "Config folder, binary, model files"
+    notes: "Portable install possible."
+    rule_version: "1.0.0"
+  - tool_id: cursor
+    tool_name: Cursor
+    vendor: Anysphere Inc.
+    category: AI IDE
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [DESKTOP_APP]
+    artifact_path_candidates:
+      Windows:
+        - "%LocalAppData%/Programs/Cursor"
+        - "%LocalAppData%/cursor-updater"
+        - "%AppData%/Cursor"
+        - "%AppData%/Code/User/globalStorage/anysphere.cursorpro"
+      macOS:
+        - "/Applications/Cursor.app"
+        - "~/Library/Application Support/Cursor"
+      Linux:
+        - "~/.config/Cursor"
+        - "/usr/share/cursor"
+    detection_method: "Install folder, config, update logs, binary signature"
+    notes: "Standalone AI IDE — not a VSCode extension."
+    rule_version: "1.1.0"
+
+  - tool_id: claude_desktop
+    tool_name: Claude Desktop
+    vendor: Anthropic
+    category: Native Assistant
+    platform_supported: [Windows, macOS]
+    execution_surface: [DESKTOP_APP]
+    artifact_path_candidates:
+      Windows:
+        - "%LocalAppData%/Programs/Claude"
+        - "%AppData%/Claude"
+        - "%LocalAppData%/Claude"
+      macOS:
+        - "/Applications/Claude.app"
+        - "~/Library/Application Support/Claude"
+    detection_method: "Install folder, config files, conversation DB"
+    notes: "Requires Anthropic account. Local MCP server integration possible."
+    rule_version: "1.0.0"
+
+  - tool_id: poe_desktop
+    tool_name: Poe Desktop
+    vendor: Quora
+    category: Native Assistant
+    platform_supported: [Windows, macOS]
+    execution_surface: [DESKTOP_APP]
+    artifact_path_candidates:
+      Windows:
+        - "%LocalAppData%/Programs/Poe"
+        - "%AppData%/Poe"
+      macOS:
+        - "/Applications/Poe.app"
+        - "~/Library/Application Support/Poe"
+    detection_method: "Install folder, config, Electron app data"
+    notes: "Aggregates multiple AI models (Claude, GPT-4, etc.)."
+    rule_version: "1.0.0"
+
+  - tool_id: lm_studio
+    tool_name: LM Studio
+    vendor: LM Studio
+    category: Local LLM
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [DESKTOP_APP]
+    artifact_path_candidates:
+      Windows:
+        - "%UserProfile%/.cache/lm-studio"
+        - "%UserProfile%/.lmstudio"
+        - "%AppData%/LMStudio"
+        - "%LocalAppData%/Programs/LM Studio"
+        - "%LocalAppData%/LM Studio"
+      macOS:
+        - "~/.lmstudio"
+        - "~/.cache/lm-studio"
+        - "~/Library/Application Support/LM Studio"
+      Linux:
+        - "~/.lmstudio"
+        - "~/.cache/lm-studio"
+    detection_method: "Install folder, downloaded model files, config JSON"
+    notes: "Runs models locally. Model files typically large (1-100 GB)."
+    rule_version: "1.0.0"
+
+  - tool_id: gpt4all
+    tool_name: GPT4All
+    vendor: Nomic AI
+    category: Local LLM
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [DESKTOP_APP]
+    artifact_path_candidates:
+      Windows:
+        - "%UserProfile%/.nomic/gpt4all"
+        - "%AppData%/gpt4all"
+        - "%LocalAppData%/Programs/GPT4All"
+      macOS:
+        - "~/.local/share/nomic.ai/GPT4All"
+        - "~/Library/Application Support/GPT4All"
+      Linux:
+        - "~/.local/share/nomic.ai/GPT4All"
+    detection_method: "Config folder, GGUF model files, chat history"
+    notes: "Open-source local LLM runner. Chat history may contain forensic content."
+    rule_version: "1.0.0"
+
+  - tool_id: jan_ai
+    tool_name: Jan
+    vendor: Homebrew Computer
+    category: Local LLM
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [DESKTOP_APP]
+    artifact_path_candidates:
+      Windows:
+        - "%UserProfile%/jan"
+        - "%LocalAppData%/Programs/Jan"
+        - "%AppData%/Jan"
+      macOS:
+        - "~/jan"
+        - "/Applications/Jan.app"
+      Linux:
+        - "~/jan"
+    detection_method: "~/jan folder, model files, thread logs"
+    notes: "Stores chat threads in ~/jan/threads. Forensically rich."
+    rule_version: "1.0.0"
+
+  - tool_id: anything_llm
+    tool_name: AnythingLLM
+    vendor: Mintplex Labs
+    category: Local LLM
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [DESKTOP_APP, DOCKER_CONTAINER, SELF_HOSTED_REMOTE]
+    artifact_path_candidates:
+      Windows:
+        - "%AppData%/anythingllm-desktop"
+        - "%LocalAppData%/Programs/AnythingLLM"
+      macOS:
+        - "~/Library/Application Support/anythingllm-desktop"
+      Linux:
+        - "~/.config/anythingllm-desktop"
+    detection_method: "Config folder, SQLite workspace DB, document uploads"
+    notes: "Can connect to remote or local LLM backends."
+    rule_version: "1.0.0"
+
+  - tool_id: msty
+    tool_name: Msty
+    vendor: Msty
+    category: Local LLM
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [DESKTOP_APP]
+    artifact_path_candidates:
+      Windows:
+        - "%AppData%/msty"
+        - "%LocalAppData%/Programs/Msty"
+      macOS:
+        - "~/Library/Application Support/Msty"
+      Linux:
+        - "~/.config/msty"
+    detection_method: "Config folder, conversation history DB"
+    notes: "Local-first AI chat client. May proxy to remote APIs."
+    rule_version: "1.0.0"
+
+  - tool_id: open_webui
+    tool_name: Open WebUI
+    vendor: Open WebUI (Community)
+    category: Local LLM
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [SELF_HOSTED_REMOTE, DOCKER_CONTAINER]
+    artifact_path_candidates:
+      Windows:
+        - "%UserProfile%/.config/open-webui"
+      macOS:
+        - "~/.config/open-webui"
+      Linux:
+        - "~/.config/open-webui"
+        - "/root/.config/open-webui"
+    detection_method: "Config folder, Docker image reference, SQLite DB"
+    notes: "Browser-accessible UI. Requires Ollama or other local backend."
+    rule_version: "1.0.0"
+
+  - tool_id: windsurf
+    tool_name: Windsurf (Codeium)
+    vendor: Codeium
+    category: AI IDE
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [DESKTOP_APP]
+    artifact_path_candidates:
+      Windows:
+        - "%LocalAppData%/Programs/Windsurf"
+        - "%LocalAppData%/windsurf-updater"
+        - "%AppData%/Windsurf"
+      macOS:
+        - "/Applications/Windsurf.app"
+        - "~/Library/Application Support/Windsurf"
+      Linux:
+        - "~/.config/Windsurf"
+    detection_method: "Install folder, config, update logs, binary"
+    notes: "AI-native IDE; formerly Codeium standalone."
+    rule_version: "1.0.0"
+
+  - tool_id: github_copilot
+    tool_name: GitHub Copilot
+    vendor: Microsoft / GitHub
+    category: IDE Extension
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [IDE_EXTENSION]
+    artifact_path_candidates:
+      Windows:
+        - "%AppData%/Code/User/globalStorage/github.copilot"
+        - "%AppData%/Code/User/globalStorage/github.copilot-chat"
+        - "%AppData%/Code - Insiders/User/globalStorage/github.copilot"
+        - "%UserProfile%/.vscode/extensions/github.copilot*"
+      macOS:
+        - "~/Library/Application Support/Code/User/globalStorage/github.copilot"
+        - "~/.vscode/extensions/github.copilot*"
+      Linux:
+        - "~/.config/Code/User/globalStorage/github.copilot"
+        - "~/.vscode/extensions/github.copilot*"
+    detection_method: "VSCode globalStorage, extension folder, telemetry logs"
+    notes: "Requires GitHub login. Token stored in OS credential store."
+    rule_version: "1.0.0"
+
+  - tool_id: claude_code
+    tool_name: Claude Code
+    vendor: Anthropic
+    category: Terminal CLI
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [TERMINAL]
+    artifact_path_candidates:
+      Windows:
+        - "%UserProfile%/.claude"
+        - "%AppData%/npm/node_modules/@anthropic-ai/claude-code"
+      macOS:
+        - "~/.claude"
+        - "/usr/local/lib/node_modules/@anthropic-ai/claude-code"
+      Linux:
+        - "~/.claude"
+        - "/usr/local/lib/node_modules/@anthropic-ai/claude-code"
+    detection_method: "CLI config folder, npm package, shell history, claude.md"
+    notes: "Terminal-based agentic coding. Stores project memory in CLAUDE.md."
+    rule_version: "1.0.0"
+
+  - tool_id: codex_cli
+    tool_name: OpenAI Codex CLI
+    vendor: OpenAI
+    category: Terminal CLI
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [TERMINAL]
+    artifact_path_candidates:
+      Windows:
+        - "%UserProfile%/.codex"
+        - "%AppData%/npm/node_modules/@openai/codex"
+      macOS:
+        - "~/.codex"
+        - "/usr/local/lib/node_modules/@openai/codex"
+      Linux:
+        - "~/.codex"
+        - "/usr/local/lib/node_modules/@openai/codex"
+    detection_method: "CLI config folder, npm package, shell history"
+    notes: "Sandboxed agentic CLI. Config in ~/.codex/config.toml."
+    rule_version: "1.0.0"
+
+  - tool_id: tabnine
+    tool_name: Tabnine
+    vendor: Tabnine
+    category: IDE Extension
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [IDE_EXTENSION]
+    artifact_path_candidates:
+      Windows:
+        - "%AppData%/Code/User/globalStorage/tabnine.tabnine-vscode"
+        - "%UserProfile%/.tabnine"
+      macOS:
+        - "~/Library/Application Support/Code/User/globalStorage/tabnine.tabnine-vscode"
+        - "~/.tabnine"
+      Linux:
+        - "~/.config/Code/User/globalStorage/tabnine.tabnine-vscode"
+        - "~/.tabnine"
+    detection_method: "VSCode globalStorage, .tabnine config folder"
+    notes: "Code completion AI. May run local model or remote hybrid."
+    rule_version: "1.0.0"
+
+  - tool_id: continue_dev
+    tool_name: Continue
+    vendor: Continue
+    category: IDE Extension
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [IDE_EXTENSION]
+    artifact_path_candidates:
+      Windows:
+        - "%AppData%/Code/User/globalStorage/continue.continue"
+        - "%UserProfile%/.continue"
+      macOS:
+        - "~/Library/Application Support/Code/User/globalStorage/continue.continue"
+        - "~/.continue"
+      Linux:
+        - "~/.config/Code/User/globalStorage/continue.continue"
+        - "~/.continue"
+    detection_method: "VSCode globalStorage, ~/.continue config"
+    notes: "Open-source IDE assistant. Config includes LLM provider settings."
+    rule_version: "1.0.0"
+
+  - tool_id: cline
+    tool_name: Cline (Claude Dev)
+    vendor: Cline Bot Inc.
+    category: IDE Extension
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [IDE_EXTENSION]
+    artifact_path_candidates:
+      Windows:
+        - "%AppData%/Code/User/globalStorage/saoudrizwan.claude-dev"
+        - "%AppData%/Code/User/globalStorage/cline.cline"
+      macOS:
+        - "~/Library/Application Support/Code/User/globalStorage/saoudrizwan.claude-dev"
+        - "~/Library/Application Support/Code/User/globalStorage/cline.cline"
+      Linux:
+        - "~/.config/Code/User/globalStorage/saoudrizwan.claude-dev"
+        - "~/.config/Code/User/globalStorage/cline.cline"
+    detection_method: "VSCode globalStorage, task history JSON files"
+    notes: "Agentic AI coding extension with persistent task history."
+    rule_version: "1.0.0"
+
+  - tool_id: aider
+    tool_name: Aider
+    vendor: Paul Gauthier (Community)
+    category: Terminal CLI
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [TERMINAL]
+    artifact_path_candidates:
+      Windows:
+        - "%UserProfile%/.aider*"
+        - "%UserProfile%/.aider.conf.yml"
+        - "%UserProfile%/.aider.model.settings.yml"
+      macOS:
+        - "~/.aider*"
+        - "~/.aider.conf.yml"
+      Linux:
+        - "~/.aider*"
+        - "~/.aider.conf.yml"
+    detection_method: "Config files, .aider.chat.history.md, pip package"
+    notes: "Git-integrated AI coding assistant. Chat history stored in project dir."
+    rule_version: "1.0.0"
+
+  - tool_id: comfyui_desktop
+    tool_name: ComfyUI Desktop
+    vendor: ComfyOrg
+    category: Image Generator
+    platform_supported: [Windows, macOS]
+    execution_surface: [DESKTOP_APP]
+    artifact_path_candidates:
+      Windows:
+        - "%AppData%/ComfyUI"
+        - "%LocalAppData%/Programs/ComfyUI"
+        - "%UserProfile%/ComfyUI"
+      macOS:
+        - "~/Library/Application Support/ComfyUI"
+        - "~/ComfyUI"
+    detection_method: "Install folder, user data dir, model files, workflow JSONs"
+    notes: "Node-based Stable Diffusion UI. Workflow files contain generation metadata."
+    rule_version: "1.0.0"
+
+  - tool_id: automatic1111
+    tool_name: AUTOMATIC1111 Stable Diffusion WebUI
+    vendor: AUTOMATIC1111 (Community)
+    category: Image Generator
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [SELF_HOSTED_REMOTE]
+    artifact_path_candidates:
+      Windows:
+        - "%UserProfile%/stable-diffusion-webui"
+        - "%UserProfile%/sd-webui"
+      macOS:
+        - "~/stable-diffusion-webui"
+      Linux:
+        - "~/stable-diffusion-webui"
+    detection_method: "Installation directory, outputs folder, model files, webui-user.bat"
+    notes: "Local image generation. Output images may contain generation metadata (PNG info)."
+    rule_version: "1.0.0"
+
+  - tool_id: invokeai
+    tool_name: InvokeAI
+    vendor: InvokeAI
+    category: Image Generator
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [DESKTOP_APP, SELF_HOSTED_REMOTE]
+    artifact_path_candidates:
+      Windows:
+        - "%UserProfile%/invokeai"
+        - "%UserProfile%/.invokeai"
+      macOS:
+        - "~/invokeai"
+        - "~/.invokeai"
+      Linux:
+        - "~/invokeai"
+        - "~/.invokeai"
+    detection_method: "Installation directory, invokeai.yaml, outputs folder"
+    notes: "Professional Stable Diffusion UI. Extensive metadata in PNG files."
+    rule_version: "1.0.0"
+
+  - tool_id: gemini_web
+    tool_name: Google Gemini (Web/App)
+    vendor: Google
+    category: Web Assistant
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [BROWSER]
+    artifact_path_candidates:
+      Windows:
+        - "%LocalAppData%/Google/Chrome/User Data/Default/Local Storage/leveldb"
+        - "%LocalAppData%/BraveSoftware/Brave-Browser/User Data/Default/Local Storage/leveldb"
+      macOS:
+        - "~/Library/Application Support/Google/Chrome/Default/Local Storage/leveldb"
+      Linux:
+        - "~/.config/google-chrome/Default/Local Storage/leveldb"
+    detection_method: "Browser history, localStorage, cookies for gemini.google.com"
+    notes: "Browser-based only. Limited local artifacts. Requires browser forensics."
+    rule_version: "1.0.0"
+
+  - tool_id: notebooklm
+    tool_name: Google NotebookLM
+    vendor: Google
+    category: Web Assistant
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [BROWSER]
+    artifact_path_candidates:
+      Windows:
+        - "%LocalAppData%/Google/Chrome/User Data/Default/Local Storage/leveldb"
+        - "%LocalAppData%/Google/Chrome/User Data/Default/History"
+      macOS:
+        - "~/Library/Application Support/Google/Chrome/Default/Local Storage/leveldb"
+      Linux:
+        - "~/.config/google-chrome/Default/Local Storage/leveldb"
+    detection_method: "Browser history, localStorage for notebooklm.google.com"
+    notes: "Document-grounded AI. Source documents are uploaded to Google servers."
+    rule_version: "1.0.0"
+
+  - tool_id: grok
+    tool_name: Grok (X/Twitter)
+    vendor: xAI
+    category: Web Assistant
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [BROWSER]
+    artifact_path_candidates:
+      Windows:
+        - "%LocalAppData%/Google/Chrome/User Data/Default/Local Storage/leveldb"
+        - "%LocalAppData%/Google/Chrome/User Data/Default/History"
+      macOS:
+        - "~/Library/Application Support/Google/Chrome/Default/Local Storage/leveldb"
+      Linux:
+        - "~/.config/google-chrome/Default/Local Storage/leveldb"
+    detection_method: "Browser history, localStorage for grok.com or x.com/i/grok"
+    notes: "Part of X platform. API access available separately."
+    rule_version: "1.0.0"
+
+  - tool_id: perplexity
+    tool_name: Perplexity AI
+    vendor: Perplexity AI
+    category: Web Assistant
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [BROWSER, DESKTOP_APP]
+    artifact_path_candidates:
+      Windows:
+        - "%LocalAppData%/Google/Chrome/User Data/Default/Local Storage/leveldb"
+        - "%LocalAppData%/Programs/Perplexity"
+        - "%AppData%/Perplexity"
+      macOS:
+        - "~/Library/Application Support/Google/Chrome/Default/Local Storage/leveldb"
+        - "/Applications/Perplexity.app"
+        - "~/Library/Application Support/Perplexity"
+      Linux:
+        - "~/.config/google-chrome/Default/Local Storage/leveldb"
+    detection_method: "Browser history, desktop app install, localStorage"
+    notes: "Search-augmented AI. Query history may be locally cached."
+    rule_version: "1.0.0"
+
+  - tool_id: microsoft_copilot
+    tool_name: Microsoft Copilot
+    vendor: Microsoft
+    category: Native Assistant
+    platform_supported: [Windows, macOS]
+    execution_surface: [BROWSER, DESKTOP_APP]
+    artifact_path_candidates:
+      Windows:
+        - "%LocalAppData%/Microsoft/Edge/User Data/Default/Local Storage/leveldb"
+        - "%LocalAppData%/Programs/Microsoft Copilot"
+        - "%AppData%/Microsoft/Microsoft Copilot"
+      macOS:
+        - "~/Library/Application Support/Microsoft Edge/Default/Local Storage/leveldb"
+    detection_method: "Edge browser localStorage, Copilot app install, Windows Copilot registry"
+    notes: "Integrated into Windows 11 and Microsoft 365. Multiple access surfaces."
+    rule_version: "1.0.0"
+
+  - tool_id: meta_ai
+    tool_name: Meta AI
+    vendor: Meta
+    category: Web Assistant
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [BROWSER]
+    artifact_path_candidates:
+      Windows:
+        - "%LocalAppData%/Google/Chrome/User Data/Default/Local Storage/leveldb"
+      macOS:
+        - "~/Library/Application Support/Google/Chrome/Default/Local Storage/leveldb"
+      Linux:
+        - "~/.config/google-chrome/Default/Local Storage/leveldb"
+    detection_method: "Browser history for meta.ai, WhatsApp/Facebook AI integration artifacts"
+    notes: "Embedded in Meta products. Web access also available."
+    rule_version: "1.0.0"
+
+  - tool_id: copilot_studio
+    tool_name: Microsoft Copilot Studio
+    vendor: Microsoft
+    category: Enterprise AI
+    platform_supported: [Windows, macOS]
+    execution_surface: [BROWSER]
+    artifact_path_candidates:
+      Windows:
+        - "%LocalAppData%/Microsoft/Edge/User Data/Default/Local Storage/leveldb"
+      macOS:
+        - "~/Library/Application Support/Microsoft Edge/Default/Local Storage/leveldb"
+    detection_method: "Browser history for copilotstudio.microsoft.com"
+    notes: "Enterprise chatbot builder. Requires Microsoft 365 license."
+    rule_version: "1.0.0"
+
+  - tool_id: character_ai
+    tool_name: Character.AI
+    vendor: Character.AI
+    category: Web Assistant
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [BROWSER]
+    artifact_path_candidates:
+      Windows:
+        - "%LocalAppData%/Google/Chrome/User Data/Default/Local Storage/leveldb"
+      macOS:
+        - "~/Library/Application Support/Google/Chrome/Default/Local Storage/leveldb"
+      Linux:
+        - "~/.config/google-chrome/Default/Local Storage/leveldb"
+    detection_method: "Browser history for character.ai, localStorage"
+    notes: "Role-play and persona-based AI. Conversation logs may be forensically significant."
+    rule_version: "1.0.0"
+
+  - tool_id: huggingface_chat
+    tool_name: HuggingChat
+    vendor: Hugging Face
+    category: Web Assistant
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [BROWSER]
+    artifact_path_candidates:
+      Windows:
+        - "%LocalAppData%/Google/Chrome/User Data/Default/Local Storage/leveldb"
+      macOS:
+        - "~/Library/Application Support/Google/Chrome/Default/Local Storage/leveldb"
+      Linux:
+        - "~/.config/google-chrome/Default/Local Storage/leveldb"
+    detection_method: "Browser history for huggingface.co/chat"
+    notes: "Open-source models served via web. Model downloads indicate local tool interest."
+    rule_version: "1.0.0"
+
+  - tool_id: mistral_le_chat
+    tool_name: Le Chat (Mistral)
+    vendor: Mistral AI
+    category: Web Assistant
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [BROWSER]
+    artifact_path_candidates:
+      Windows:
+        - "%LocalAppData%/Google/Chrome/User Data/Default/Local Storage/leveldb"
+      macOS:
+        - "~/Library/Application Support/Google/Chrome/Default/Local Storage/leveldb"
+      Linux:
+        - "~/.config/google-chrome/Default/Local Storage/leveldb"
+    detection_method: "Browser history for chat.mistral.ai"
+    notes: "Web-based chat for Mistral models. API key indicator for programmatic use."
+    rule_version: "1.0.0"
+
+  - tool_id: deepseek
+    tool_name: DeepSeek
+    vendor: DeepSeek AI
+    category: Web Assistant
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [BROWSER, DESKTOP_APP]
+    artifact_path_candidates:
+      Windows:
+        - "%LocalAppData%/Google/Chrome/User Data/Default/Local Storage/leveldb"
+        - "%AppData%/DeepSeek"
+        - "%LocalAppData%/Programs/DeepSeek"
+      macOS:
+        - "~/Library/Application Support/Google/Chrome/Default/Local Storage/leveldb"
+        - "~/Library/Application Support/DeepSeek"
+      Linux:
+        - "~/.config/google-chrome/Default/Local Storage/leveldb"
+    detection_method: "Browser history for chat.deepseek.com, desktop app install"
+    notes: "Desktop app available. Model downloadable for Ollama/LM Studio use."
+    rule_version: "1.0.0"
+
+  - tool_id: replit_ai
+    tool_name: Replit AI (Ghostwriter)
+    vendor: Replit
+    category: Web Assistant
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [BROWSER]
+    artifact_path_candidates:
+      Windows:
+        - "%LocalAppData%/Google/Chrome/User Data/Default/Local Storage/leveldb"
+      macOS:
+        - "~/Library/Application Support/Google/Chrome/Default/Local Storage/leveldb"
+      Linux:
+        - "~/.config/google-chrome/Default/Local Storage/leveldb"
+    detection_method: "Browser history for replit.com, Replit Desktop app install"
+    notes: "Web-based AI coding environment. Projects stored in cloud."
+    rule_version: "1.0.0"
+
+  - tool_id: copilot_vscode_chat
+    tool_name: GitHub Copilot Chat (VSCode)
+    vendor: Microsoft / GitHub
+    category: IDE Extension
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [IDE_EXTENSION]
+    artifact_path_candidates:
+      Windows:
+        - "%AppData%/Code/User/globalStorage/github.copilot-chat"
+        - "%AppData%/Code/User/workspaceStorage"
+      macOS:
+        - "~/Library/Application Support/Code/User/globalStorage/github.copilot-chat"
+      Linux:
+        - "~/.config/Code/User/globalStorage/github.copilot-chat"
+    detection_method: "VSCode globalStorage, workspaceStorage indexed DBs"
+    notes: "Chat logs stored in SQLite DBs within workspaceStorage."
+    rule_version: "1.0.0"
+
+  - tool_id: fabric_ai
+    tool_name: Fabric
+    vendor: Daniel Miessler (Community)
+    category: Terminal CLI
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [TERMINAL]
+    artifact_path_candidates:
+      Windows:
+        - "%UserProfile%/.config/fabric"
+        - "%UserProfile%/.config/fabric/.env"
+      macOS:
+        - "~/.config/fabric"
+      Linux:
+        - "~/.config/fabric"
+    detection_method: "~/.config/fabric directory, patterns folder, .env with API keys"
+    notes: "Pattern-based LLM automation tool. API keys stored in .env."
+    rule_version: "1.0.0"
+
+  - tool_id: openai_api_keys
+    tool_name: OpenAI API (Generic)
+    vendor: OpenAI
+    category: API Credential
+    platform_supported: [Windows, macOS, Linux]
+    execution_surface: [TERMINAL, IDE_EXTENSION]
+    artifact_path_candidates:
+      Windows:
+        - "%UserProfile%/.openai"
+        - "%AppData%/openai"
+        - "%UserProfile%/.config/openai"
+      macOS:
+        - "~/.openai"
+        - "~/.config/openai"
+      Linux:
+        - "~/.openai"
+        - "~/.config/openai"
+    detection_method: "API key files, .openai config, environment variable evidence"
+    notes: "API key presence indicates AI tool use but not specific tool. Attribution limited."
+    rule_version: "1.0.0"

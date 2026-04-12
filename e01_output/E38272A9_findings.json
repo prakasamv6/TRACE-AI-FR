@@ -1,0 +1,61 @@
+{
+  "tool": "TRACE-AI-FR",
+  "version": "2.0.0",
+  "framework_name": "TRACE-AI-FR",
+  "generated_at": "2026-04-07T02:13:42.913755",
+  "case_info": {
+    "case_id": "E38272A9",
+    "case_name": "ItemA-E01-Forensic-Analysis",
+    "examiner": "Hemal",
+    "organization": "UNCC Forensics Lab",
+    "description": ""
+  },
+  "evidence_info": {
+    "evidence_item_id": "57383DFD",
+    "image_path": "C:\\UNCC\\ITIS-5250-092(Comp-For)\\ItemA.E01",
+    "image_type": "Full Disk Image",
+    "image_size_bytes": 15336448,
+    "detected_os": "Unknown",
+    "user_profiles": [],
+    "ewf_metadata": {},
+    "errors": [
+      "pyewf library not installed. E01 native parsing unavailable."
+    ]
+  },
+  "evidence_coverage": {
+    "image_type": "Unknown",
+    "full_disk_available": false,
+    "partitions_accessible": 0,
+    "partitions_total": 0,
+    "encrypted_areas_detected": false,
+    "carving_enabled": false,
+    "os_detected": "Unknown",
+    "user_profiles_found": [],
+    "browsers_detected": [],
+    "native_apps_detected": [],
+    "artifact_families_available": [],
+    "artifact_families_missing": [],
+    "parsers_succeeded": [],
+    "parsers_failed": [],
+    "parsers_not_applicable": [],
+    "parsers_stub": [],
+    "coverage_notes": [],
+    "limitations": []
+  },
+  "carving_enabled": false,
+  "artifacts": [],
+  "timeline": [],
+  "ai_usage_footprints": [],
+  "fraues": [],
+  "comparative_matrix": [],
+  "parser_results": [],
+  "governance_record": null,
+  "scope_of_conclusion": "",
+  "inference_boundaries": [],
+  "analysis_notes": [
+    "Evidence could not be accessed or parsed. No analysis was performed."
+  ],
+  "examination_questions": [],
+  "fr_assessments": [],
+  "exhibits": []
+}

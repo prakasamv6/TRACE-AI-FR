@@ -1,0 +1,148 @@
+{
+  "case_id": "3B13B281",
+  "generated_at": "2026-04-07T01:58:47.175647",
+  "framework_name": "TRACE-AI-FR",
+  "framework_version": "2.0.0",
+  "collection_scope": "Evidence source: C:\\UNCC\\ITIS-5250-092(Comp-For)\\Project\\code\\demo_evidence; Image type: Full Disk Image; Detected OS: Windows; User profiles: JohnDoe; Browsers detected: Chrome; Full disk available: Yes; File carving: Disabled",
+  "legal_basis": "",
+  "evidence_source_classes_examined": [
+    "Browser-Derived",
+    "Content-Remnant-Derived",
+    "OS-Derived"
+  ],
+  "parser_versions": {
+    "ChromiumHistoryParser": "1.0.0",
+    "FirefoxHistoryParser": "1.0.0",
+    "WindowsPrefetchParser": "1.0.0",
+    "WindowsRecentFilesParser": "1.0.0",
+    "WindowsUserAssistParser": "1.0.0",
+    "WindowsEventLogParser": "1.0.0",
+    "WindowsRecycleBinParser": "1.0.0",
+    "WindowsAppDataParser": "1.0.0",
+    "WindowsRegistryHiveParser": "1.0.0",
+    "AIContentScanner": "1.0.0"
+  },
+  "signature_version": "2.0.0",
+  "validation_state": "Partially Validated",
+  "version_drift_register": [
+    {
+      "component": "ChromiumHistoryParser",
+      "component_version": "1.0.0",
+      "signature_version": "built-in",
+      "last_validated_date": "2026-04-07",
+      "validation_status": "Partially Validated",
+      "notes": "Tested against synthetic evidence fixtures."
+    },
+    {
+      "component": "FirefoxHistoryParser",
+      "component_version": "1.0.0",
+      "signature_version": "built-in",
+      "last_validated_date": "2026-04-07",
+      "validation_status": "Partially Validated",
+      "notes": "Tested against synthetic evidence fixtures."
+    },
+    {
+      "component": "WindowsPrefetchParser",
+      "component_version": "1.0.0",
+      "signature_version": "built-in",
+      "last_validated_date": "2026-04-07",
+      "validation_status": "Partially Validated",
+      "notes": "Tested against synthetic evidence fixtures."
+    },
+    {
+      "component": "WindowsRecentFilesParser",
+      "component_version": "1.0.0",
+      "signature_version": "built-in",
+      "last_validated_date": "2026-04-07",
+      "validation_status": "Partially Validated",
+      "notes": "Tested against synthetic evidence fixtures."
+    },
+    {
+      "component": "WindowsUserAssistParser",
+      "component_version": "1.0.0",
+      "signature_version": "built-in",
+      "last_validated_date": "2026-04-07",
+      "validation_status": "Partially Validated",
+      "notes": "Tested against synthetic evidence fixtures."
+    },
+    {
+      "component": "WindowsEventLogParser",
+      "component_version": "1.0.0",
+      "signature_version": "built-in",
+      "last_validated_date": "2026-04-07",
+      "validation_status": "Partially Validated",
+      "notes": "Tested against synthetic evidence fixtures."
+    },
+    {
+      "component": "WindowsRecycleBinParser",
+      "component_version": "1.0.0",
+      "signature_version": "built-in",
+      "last_validated_date": "2026-04-07",
+      "validation_status": "Partially Validated",
+      "notes": "Tested against synthetic evidence fixtures."
+    },
+    {
+      "component": "WindowsAppDataParser",
+      "component_version": "1.0.0",
+      "signature_version": "built-in",
+      "last_validated_date": "2026-04-07",
+      "validation_status": "Partially Validated",
+      "notes": "Tested against synthetic evidence fixtures."
+    },
+    {
+      "component": "WindowsRegistryHiveParser",
+      "component_version": "1.0.0",
+      "signature_version": "built-in",
+      "last_validated_date": "2026-04-07",
+      "validation_status": "Partially Validated",
+      "notes": "Tested against synthetic evidence fixtures."
+    },
+    {
+      "component": "AIContentScanner",
+      "component_version": "1.0.0",
+      "signature_version": "built-in",
+      "last_validated_date": "2026-04-07",
+      "validation_status": "Partially Validated",
+      "notes": "Tested against synthetic evidence fixtures."
+    }
+  ],
+  "known_blind_spots": [
+    "File carving was disabled; deleted but not overwritten artifacts were not recovered.",
+    "Artifact family 'Browser Cache' was not found in the evidence; conclusions about platform use from that family are not possible.",
+    "Artifact family 'Browser Downloads' was not found in the evidence; conclusions about platform use from that family are not possible.",
+    "Artifact family 'File System' was not found in the evidence; conclusions about platform use from that family are not possible.",
+    "Artifact family 'Native Application' was not found in the evidence; conclusions about platform use from that family are not possible.",
+    "Artifact family 'OS Event Log' was not found in the evidence; conclusions about platform use from that family are not possible.",
+    "Artifact family 'OS Plist' was not found in the evidence; conclusions about platform use from that family are not possible.",
+    "Artifact family 'OS Recent Files' was not found in the evidence; conclusions about platform use from that family are not possible.",
+    "Artifact family 'OS Registry' was not found in the evidence; conclusions about platform use from that family are not possible.",
+    "Artifact family 'OS Unified Log' was not found in the evidence; conclusions about platform use from that family are not possible.",
+    "Artifact family 'Screenshot' was not found in the evidence; conclusions about platform use from that family are not possible."
+  ],
+  "inference_boundaries": [
+    "This analysis reconstructs observable AI-system interaction from endpoint artifacts. It does not infer belief, trust, acceptance, reliance, or investigative intent from those artifacts.",
+    "Reported time windows are approximate and derived from artifact timestamps, not from direct session instrumentation.",
+    "Platform attribution is distinguished from model attribution; model conclusions require preserved model identifiers in exports or metadata.",
+    "Absence of evidence within the examined scope is never treated as evidence of absence.",
+    "Deletion, logout, or cache clearing is reported as a persistence effect, not as concealment or motive."
+  ],
+  "required_disclosures": [
+    "This framework output is a forensic reconstruction. It does not bypass legal gatekeeping under Rule 702 or equivalent standards.",
+    "Narrative text generated by LLM integration is explanatory only; evidentiary facts are the artifacts, exhibits, and scoring decisions.",
+    "Validation of parser accuracy and signature coverage is ongoing; the version-drift register documents the current validation state."
+  ],
+  "rules_applied": [
+    "Rule 1: Interaction is reportable; cognition is not.",
+    "Rule 2: Evidence recovery is expected to be uneven.",
+    "Rule 3: Platform attribution is stronger than model attribution.",
+    "Rule 4: Time findings are bounded, not exact.",
+    "Rule 5: Image-review findings are graded.",
+    "Rule 6: Unsupported is not the same as absent.",
+    "Rule 7: Cleanup affects persistence, not motive.",
+    "Rule 8: Evidence classes are not interchangeable.",
+    "Rule 9: Artifact confidence is not event confidence.",
+    "Rule 10: Narrative text is explanatory, not evidentiary.",
+    "Rule 11: Framework output is forensic reconstruction, not automatic admissibility.",
+    "Rule 12: Validation is continuous, not one-time."
+  ]
+}

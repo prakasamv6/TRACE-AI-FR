@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "ai-usage-evidence-analyzer"
+version = "3.0.0"
+description = "Forensic tool to detect ChatGPT, Claude, and Gemini usage from E01 images and endpoint artifacts"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Security",
+    "Programming Language :: Python :: 3",
+]
+dependencies = ["python-docx>=1.0.0"]
+
+[project.optional-dependencies]
+forensic = ["pytsk3", "pyewf", "python-registry"]
+llm = ["openai>=1.0.0"]
+dev = ["pytest>=7.0"]
+all = ["pytsk3", "pyewf", "python-registry", "openai>=1.0.0", "python-docx>=1.0.0"]
+
+[project.scripts]
+ai-evidence = "ai_usage_evidence_analyzer.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["ai_usage_evidence_analyzer*"]

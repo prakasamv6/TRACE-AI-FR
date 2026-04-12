@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRACE-AI-FR — Case E38272A9</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface-2: #334155;
+            --border: #475569;
+            --text: #e2e8f0;
+            --text-dim: #94a3b8;
+            --primary: #3b82f6;
+            --primary-dim: #1d4ed8;
+            --accent: #8b5cf6;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #06b6d4;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+        /* --- Top navigation / brand bar --- */
+        .topbar {
+            background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+            border-bottom: 2px solid var(--primary);
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+        }
+        .brand {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+        .brand-name {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        .brand-name .t { color: var(--info); }
+        .brand-name .a { color: var(--warning); }
+        .brand-name .f { color: var(--success); }
+        .brand-version {
+            font-size: 12px;
+            color: var(--text-dim);
+            background: var(--surface-2);
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        .topbar-meta {
+            text-align: right;
+            font-size: 12px;
+            color: var(--text-dim);
+            line-height: 1.4;
+        }
+        /* --- Layout --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 32px 60px;
+        }
+        /* --- Dashboard cards --- */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 24px 0 32px;
+        }
+        .stat-card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 6px 0 2px;
+            color: var(--text-dim);
+        }
+        .stat-detail {
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+        .stat-primary .stat-number { color: var(--primary); }
+        .stat-accent .stat-number { color: var(--accent); }
+        .stat-success .stat-number { color: var(--success); }
+        .stat-info .stat-number { color: var(--info); }
+        /* --- Tabs navigation --- */
+        .tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 2px solid var(--border);
+            margin: 32px 0 0;
+            overflow-x: auto;
+        }
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-dim);
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+            user-select: none;
+        }
+        .tab:hover { color: var(--text); background: var(--surface); }
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background: var(--surface);
+        }
+        .tab-content {
+            display: none;
+            padding: 24px 0;
+            animation: fadeIn 0.3s ease;
+        }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* --- Report body (converted Markdown) --- */
+        .report-body h1 {
+            color: var(--primary);
+            font-size: 22px;
+            font-weight: 700;
+            border-bottom: 2px solid var(--surface-2);
+            padding-bottom: 8px;
+            margin-top: 32px;
+        }
+        .report-body h2 {
+            color: var(--info);
+            font-size: 18px;
+            margin-top: 24px;
+        }
+        .report-body h3 {
+            color: var(--accent);
+            font-size: 15px;
+            margin-top: 18px;
+        }
+        .report-body p {
+            margin: 8px 0;
+        }
+        /* --- Tables --- */
+        .forensic-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 13px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .forensic-table th {
+            background: var(--primary-dim);
+            color: white;
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .forensic-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--surface-2);
+        }
+        .forensic-table tr:nth-child(even) { background: var(--surface); }
+        .forensic-table tr:hover { background: var(--surface-2); }
+        /* --- FRAUE cards --- */
+        .section-fraues { margin-top: 0; }
+        .section-fraues .section-intro {
+            color: var(--text-dim);
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .fraue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 16px;
+        }
+        .fraue-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .fraue-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+        .fraue-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: var(--surface-2);
+            border-bottom: 1px solid var(--border);
+        }
+        .fraue-id {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--accent);
+        }
+        .fraue-badge {
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .conf-high { background: rgba(34,197,94,0.2); color: var(--success); border: 1px solid var(--success); }
+        .conf-moderate { background: rgba(245,158,11,0.2); color: var(--warning); border: 1px solid var(--warning); }
+        .conf-low { background: rgba(239,68,68,0.2); color: var(--danger); border: 1px solid var(--danger); }
+        .conf-insufficient { background: rgba(148,163,184,0.2); color: var(--text-dim); border: 1px solid var(--border); }
+        .fraue-body { padding: 16px; }
+        .fraue-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .fraue-field {
+            display: flex;
+            flex-direction: column;
+        }
+        .field-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+        .field-value {
+            font-size: 13px;
+            color: var(--text);
+        }
+        .fraue-caveats, .fraue-alternatives {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--surface-2);
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+        .fraue-caveats ul, .fraue-alternatives ul {
+            margin: 4px 0 0;
+            padding-left: 18px;
+        }
+        .fraue-caveats li, .fraue-alternatives li {
+            margin: 2px 0;
+        }
+        /* --- Governance section --- */
+        .section-governance { margin-top: 0; }
+        .governance-block {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 16px 0;
+        }
+        .governance-block h2 {
+            color: var(--warning);
+            font-size: 18px;
+            margin: 0 0 12px;
+        }
+        .governance-list {
+            padding-left: 20px;
+        }
+        .governance-list li {
+            margin: 4px 0;
+            color: var(--text-dim);
+        }
+        .scope-text {
+            background: var(--surface-2);
+            border-left: 4px solid var(--warning);
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text);
+        }
+        .governance-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 24px;
+            margin-bottom: 16px;
+            font-size: 13px;
+        }
+        .gov-field { color: var(--text-dim); }
+        .gov-field strong { color: var(--text); }
+        .gov-details {
+            margin: 8px 0;
+            border: 1px solid var(--surface-2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .gov-details summary {
+            padding: 10px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            background: var(--surface-2);
+            color: var(--text);
+            user-select: none;
+        }
+        .gov-details summary:hover { background: var(--border); }
+        .gov-details ul {
+            padding: 8px 16px 12px 32px;
+            margin: 0;
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+        /* --- Code & misc --- */
+        code {
+            background: var(--surface-2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Cascadia Code', 'Fira Code', 'Courier New', monospace;
+            font-size: 12px;
+            color: var(--info);
+        }
+        hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 32px 0;
+        }
+        ul { padding-left: 24px; }
+        li { margin: 3px 0; }
+        strong { color: var(--text); }
+        blockquote {
+            background: var(--surface);
+            border-left: 4px solid var(--accent);
+            padding: 12px 16px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 13px;
+        }
+        .footer {
+            text-align: center;
+            padding: 24px;
+            color: var(--text-dim);
+            font-size: 12px;
+            border-top: 1px solid var(--border);
+            margin-top: 48px;
+        }
+        /* --- Sticky sidebar TOC (large screens) --- */
+        @media (min-width: 1400px) {
+            .container { max-width: 1400px; }
+        }
+        /* --- Print --- */
+        @media print {
+            :root {
+                --bg: #fff;
+                --surface: #f8f8f8;
+                --surface-2: #eee;
+                --border: #ccc;
+                --text: #222;
+                --text-dim: #666;
+            }
+            .topbar { position: static; }
+            .tabs { display: none; }
+            .tab-content { display: block !important; }
+            .stat-card:hover, .fraue-card:hover { transform: none; box-shadow: none; }
+            body { font-size: 11pt; }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="brand">
+            <span class="brand-name">
+                <span class="t">TRACE</span>-<span class="a">AI</span>-<span class="f">FR</span>
+            </span>
+            <span class="brand-version">v2.0.0</span>
+        </div>
+        <div class="topbar-meta">
+            UNCC Forensics Lab &middot; Hemal<br>
+            Case #E38272A9 &middot; 04-07-2026
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <div class="dashboard">
+            <div class="stat-card stat-primary">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Artifacts</div>
+                <div class="stat-detail">0 direct · 0 inferred</div>
+            </div>
+            <div class="stat-card stat-accent">
+                <div class="stat-number">0</div>
+                <div class="stat-label">FRAUEs</div>
+                <div class="stat-detail">Reconstructed Events</div>
+            </div>
+            <div class="stat-card stat-success">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Platforms</div>
+                <div class="stat-detail">None detected</div>
+            </div>
+            <div class="stat-card stat-info">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Timeline Events</div>
+                <div class="stat-detail">0 parsers run</div>
+            </div>
+        </div>
+        
+
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab(event, 'tab-report')">Forensic Report</div>
+            <div class="tab" onclick="switchTab(event, 'tab-fraues')">FRAUEs</div>
+            <div class="tab" onclick="switchTab(event, 'tab-governance')">Governance</div>
+        </div>
+
+        <div id="tab-report" class="tab-content active">
+            <div class="report-body">
+                <p><div style="text-align:right"></p>
+<p>UNCC Forensics Lab<br></p>
+<p>Hemal<br></p>
+<p>Case #E38272A9<br></p>
+<p>04-07-2026</p>
+<p></div></p>
+<h1>Overview</h1>
+<p>On 04/07/2026, UNCC Forensics Lab provided an Expert Witness Format (E01) image to the forensic laboratory for analysis. The evidence was received by Hemal and identified as <strong>ItemA.E01</strong>.</p>
+<p>The examiner was instructed to perform a forensic analysis to determine whether AI platforms — specifically ChatGPT-4, Claude, or Google Gemini — were used on the examined Unknown endpoint. This analysis includes identification of browser history, cookies, downloads, application traces, cached content, and any other artifacts that indicate AI platform access or usage.</p>
+<h1>Forensic Acquisition & Exam Preparation</h1>
+<p>The forensic analysis was performed using <strong>AI Usage Evidence Analyzer v2.0.0</strong> on the examiner's forensic workstation.</p>
+<p><em>Note: No hash verification was performed on the evidence source. If the evidence was provided as a mounted directory, hash verification may not be applicable.</em></p>
+<p><strong>Evidence Details:</strong></p>
+<ul>
+<li>Evidence Source: <code>ItemA.E01</code></li>
+<li>Image Size: 15,336,448 bytes (14.63 MB)</li>
+<li>Detected Operating System: Unknown</li>
+<li>Read-Only Processing: Yes</li>
+</ul>
+<p>All evidence was processed in <strong>read-only mode</strong>. SQLite databases within the evidence were copied to temporary storage before querying to avoid WAL lock interference. No modifications were made to the original evidence.</p>
+<h1>Findings and Report (Forensic Analysis)</h1>
+<p>After completing the forensic analysis of the submitted evidence, <strong>no artifacts relating to AI platform usage were identified</strong>.</p>
+<p><strong>IMPORTANT:</strong> This negative finding must be interpreted in light of the evidence coverage assessment below. Absence of evidence is not evidence of absence.</p>
+<p><strong>Evidence Coverage Assessment</strong></p>
+<ul>
+<li>Image Type: Unknown</li>
+<li>Full Disk Available: No</li>
+<li>Partitions Accessible: 0 / 0</li>
+<li>Encrypted Areas: Not detected</li>
+<li>File Carving: Disabled</li>
+</ul>
+<h1>Conclusion</h1>
+<p>Based on the forensic analysis performed, no artifacts indicating AI platform usage (ChatGPT, Claude, or Gemini) were identified in the submitted evidence. This negative finding is qualified by the evidence coverage assessment above — absence of evidence is not evidence of absence.</p>
+<p><strong>Evidentiary Caveats:</strong></p>
+<ul>
+<li>A domain visit alone is not enough to conclude substantive AI use.</li>
+<li>A cached object alone is not enough to conclude prompt submission.</li>
+<li>A login trace alone is not enough to conclude active investigative use.</li>
+<li>An export file alone is not enough to prove which model generated it unless corroborated.</li>
+<li>Platform attribution, model attribution, and content attribution are separate analytical layers.</li>
+<li>Absence of evidence must not be reported as evidence of absence.</li>
+</ul>
+<p>File carving was disabled. Artifacts in unallocated space were not examined. Additional analysis may yield further findings.</p>
+<p>The evidence source was not a full disk image. Artifacts outside the provided scope may exist on the original media.</p>
+<p>The forensic evidence and reports are being provided to the requesting party. No further analysis as of this report.</p>
+<hr>
+<p>Signed:</p>
+<p><em>Hemal</em></p>
+<p>_________________________</p>
+<p>Hemal</p>
+<p>Digital Forensics Examiner</p>
+<p>UNCC Forensics Lab</p>
+<hr>
+<p><em>Report generated by TRACE-AI-FR v2.0.0</em></p>
+<p><em>Generated on: 2026-04-07 02:13:42 UTC</em></p>
+            </div>
+        </div>
+
+        <div id="tab-fraues" class="tab-content">
+            <p style="color:var(--text-dim)">No FRAUEs reconstructed for this case.</p>
+        </div>
+
+        <div id="tab-governance" class="tab-content">
+            <p style="color:var(--text-dim)">No governance record available.</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        TRACE-AI-FR v2.0.0 &middot;
+        Generated 2026-04-07 02:13:42 UTC &middot;
+        UNCC Forensics Lab
+    </div>
+
+    <script>
+        function switchTab(e, tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            e.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

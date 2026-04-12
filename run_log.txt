@@ -1,0 +1,213 @@
+2026-04-06 21:58:47,105 [WARNING] ai_usage_evidence_analyzer.e01_handler: pyewf not available. E01 native parsing will be limited.
+2026-04-06 21:58:47,105 [WARNING] ai_usage_evidence_analyzer.e01_handler: pytsk3 not available. Filesystem parsing will be limited.
+2026-04-06 21:58:47,117 [DEBUG] ai_usage_evidence_analyzer.llm_narrator: openai package not installed. LLM narrator will use fallback templates.
+2026-04-06 21:58:47,126 [DEBUG] ai_usage_evidence_analyzer.parser_registry: Registered parser: ChromiumHistoryParser
+2026-04-06 21:58:47,126 [DEBUG] ai_usage_evidence_analyzer.parser_registry: Registered parser: FirefoxHistoryParser
+2026-04-06 21:58:47,126 [DEBUG] ai_usage_evidence_analyzer.parser_registry: Registered parser: SafariHistoryParser
+2026-04-06 21:58:47,140 [DEBUG] ai_usage_evidence_analyzer.parser_registry: Registered parser: WindowsPrefetchParser
+2026-04-06 21:58:47,140 [DEBUG] ai_usage_evidence_analyzer.parser_registry: Registered parser: WindowsRecentFilesParser
+2026-04-06 21:58:47,140 [DEBUG] ai_usage_evidence_analyzer.parser_registry: Registered parser: WindowsUserAssistParser
+2026-04-06 21:58:47,140 [DEBUG] ai_usage_evidence_analyzer.parser_registry: Registered parser: WindowsEventLogParser
+2026-04-06 21:58:47,140 [DEBUG] ai_usage_evidence_analyzer.parser_registry: Registered parser: WindowsRecycleBinParser
+2026-04-06 21:58:47,140 [DEBUG] ai_usage_evidence_analyzer.parser_registry: Registered parser: WindowsAppDataParser
+2026-04-06 21:58:47,141 [DEBUG] ai_usage_evidence_analyzer.parser_registry: Registered parser: WindowsRegistryHiveParser
+2026-04-06 21:58:47,147 [DEBUG] ai_usage_evidence_analyzer.parser_registry: Registered parser: macOSQuarantineParser
+2026-04-06 21:58:47,147 [DEBUG] ai_usage_evidence_analyzer.parser_registry: Registered parser: macOSAppSupportParser
+2026-04-06 21:58:47,147 [DEBUG] ai_usage_evidence_analyzer.parser_registry: Registered parser: macOSRecentItemsParser
+2026-04-06 21:58:47,147 [DEBUG] ai_usage_evidence_analyzer.parser_registry: Registered parser: macOSUnifiedLogParser
+2026-04-06 21:58:47,148 [DEBUG] ai_usage_evidence_analyzer.parser_registry: Registered parser: iPhoneSafariParser
+2026-04-06 21:58:47,148 [DEBUG] ai_usage_evidence_analyzer.parser_registry: Registered parser: iPhoneAppUsageParser
+2026-04-06 21:58:47,149 [DEBUG] ai_usage_evidence_analyzer.parser_registry: Registered parser: AIContentScanner
+2026-04-06 21:58:47,154 [INFO] ai_usage_evidence_analyzer.engine: [engine] ============================================================
+2026-04-06 21:58:47,154 [INFO] ai_usage_evidence_analyzer.engine: [engine] TRACE-AI-FR Forensic Analysis Started
+2026-04-06 21:58:47,154 [INFO] ai_usage_evidence_analyzer.engine: [engine] Evidence: C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence
+2026-04-06 21:58:47,154 [INFO] ai_usage_evidence_analyzer.engine: [engine] Output: C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output
+2026-04-06 21:58:47,154 [INFO] ai_usage_evidence_analyzer.engine: [engine] ============================================================
+2026-04-06 21:58:47,154 [INFO] ai_usage_evidence_analyzer.engine: [engine] Evidence loaded: OS=Windows, Profiles=['JohnDoe'], Type=Full Disk Image
+2026-04-06 21:58:47,154 [INFO] ai_usage_evidence_analyzer.engine: [engine] Processing user profile: JohnDoe
+2026-04-06 21:58:47,155 [INFO] ai_usage_evidence_analyzer.parser_registry: Executing 10 parser(s) for Windows (user_profile=JohnDoe)
+2026-04-06 21:58:47,167 [INFO] ai_usage_evidence_analyzer.parser_registry:   [ChromiumHistoryParser] Success: 12 artifacts, 12.1ms
+2026-04-06 21:58:47,167 [INFO] ai_usage_evidence_analyzer.parser_registry:   [FirefoxHistoryParser] Not Applicable: 0 artifacts, 0.1ms
+2026-04-06 21:58:47,169 [INFO] ai_usage_evidence_analyzer.parser_registry:   [WindowsPrefetchParser] Success: 4 artifacts, 1.5ms
+2026-04-06 21:58:47,169 [INFO] ai_usage_evidence_analyzer.parser_registry:   [WindowsRecentFilesParser] Not Applicable: 0 artifacts, 0.2ms
+2026-04-06 21:58:47,169 [INFO] ai_usage_evidence_analyzer.parser_registry:   [WindowsUserAssistParser] Not Applicable: 0 artifacts, 0.0ms
+2026-04-06 21:58:47,170 [INFO] ai_usage_evidence_analyzer.parser_registry:   [WindowsEventLogParser] Not Applicable: 0 artifacts, 0.0ms
+2026-04-06 21:58:47,170 [INFO] ai_usage_evidence_analyzer.parser_registry:   [WindowsRecycleBinParser] Not Applicable: 0 artifacts, 0.0ms
+2026-04-06 21:58:47,170 [INFO] ai_usage_evidence_analyzer.parser_registry:   [WindowsAppDataParser] Not Applicable: 0 artifacts, 0.1ms
+2026-04-06 21:58:47,170 [INFO] ai_usage_evidence_analyzer.parser_registry: [WindowsRegistryHiveParser] python-registry not installed. Using binary scan fallback for hive parsing.
+2026-04-06 21:58:47,171 [INFO] ai_usage_evidence_analyzer.parser_registry:   [WindowsRegistryHiveParser] Not Applicable: 0 artifacts, 0.9ms
+2026-04-06 21:58:47,173 [INFO] ai_usage_evidence_analyzer.parser_registry:   [AIContentScanner] Success: 6 artifacts, 2.3ms
+2026-04-06 21:58:47,173 [INFO] ai_usage_evidence_analyzer.engine: [engine] Total artifacts found: 22
+2026-04-06 21:58:47,173 [INFO] ai_usage_evidence_analyzer.engine: [engine] Assigning evidence source classes (Rule 8)...
+2026-04-06 21:58:47,174 [INFO] ai_usage_evidence_analyzer.engine: [engine] Assigning persistence states (Rule 7)...
+2026-04-06 21:58:47,174 [INFO] ai_usage_evidence_analyzer.persistence: Persistence states assigned to 22 artifact(s)
+2026-04-06 21:58:47,174 [INFO] ai_usage_evidence_analyzer.engine: [engine] Running correlation engine...
+2026-04-06 21:58:47,174 [INFO] ai_usage_evidence_analyzer.correlation: Correlating 22 artifacts
+2026-04-06 21:58:47,174 [INFO] ai_usage_evidence_analyzer.correlation: Timeline built with 17 events
+2026-04-06 21:58:47,174 [INFO] ai_usage_evidence_analyzer.engine: [engine] Running confidence scoring...
+2026-04-06 21:58:47,174 [INFO] ai_usage_evidence_analyzer.engine: [engine] Building comparative artifact matrix...
+2026-04-06 21:58:47,175 [INFO] ai_usage_evidence_analyzer.engine: [engine] Running TRACE-AI-FR adjudication engine...
+2026-04-06 21:58:47,175 [INFO] ai_usage_evidence_analyzer.adjudication: Adjudication produced 6 FRAUE(s)
+2026-04-06 21:58:47,175 [INFO] ai_usage_evidence_analyzer.engine: [engine] Adjudication complete: 6 FRAUEs reconstructed
+2026-04-06 21:58:47,175 [INFO] ai_usage_evidence_analyzer.engine: [engine] Building governance record (Layer 8)...
+2026-04-06 21:58:47,175 [INFO] ai_usage_evidence_analyzer.engine: [engine] Evaluating functional requirements (FR-1 through FR-9)...
+2026-04-06 21:58:47,176 [INFO] ai_usage_evidence_analyzer.fr_assessment: FR assessment complete: 2/9 fully addressed
+2026-04-06 21:58:47,176 [INFO] ai_usage_evidence_analyzer.engine: [engine] FR assessment: 2 fully addressed, 6 partially addressed, 1 gaps
+2026-04-06 21:58:47,176 [INFO] ai_usage_evidence_analyzer.engine: [engine] Exporting reports...
+2026-04-06 21:58:47,178 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 1: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_001.bin
+2026-04-06 21:58:47,178 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 1: Browser History — Gemini — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History
+2026-04-06 21:58:47,179 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 2: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_002.bin
+2026-04-06 21:58:47,180 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 2: Browser History — Gemini — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History
+2026-04-06 21:58:47,181 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 3: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_003.bin
+2026-04-06 21:58:47,181 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 3: Browser History — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History
+2026-04-06 21:58:47,183 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 4: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_004.bin
+2026-04-06 21:58:47,183 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 4: Browser History — Claude — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History
+2026-04-06 21:58:47,186 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 5: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_005.bin
+2026-04-06 21:58:47,186 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 5: Browser History — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History
+2026-04-06 21:58:47,187 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 6: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_006.bin
+2026-04-06 21:58:47,187 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 6: Browser History — Claude — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History
+2026-04-06 21:58:47,189 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 7: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_007.bin
+2026-04-06 21:58:47,189 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 7: Browser History — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History
+2026-04-06 21:58:47,190 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 8: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_008.bin
+2026-04-06 21:58:47,191 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 8: Browser Cookies — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies
+2026-04-06 21:58:47,192 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 9: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_009.bin
+2026-04-06 21:58:47,192 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 9: Browser Cookies — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies
+2026-04-06 21:58:47,194 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 10: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_010.bin
+2026-04-06 21:58:47,194 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 10: Browser Cookies — Claude — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies
+2026-04-06 21:58:47,195 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 11: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_011.bin
+2026-04-06 21:58:47,195 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 11: Browser Cookies — Gemini — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies
+2026-04-06 21:58:47,196 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 12: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_012.log
+2026-04-06 21:58:47,196 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 12: Browser Local Storage — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Local Storage/leveldb\chatgpt_trace.log
+2026-04-06 21:58:47,198 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 13: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_013.pf
+2026-04-06 21:58:47,198 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 13: OS Execution Trace — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf
+2026-04-06 21:58:47,199 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 14: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_014.pf
+2026-04-06 21:58:47,199 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 14: OS Execution Trace — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf
+2026-04-06 21:58:47,200 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 15: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_015.pf
+2026-04-06 21:58:47,201 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 15: OS Execution Trace — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf
+2026-04-06 21:58:47,202 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 16: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_016.pf
+2026-04-06 21:58:47,202 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 16: OS Execution Trace — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf
+2026-04-06 21:58:47,204 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 17: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_017.pdf
+2026-04-06 21:58:47,204 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 17: User Content — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\ChatGPT_Crime_Scene_Analysis.pdf
+2026-04-06 21:58:47,206 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 18: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_018.txt
+2026-04-06 21:58:47,206 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 18: User Content — Claude — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt
+2026-04-06 21:58:47,207 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 19: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_019.txt
+2026-04-06 21:58:47,207 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 19: User Content — Claude — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt
+2026-04-06 21:58:47,209 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 20: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_020.md
+2026-04-06 21:58:47,209 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 20: User Content — Gemini — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md
+2026-04-06 21:58:47,210 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 21: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_021.md
+2026-04-06 21:58:47,210 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 21: User Content — Gemini — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md
+2026-04-06 21:58:47,211 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 22: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_022.md
+2026-04-06 21:58:47,211 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 22: User Content — Gemini — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md
+2026-04-06 21:58:47,211 [INFO] ai_usage_evidence_analyzer.storage: Initializing SQLite database: C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\3B13B281_findings.sqlite
+2026-04-06 21:58:47,254 [INFO] ai_usage_evidence_analyzer.storage: Report exported to SQLite: C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\3B13B281_findings.sqlite
+2026-04-06 21:58:47,255 [INFO] ai_usage_evidence_analyzer.engine: [engine] SQLite: C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\3B13B281_findings.sqlite
+2026-04-06 21:58:47,258 [INFO] ai_usage_evidence_analyzer.report_generator: JSON report exported: C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\3B13B281_findings.json
+2026-04-06 21:58:47,259 [INFO] ai_usage_evidence_analyzer.engine: [engine] JSON: C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\3B13B281_findings.json
+2026-04-06 21:58:47,260 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 23: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_023.bin
+2026-04-06 21:58:47,260 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 23: Browser History — Gemini — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History
+2026-04-06 21:58:47,261 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 24: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_024.bin
+2026-04-06 21:58:47,261 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 24: Browser History — Gemini — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History
+2026-04-06 21:58:47,262 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 25: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_025.bin
+2026-04-06 21:58:47,262 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 25: Browser History — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History
+2026-04-06 21:58:47,264 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 26: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_026.bin
+2026-04-06 21:58:47,264 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 26: Browser History — Claude — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History
+2026-04-06 21:58:47,265 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 27: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_027.bin
+2026-04-06 21:58:47,265 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 27: Browser History — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History
+2026-04-06 21:58:47,266 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 28: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_028.bin
+2026-04-06 21:58:47,266 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 28: Browser History — Claude — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History
+2026-04-06 21:58:47,267 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 29: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_029.bin
+2026-04-06 21:58:47,267 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 29: Browser History — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History
+2026-04-06 21:58:47,270 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 30: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_030.bin
+2026-04-06 21:58:47,270 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 30: Browser Cookies — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies
+2026-04-06 21:58:47,272 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 31: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_031.bin
+2026-04-06 21:58:47,272 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 31: Browser Cookies — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies
+2026-04-06 21:58:47,274 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 32: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_032.bin
+2026-04-06 21:58:47,274 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 32: Browser Cookies — Claude — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies
+2026-04-06 21:58:47,275 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 33: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_033.bin
+2026-04-06 21:58:47,275 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 33: Browser Cookies — Gemini — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies
+2026-04-06 21:58:47,277 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 34: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_034.log
+2026-04-06 21:58:47,277 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 34: Browser Local Storage — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Local Storage/leveldb\chatgpt_trace.log
+2026-04-06 21:58:47,279 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 35: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_035.pf
+2026-04-06 21:58:47,279 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 35: OS Execution Trace — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf
+2026-04-06 21:58:47,281 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 36: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_036.pf
+2026-04-06 21:58:47,281 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 36: OS Execution Trace — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf
+2026-04-06 21:58:47,282 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 37: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_037.pf
+2026-04-06 21:58:47,282 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 37: OS Execution Trace — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf
+2026-04-06 21:58:47,284 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 38: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_038.pf
+2026-04-06 21:58:47,284 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 38: OS Execution Trace — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf
+2026-04-06 21:58:47,285 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 39: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_039.pdf
+2026-04-06 21:58:47,286 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 39: User Content — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\ChatGPT_Crime_Scene_Analysis.pdf
+2026-04-06 21:58:47,287 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 40: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_040.txt
+2026-04-06 21:58:47,287 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 40: User Content — Claude — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt
+2026-04-06 21:58:47,288 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 41: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_041.txt
+2026-04-06 21:58:47,288 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 41: User Content — Claude — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt
+2026-04-06 21:58:47,289 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 42: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_042.md
+2026-04-06 21:58:47,290 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 42: User Content — Gemini — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md
+2026-04-06 21:58:47,291 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 43: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_043.md
+2026-04-06 21:58:47,291 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 43: User Content — Gemini — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md
+2026-04-06 21:58:47,292 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 44: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_044.md
+2026-04-06 21:58:47,292 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 44: User Content — Gemini — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md
+2026-04-06 21:58:47,292 [DEBUG] ai_usage_evidence_analyzer.llm_narrator: OpenAI not available, using fallback template.
+2026-04-06 21:58:47,292 [DEBUG] ai_usage_evidence_analyzer.llm_narrator: OpenAI not available, using fallback template.
+2026-04-06 21:58:47,292 [DEBUG] ai_usage_evidence_analyzer.llm_narrator: OpenAI not available, using fallback template.
+2026-04-06 21:58:47,293 [DEBUG] ai_usage_evidence_analyzer.llm_narrator: OpenAI not available, using fallback template.
+2026-04-06 21:58:47,293 [DEBUG] ai_usage_evidence_analyzer.llm_narrator: OpenAI not available, using fallback template.
+2026-04-06 21:58:47,293 [DEBUG] ai_usage_evidence_analyzer.llm_narrator: OpenAI not available, using fallback template.
+2026-04-06 21:58:47,295 [INFO] ai_usage_evidence_analyzer.report_generator: Markdown report generated: C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\3B13B281_report.md
+2026-04-06 21:58:47,295 [INFO] ai_usage_evidence_analyzer.engine: [engine] Markdown: C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\3B13B281_report.md
+2026-04-06 21:58:47,296 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 45: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_045.bin
+2026-04-06 21:58:47,296 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 45: Browser History — Gemini — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History
+2026-04-06 21:58:47,298 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 46: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_046.bin
+2026-04-06 21:58:47,299 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 46: Browser History — Gemini — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History
+2026-04-06 21:58:47,300 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 47: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_047.bin
+2026-04-06 21:58:47,300 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 47: Browser History — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History
+2026-04-06 21:58:47,302 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 48: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_048.bin
+2026-04-06 21:58:47,302 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 48: Browser History — Claude — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History
+2026-04-06 21:58:47,304 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 49: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_049.bin
+2026-04-06 21:58:47,304 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 49: Browser History — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History
+2026-04-06 21:58:47,306 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 50: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_050.bin
+2026-04-06 21:58:47,306 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 50: Browser History — Claude — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History
+2026-04-06 21:58:47,308 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 51: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_051.bin
+2026-04-06 21:58:47,308 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 51: Browser History — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\History
+2026-04-06 21:58:47,309 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 52: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_052.bin
+2026-04-06 21:58:47,309 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 52: Browser Cookies — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies
+2026-04-06 21:58:47,310 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 53: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_053.bin
+2026-04-06 21:58:47,311 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 53: Browser Cookies — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies
+2026-04-06 21:58:47,312 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 54: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_054.bin
+2026-04-06 21:58:47,312 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 54: Browser Cookies — Claude — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies
+2026-04-06 21:58:47,314 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 55: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_055.bin
+2026-04-06 21:58:47,314 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 55: Browser Cookies — Gemini — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Cookies
+2026-04-06 21:58:47,316 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 56: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_056.log
+2026-04-06 21:58:47,316 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 56: Browser Local Storage — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\AppData/Local/Google/Chrome/User Data\Default\Local Storage/leveldb\chatgpt_trace.log
+2026-04-06 21:58:47,318 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 57: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_057.pf
+2026-04-06 21:58:47,318 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 57: OS Execution Trace — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf
+2026-04-06 21:58:47,319 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 58: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_058.pf
+2026-04-06 21:58:47,319 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 58: OS Execution Trace — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf
+2026-04-06 21:58:47,322 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 59: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_059.pf
+2026-04-06 21:58:47,322 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 59: OS Execution Trace — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf
+2026-04-06 21:58:47,324 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 60: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_060.pf
+2026-04-06 21:58:47,324 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 60: OS Execution Trace — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Windows\Prefetch\CHROME.EXE-ABC12345.pf
+2026-04-06 21:58:47,325 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 61: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_061.pdf
+2026-04-06 21:58:47,326 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 61: User Content — ChatGPT — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\ChatGPT_Crime_Scene_Analysis.pdf
+2026-04-06 21:58:47,327 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 62: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_062.txt
+2026-04-06 21:58:47,327 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 62: User Content — Claude — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt
+2026-04-06 21:58:47,329 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 63: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_063.txt
+2026-04-06 21:58:47,329 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 63: User Content — Claude — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\claude_response_export.txt
+2026-04-06 21:58:47,331 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 64: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_064.md
+2026-04-06 21:58:47,332 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 64: User Content — Gemini — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md
+2026-04-06 21:58:47,334 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 65: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_065.md
+2026-04-06 21:58:47,334 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 65: User Content — Gemini — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md
+2026-04-06 21:58:47,335 [DEBUG] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 66: captured to C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\exhibits\exhibit_066.md
+2026-04-06 21:58:47,335 [INFO] ai_usage_evidence_analyzer.evidence_exhibit: Exhibit 66: User Content — Gemini — C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_evidence\Users\JohnDoe\Downloads\gemini_forensic_notes.md
+2026-04-06 21:58:47,335 [DEBUG] ai_usage_evidence_analyzer.llm_narrator: OpenAI not available, using fallback template.
+2026-04-06 21:58:47,336 [DEBUG] ai_usage_evidence_analyzer.llm_narrator: OpenAI not available, using fallback template.
+2026-04-06 21:58:47,336 [DEBUG] ai_usage_evidence_analyzer.llm_narrator: OpenAI not available, using fallback template.
+2026-04-06 21:58:47,337 [DEBUG] ai_usage_evidence_analyzer.llm_narrator: OpenAI not available, using fallback template.
+2026-04-06 21:58:47,337 [DEBUG] ai_usage_evidence_analyzer.llm_narrator: OpenAI not available, using fallback template.
+2026-04-06 21:58:47,337 [DEBUG] ai_usage_evidence_analyzer.llm_narrator: OpenAI not available, using fallback template.
+2026-04-06 21:58:47,345 [INFO] ai_usage_evidence_analyzer.report_generator: HTML report generated: C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\3B13B281_report.html
+2026-04-06 21:58:47,345 [INFO] ai_usage_evidence_analyzer.engine: [engine] HTML: C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\3B13B281_report.html
+2026-04-06 21:58:47,346 [INFO] ai_usage_evidence_analyzer.governance: Governance record exported: C:\UNCC\ITIS-5250-092(Comp-For)\Project\code\demo_output\3B13B281_governance_record.json
+2026-04-06 21:58:47,346 [INFO] ai_usage_evidence_analyzer.engine: [engine] Governance: 3B13B281_governance_record.json
+2026-04-06 21:58:47,346 [INFO] ai_usage_evidence_analyzer.engine: [engine] Analysis completed in 0.2 seconds
+2026-04-06 21:58:47,346 [INFO] ai_usage_evidence_analyzer.engine: [engine] Artifacts: 22, Timeline events: 17, AI footprints: 3, FRAUEs: 6
