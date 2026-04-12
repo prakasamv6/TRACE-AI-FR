@@ -41,6 +41,7 @@ hiddenimports = [
     'ai_usage_evidence_analyzer.voice_evidence',
     'ai_usage_evidence_analyzer.parsers',
     'ai_usage_evidence_analyzer.parsers.ai_tool_scanner',
+    'ai_usage_evidence_analyzer.parsers.android_parsers',
     'ai_usage_evidence_analyzer.parsers.antiforensics_parsers',
     'ai_usage_evidence_analyzer.parsers.browser_parsers',
     'ai_usage_evidence_analyzer.parsers.c2pa_parser',

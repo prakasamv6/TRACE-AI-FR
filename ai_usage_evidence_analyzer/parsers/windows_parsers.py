@@ -560,7 +560,7 @@ class UserAssistParser(BaseParser):
 
 
 # ---------------------------------------------------------------------------
-# Event Log Parser (Stub)
+# Event Log Parser
 # ---------------------------------------------------------------------------
 
 @register_parser
@@ -568,17 +568,35 @@ class WindowsEventLogParser(BaseParser):
     """
     Parse Windows Event Logs for AI-related activity.
 
-    STUB: Full EVTX parsing requires python-evtx or similar.
-    This parser performs binary scanning of .evtx files for AI-related strings.
+    Attempts to parse EVTX files using python-evtx if available.
+    Falls back to binary string scanning if not installed.
+    
+    Extracts:
+    - Application events related to AI apps
+    - System events showing process launches
+    - PowerShell event logs with AI-related commands
+    - Security events (process creation, network connections)
     """
 
     PARSER_NAME = "WindowsEventLogParser"
-    PARSER_VERSION = "1.0.0"
+    PARSER_VERSION = "2.0.0"
     SUPPORTED_OS = [OSPlatform.WINDOWS]
     ARTIFACT_FAMILY = "OS Event Log"
-    IS_STUB = True
+    IS_STUB = False
+
+    # Event log files of interest
+    TARGET_LOGS = [
+        "Application.evtx",
+        "System.evtx",
+        "Security.evtx",
+        "Microsoft-Windows-PowerShell%4Operational.evtx",
+        "Windows PowerShell.evtx",
+        "Microsoft-Windows-TaskScheduler%4Operational.evtx",
+    ]
 
     def parse(self) -> ParserResult:
+        artifacts: List[ArtifactRecord] = []
+        errors: List[str] = []
         paths_searched = []
         paths_found = []
         paths_missing = []
@@ -599,13 +617,173 @@ class WindowsEventLogParser(BaseParser):
 
         paths_found.append(evtx_dir)
 
+        # Check for python-evtx library
+        has_evtx_lib = False
+        try:
+            import Evtx.Evtx as evtx_module  # type: ignore[import-not-found]  # noqa: F401
+            has_evtx_lib = True
+        except ImportError:
+            self._log("INFO", "python-evtx not installed. Using binary scan fallback.")
+
+        # Process each target log file
+        for log_name in self.TARGET_LOGS:
+            log_path = os.path.join(evtx_dir, log_name)
+            paths_searched.append(log_path)
+
+            if not os.path.isfile(log_path):
+                paths_missing.append(log_path)
+                continue
+
+            paths_found.append(log_path)
+
+            if has_evtx_lib:
+                self._parse_evtx_structured(log_path, log_name, artifacts, errors)
+            else:
+                self._parse_evtx_binary(log_path, log_name, artifacts, errors)
+
+        status = ParserStatus.SUCCESS if artifacts else ParserStatus.NOT_APPLICABLE
+        notes = ("Event logs parsed using python-evtx." if has_evtx_lib 
+                 else "Event logs scanned using binary pattern matching. "
+                      "Install python-evtx for full XML parsing.")
+        
         return self._make_result(
-            status=ParserStatus.STUB,
+            status=status,
+            artifacts=artifacts,
+            errors=errors,
             paths_searched=paths_searched,
             paths_found=paths_found,
-            notes="EVTX parsing is a stub in the MVP. Full implementation requires "
-                  "python-evtx. Event log directory was located but not parsed.",
+            paths_missing=paths_missing,
+            notes=notes,
         )
+
+    def _parse_evtx_structured(self, log_path: str, log_name: str, 
+                               artifacts: List, errors: List) -> None:
+        """Parse EVTX file using python-evtx library."""
+        try:
+            import Evtx.Evtx as evtx_module
+            import xml.etree.ElementTree as ET
+
+            with evtx_module.Evtx(log_path) as log:
+                for record in log.records():
+                    try:
+                        xml_str = record.xml()
+                        root = ET.fromstring(xml_str)
+                        
+                        # Extract event data
+                        event_id_elem = root.find(".//{http://schemas.microsoft.com/win/2004/08/events/event}EventID")
+                        event_id = int(event_id_elem.text) if event_id_elem is not None else 0
+                        
+                        time_elem = root.find(".//{http://schemas.microsoft.com/win/2004/08/events/event}TimeCreated")
+                        timestamp_str = time_elem.get("SystemTime") if time_elem is not None else None
+                        timestamp = None
+                        if timestamp_str:
+                            try:
+                                timestamp = datetime.fromisoformat(timestamp_str.replace('Z', '+00:00'))
+                            except Exception:
+                                pass
+
+                        # Check for AI-related content in event data
+                        xml_lower = xml_str.lower()
+                        
+                        for sig in ALL_SIGNATURES:
+                            matched = False
+                            matched_indicator = ""
+                            
+                            # Check domains
+                            for domain in sig.domains:
+                                if domain.lower() in xml_lower:
+                                    matched = True
+                                    matched_indicator = f"Domain: {domain}"
+                                    break
+                            
+                            # Check process names
+                            if not matched:
+                                for proc in sig.process_names:
+                                    if proc.lower() in xml_lower:
+                                        matched = True
+                                        matched_indicator = f"Process: {proc}"
+                                        break
+                            
+                            # Check app names
+                            if not matched:
+                                for app in sig.app_names_windows:
+                                    if app.lower() in xml_lower:
+                                        matched = True
+                                        matched_indicator = f"App: {app}"
+                                        break
+                            
+                            if matched:
+                                # Extract event message if available
+                                event_data = []
+                                for data_elem in root.findall(".//{http://schemas.microsoft.com/win/2004/08/events/event}Data"):
+                                    if data_elem.text:
+                                        event_data.append(data_elem.text[:100])
+                                
+                                record_obj = ArtifactRecord(
+                                    case_id=self.case_id,
+                                    evidence_item_id=self.evidence_item_id,
+                                    source_image=self.source_image,
+                                    user_profile=self.user_profile,
+                                    artifact_family=ArtifactFamily.OS_EVENT_LOG,
+                                    artifact_type="Windows Event Log",
+                                    artifact_subtype=f"{log_name} Event ID {event_id}",
+                                    artifact_path=log_path,
+                                    parser_used=self.PARSER_NAME,
+                                    timestamp=timestamp,
+                                    timestamp_type=TimestampType.CREATED,
+                                    timezone_normalized=True if timestamp else False,
+                                    extracted_indicator=matched_indicator,
+                                    suspected_platform=sig.platform,
+                                    suspected_access_mode=AccessMode.UNKNOWN,
+                                    classification=EvidenceClassification.CIRCUMSTANTIAL,
+                                    attribution_layer=AttributionLayer.PLATFORM,
+                                    confidence=ConfidenceLevel.LOW,
+                                    notes=f"Event log entry. Data: {' | '.join(event_data[:3])}",
+                                )
+                                artifacts.append(record_obj)
+                                
+                    except Exception as exc:
+                        errors.append(f"Error parsing event record in {log_name}: {exc}")
+                        
+        except Exception as exc:
+            errors.append(f"Error opening {log_name}: {exc}")
+
+    def _parse_evtx_binary(self, log_path: str, log_name: str,
+                           artifacts: List, errors: List) -> None:
+        """Parse EVTX file using binary string scanning."""
+        try:
+            with open(log_path, "rb") as f:
+                # Read in chunks to handle large files
+                chunk_size = 1024 * 1024  # 1MB
+                while True:
+                    data = f.read(chunk_size)
+                    if not data:
+                        break
+                    
+                    matches = scan_binary_for_ai_strings(data)
+                    for m in matches:
+                        record = ArtifactRecord(
+                            case_id=self.case_id,
+                            evidence_item_id=self.evidence_item_id,
+                            source_image=self.source_image,
+                            user_profile=self.user_profile,
+                            artifact_family=ArtifactFamily.OS_EVENT_LOG,
+                            artifact_type="Windows Event Log",
+                            artifact_subtype=f"{log_name} String Match",
+                            artifact_path=log_path,
+                            parser_used=self.PARSER_NAME,
+                            extracted_indicator=f"String: {m['matched_string']}",
+                            suspected_platform=m["platform"],
+                            suspected_access_mode=AccessMode.UNKNOWN,
+                            classification=EvidenceClassification.INFERRED,
+                            attribution_layer=AttributionLayer.PLATFORM,
+                            confidence=ConfidenceLevel.LOW,
+                            notes=f"Binary scan match. {m.get('context', '')[:100]}",
+                        )
+                        artifacts.append(record)
+                        
+        except Exception as exc:
+            errors.append(f"Error scanning {log_name}: {exc}")
 
 
 # ---------------------------------------------------------------------------

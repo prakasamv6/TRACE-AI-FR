@@ -8,6 +8,7 @@ from . import browser_parsers
 from . import windows_parsers
 from . import macos_parsers
 from . import iphone_parsers
+from . import android_parsers
 from . import content_parsers
 from . import plugin_parsers
 from . import antiforensics_parsers

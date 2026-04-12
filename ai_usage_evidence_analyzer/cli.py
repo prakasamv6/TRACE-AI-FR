@@ -394,12 +394,21 @@ def cmd_info(args):
 
 def _banner_plain_info():
     """Plain-text info for when Rich is unavailable."""
+    from .signatures import ALL_SIGNATURES
+    
+    # Get all platform names from signatures
+    platform_names = [sig.platform.value for sig in ALL_SIGNATURES]
+    platforms_str = ", ".join(platform_names[:8])
+    if len(platform_names) > 8:
+        platforms_str += f", +{len(platform_names) - 8} more"
+    
     print(f"\n{__product__} v{__version__}")
     print(f"{__full_name__}")
     print(f"")
-    print(f"Supported AI Platforms: ChatGPT, Claude, Gemini, Perplexity, Copilot, Meta AI, Grok, Poe")
-    print(f"Supported OS Platforms: Windows, macOS, iPhone (logical)")
-    print(f"Supported Browsers:    Chrome, Edge, Firefox, Brave, Safari")
+    print(f"Supported AI Platforms ({len(ALL_SIGNATURES)} total):")
+    print(f"  {platforms_str}")
+    print(f"Supported OS Platforms: Windows, macOS, Linux, iPhone, Android")
+    print(f"Supported Browsers:    Chrome, Edge, Firefox, Brave, Safari, Samsung Internet")
     print(f"")
     print(f"Input Formats:")
     print(f"  - E01 forensic images (requires pyewf + pytsk3)")

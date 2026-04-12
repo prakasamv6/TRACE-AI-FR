@@ -15,7 +15,7 @@
 
 <div class="node">
   <a name="desktop_app.py"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/desktop_app.py" type="text/plain"><tt>desktop_app.py</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/desktop_app.py" type="text/plain"><tt>desktop_app.py</tt></a>
 <span class="moduletype">Script</span>  <div class="import">
 imports:
     <a href="#_collections_abc">_collections_abc</a>
@@ -46,6 +46,7 @@ imports:
  &#8226;   <a href="#ai_usage_evidence_analyzer.parser_registry">ai_usage_evidence_analyzer.parser_registry</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers">ai_usage_evidence_analyzer.parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.ai_tool_scanner">ai_usage_evidence_analyzer.parsers.ai_tool_scanner</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.android_parsers">ai_usage_evidence_analyzer.parsers.android_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.antiforensics_parsers">ai_usage_evidence_analyzer.parsers.antiforensics_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.browser_parsers">ai_usage_evidence_analyzer.parsers.browser_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.c2pa_parser">ai_usage_evidence_analyzer.parsers.c2pa_parser</a>
@@ -418,6 +419,17 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="'Evtx.Evtx'"></a>
+  <a target="code" href="" type="text/plain"><tt>'Evtx.Evtx'</tt></a>
+<span class="moduletype">MissingModule</span>  <div class="import">
+imported by:
+    <a href="#ai_usage_evidence_analyzer.parsers.windows_parsers">ai_usage_evidence_analyzer.parsers.windows_parsers</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="'IPython.core'"></a>
   <a target="code" href="" type="text/plain"><tt>'IPython.core'</tt></a>
 <span class="moduletype">MissingModule</span>  <div class="import">
@@ -540,6 +552,7 @@ imported by:
  &#8226;   <a href="#typing_extensions">typing_extensions</a>
  &#8226;   <a href="#typing_inspection.introspection">typing_inspection.introspection</a>
  &#8226;   <a href="#typing_inspection.typing_objects">typing_inspection.typing_objects</a>
+ &#8226;   <a href="#xml.etree.ElementTree">xml.etree.ElementTree</a>
  &#8226;   <a href="#yaml.constructor">yaml.constructor</a>
  &#8226;   <a href="#zstandard">zstandard</a>
 
@@ -1080,6 +1093,17 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="Evtx"></a>
+  <a target="code" href="" type="text/plain"><tt>Evtx</tt></a>
+<span class="moduletype">MissingModule</span>  <div class="import">
+imported by:
+    <a href="#ai_usage_evidence_analyzer.parsers.windows_parsers">ai_usage_evidence_analyzer.parsers.windows_parsers</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="Registry"></a>
   <a target="code" href="" type="text/plain"><tt>Registry</tt></a>
 <span class="moduletype">MissingModule</span>  <div class="import">
@@ -1116,6 +1140,7 @@ imported by:
  &#8226;   <a href="#ai_usage_evidence_analyzer.models">ai_usage_evidence_analyzer.models</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parser_registry">ai_usage_evidence_analyzer.parser_registry</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.ai_tool_scanner">ai_usage_evidence_analyzer.parsers.ai_tool_scanner</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.android_parsers">ai_usage_evidence_analyzer.parsers.android_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.antiforensics_parsers">ai_usage_evidence_analyzer.parsers.antiforensics_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.browser_parsers">ai_usage_evidence_analyzer.parsers.browser_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.c2pa_parser">ai_usage_evidence_analyzer.parsers.c2pa_parser</a>
@@ -2147,6 +2172,25 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="_elementtree"></a>
+  <tt>_elementtree</tt> <span class="moduletype"><tt>C:\Users\hemal\AppData\Local\Programs\Python\Python313\DLLs\_elementtree.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#pyexpat">pyexpat</a>
+ &#8226;   <a href="#xml.etree.ElementInclude">xml.etree.ElementInclude</a>
+ &#8226;   <a href="#xml.etree.ElementPath">xml.etree.ElementPath</a>
+ &#8226;   <a href="#xml.etree.ElementTree">xml.etree.ElementTree</a>
+ &#8226;   <a href="#xml.etree.cElementTree">xml.etree.cElementTree</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#xml.etree.ElementTree">xml.etree.ElementTree</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="_frozen_importlib"></a>
   <a target="code" href="" type="text/plain"><tt>_frozen_importlib</tt></a>
 <span class="moduletype">ExcludedModule</span>  <div class="import">
@@ -2996,7 +3040,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/__init__.py" type="text/plain"><tt>ai_usage_evidence_analyzer</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/__init__.py" type="text/plain"><tt>ai_usage_evidence_analyzer</tt></a>
 <span class="moduletype">Package</span>  <div class="import">
 imports:
     <a href="#ai_usage_evidence_analyzer">ai_usage_evidence_analyzer</a>
@@ -3048,7 +3092,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.__main__"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/__main__.py" type="text/plain"><tt>ai_usage_evidence_analyzer.__main__</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/__main__.py" type="text/plain"><tt>ai_usage_evidence_analyzer.__main__</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#ai_usage_evidence_analyzer">ai_usage_evidence_analyzer</a>
@@ -3065,7 +3109,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.acquisition_bridge"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/acquisition_bridge.py" type="text/plain"><tt>ai_usage_evidence_analyzer.acquisition_bridge</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/acquisition_bridge.py" type="text/plain"><tt>ai_usage_evidence_analyzer.acquisition_bridge</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3088,7 +3132,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.adjudication"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/adjudication.py" type="text/plain"><tt>ai_usage_evidence_analyzer.adjudication</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/adjudication.py" type="text/plain"><tt>ai_usage_evidence_analyzer.adjudication</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3112,7 +3156,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.capability_registry"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/capability_registry.py" type="text/plain"><tt>ai_usage_evidence_analyzer.capability_registry</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/capability_registry.py" type="text/plain"><tt>ai_usage_evidence_analyzer.capability_registry</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3134,7 +3178,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.carving"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/carving.py" type="text/plain"><tt>ai_usage_evidence_analyzer.carving</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/carving.py" type="text/plain"><tt>ai_usage_evidence_analyzer.carving</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3161,7 +3205,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.caveats"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/caveats.py" type="text/plain"><tt>ai_usage_evidence_analyzer.caveats</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/caveats.py" type="text/plain"><tt>ai_usage_evidence_analyzer.caveats</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#ai_usage_evidence_analyzer">ai_usage_evidence_analyzer</a>
@@ -3181,7 +3225,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.claim_ladder"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/claim_ladder.py" type="text/plain"><tt>ai_usage_evidence_analyzer.claim_ladder</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/claim_ladder.py" type="text/plain"><tt>ai_usage_evidence_analyzer.claim_ladder</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3202,7 +3246,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.cli"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/cli.py" type="text/plain"><tt>ai_usage_evidence_analyzer.cli</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/cli.py" type="text/plain"><tt>ai_usage_evidence_analyzer.cli</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#'rich.columns'">'rich.columns'</a>
@@ -3214,6 +3258,7 @@ imports:
  &#8226;   <a href="#__future__">__future__</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer">ai_usage_evidence_analyzer</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.engine">ai_usage_evidence_analyzer.engine</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.signatures">ai_usage_evidence_analyzer.signatures</a>
  &#8226;   <a href="#argparse">argparse</a>
  &#8226;   <a href="#datetime">datetime</a>
  &#8226;   <a href="#logging">logging</a>
@@ -3233,7 +3278,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.confidence"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/confidence.py" type="text/plain"><tt>ai_usage_evidence_analyzer.confidence</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/confidence.py" type="text/plain"><tt>ai_usage_evidence_analyzer.confidence</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3255,7 +3300,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.correlation"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/correlation.py" type="text/plain"><tt>ai_usage_evidence_analyzer.correlation</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/correlation.py" type="text/plain"><tt>ai_usage_evidence_analyzer.correlation</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3278,7 +3323,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.docx_parser"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/docx_parser.py" type="text/plain"><tt>ai_usage_evidence_analyzer.docx_parser</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/docx_parser.py" type="text/plain"><tt>ai_usage_evidence_analyzer.docx_parser</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#ai_usage_evidence_analyzer">ai_usage_evidence_analyzer</a>
@@ -3301,7 +3346,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.docx_report"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/docx_report.py" type="text/plain"><tt>ai_usage_evidence_analyzer.docx_report</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/docx_report.py" type="text/plain"><tt>ai_usage_evidence_analyzer.docx_report</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3332,7 +3377,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.e01_handler"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/e01_handler.py" type="text/plain"><tt>ai_usage_evidence_analyzer.e01_handler</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/e01_handler.py" type="text/plain"><tt>ai_usage_evidence_analyzer.e01_handler</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3366,7 +3411,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.engine"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/engine.py" type="text/plain"><tt>ai_usage_evidence_analyzer.engine</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/engine.py" type="text/plain"><tt>ai_usage_evidence_analyzer.engine</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3420,7 +3465,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.evidence_exhibit"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/evidence_exhibit.py" type="text/plain"><tt>ai_usage_evidence_analyzer.evidence_exhibit</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/evidence_exhibit.py" type="text/plain"><tt>ai_usage_evidence_analyzer.evidence_exhibit</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3446,7 +3491,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.forensic_checklist"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/forensic_checklist.py" type="text/plain"><tt>ai_usage_evidence_analyzer.forensic_checklist</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/forensic_checklist.py" type="text/plain"><tt>ai_usage_evidence_analyzer.forensic_checklist</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#ai_usage_evidence_analyzer">ai_usage_evidence_analyzer</a>
@@ -3468,7 +3513,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.fr_assessment"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/fr_assessment.py" type="text/plain"><tt>ai_usage_evidence_analyzer.fr_assessment</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/fr_assessment.py" type="text/plain"><tt>ai_usage_evidence_analyzer.fr_assessment</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3489,7 +3534,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.governance"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/governance.py" type="text/plain"><tt>ai_usage_evidence_analyzer.governance</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/governance.py" type="text/plain"><tt>ai_usage_evidence_analyzer.governance</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3514,7 +3559,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.llm_narrator"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/llm_narrator.py" type="text/plain"><tt>ai_usage_evidence_analyzer.llm_narrator</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/llm_narrator.py" type="text/plain"><tt>ai_usage_evidence_analyzer.llm_narrator</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3537,7 +3582,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.matrix"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/matrix.py" type="text/plain"><tt>ai_usage_evidence_analyzer.matrix</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/matrix.py" type="text/plain"><tt>ai_usage_evidence_analyzer.matrix</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3560,7 +3605,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.models"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/models.py" type="text/plain"><tt>ai_usage_evidence_analyzer.models</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/models.py" type="text/plain"><tt>ai_usage_evidence_analyzer.models</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3590,6 +3635,7 @@ imported by:
  &#8226;   <a href="#ai_usage_evidence_analyzer.matrix">ai_usage_evidence_analyzer.matrix</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parser_registry">ai_usage_evidence_analyzer.parser_registry</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.ai_tool_scanner">ai_usage_evidence_analyzer.parsers.ai_tool_scanner</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.android_parsers">ai_usage_evidence_analyzer.parsers.android_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.antiforensics_parsers">ai_usage_evidence_analyzer.parsers.antiforensics_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.browser_parsers">ai_usage_evidence_analyzer.parsers.browser_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.c2pa_parser">ai_usage_evidence_analyzer.parsers.c2pa_parser</a>
@@ -3622,7 +3668,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.parser_registry"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/parser_registry.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parser_registry</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/parser_registry.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parser_registry</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3639,6 +3685,7 @@ imports:
 imported by:
     <a href="#ai_usage_evidence_analyzer.engine">ai_usage_evidence_analyzer.engine</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.ai_tool_scanner">ai_usage_evidence_analyzer.parsers.ai_tool_scanner</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.android_parsers">ai_usage_evidence_analyzer.parsers.android_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.antiforensics_parsers">ai_usage_evidence_analyzer.parsers.antiforensics_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.browser_parsers">ai_usage_evidence_analyzer.parsers.browser_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.c2pa_parser">ai_usage_evidence_analyzer.parsers.c2pa_parser</a>
@@ -3658,11 +3705,12 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.parsers"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/parsers/__init__.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/parsers/__init__.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers</tt></a>
 <span class="moduletype">Package</span>  <div class="import">
 imports:
     <a href="#ai_usage_evidence_analyzer">ai_usage_evidence_analyzer</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers">ai_usage_evidence_analyzer.parsers</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.android_parsers">ai_usage_evidence_analyzer.parsers.android_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.antiforensics_parsers">ai_usage_evidence_analyzer.parsers.antiforensics_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.browser_parsers">ai_usage_evidence_analyzer.parsers.browser_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.c2pa_parser">ai_usage_evidence_analyzer.parsers.c2pa_parser</a>
@@ -3681,6 +3729,7 @@ imported by:
     <a href="#ai_usage_evidence_analyzer.engine">ai_usage_evidence_analyzer.engine</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers">ai_usage_evidence_analyzer.parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.ai_tool_scanner">ai_usage_evidence_analyzer.parsers.ai_tool_scanner</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.android_parsers">ai_usage_evidence_analyzer.parsers.android_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.antiforensics_parsers">ai_usage_evidence_analyzer.parsers.antiforensics_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.browser_parsers">ai_usage_evidence_analyzer.parsers.browser_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.c2pa_parser">ai_usage_evidence_analyzer.parsers.c2pa_parser</a>
@@ -3703,7 +3752,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.parsers.ai_tool_scanner"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/parsers/ai_tool_scanner.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.ai_tool_scanner</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/parsers/ai_tool_scanner.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.ai_tool_scanner</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3731,8 +3780,36 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="ai_usage_evidence_analyzer.parsers.android_parsers"></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/parsers/android_parsers.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.android_parsers</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#__future__">__future__</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.models">ai_usage_evidence_analyzer.models</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.parser_registry">ai_usage_evidence_analyzer.parser_registry</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.parsers">ai_usage_evidence_analyzer.parsers</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.browser_parsers">ai_usage_evidence_analyzer.parsers.browser_parsers</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.signatures">ai_usage_evidence_analyzer.signatures</a>
+ &#8226;   <a href="#datetime">datetime</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#pathlib">pathlib</a>
+ &#8226;   <a href="#re">re</a>
+ &#8226;   <a href="#typing">typing</a>
+ &#8226;   <a href="#xml.etree.ElementTree">xml.etree.ElementTree</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#ai_usage_evidence_analyzer.parsers">ai_usage_evidence_analyzer.parsers</a>
+ &#8226;   <a href="#desktop_app.py">desktop_app.py</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="ai_usage_evidence_analyzer.parsers.antiforensics_parsers"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/parsers/antiforensics_parsers.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.antiforensics_parsers</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/parsers/antiforensics_parsers.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.antiforensics_parsers</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3760,7 +3837,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.parsers.browser_parsers"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/parsers/browser_parsers.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.browser_parsers</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/parsers/browser_parsers.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.browser_parsers</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3782,6 +3859,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#ai_usage_evidence_analyzer.parsers">ai_usage_evidence_analyzer.parsers</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.android_parsers">ai_usage_evidence_analyzer.parsers.android_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.iphone_parsers">ai_usage_evidence_analyzer.parsers.iphone_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.macos_parsers">ai_usage_evidence_analyzer.parsers.macos_parsers</a>
  &#8226;   <a href="#desktop_app.py">desktop_app.py</a>
@@ -3792,7 +3870,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.parsers.c2pa_parser"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/parsers/c2pa_parser.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.c2pa_parser</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/parsers/c2pa_parser.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.c2pa_parser</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3819,7 +3897,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.parsers.chatgpt_export_parser"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/parsers/chatgpt_export_parser.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.chatgpt_export_parser</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/parsers/chatgpt_export_parser.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.chatgpt_export_parser</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3844,7 +3922,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.parsers.content_parsers"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/parsers/content_parsers.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.content_parsers</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/parsers/content_parsers.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.content_parsers</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3870,7 +3948,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.parsers.generated_asset_parser"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/parsers/generated_asset_parser.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.generated_asset_parser</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/parsers/generated_asset_parser.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.generated_asset_parser</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3895,7 +3973,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.parsers.iphone_parsers"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/parsers/iphone_parsers.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.iphone_parsers</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/parsers/iphone_parsers.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.iphone_parsers</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3922,7 +4000,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.parsers.macos_parsers"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/parsers/macos_parsers.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.macos_parsers</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/parsers/macos_parsers.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.macos_parsers</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3951,7 +4029,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.parsers.memory_pcap_parser"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/parsers/memory_pcap_parser.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.memory_pcap_parser</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/parsers/memory_pcap_parser.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.memory_pcap_parser</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -3978,7 +4056,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.parsers.plugin_parsers"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/parsers/plugin_parsers.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.plugin_parsers</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/parsers/plugin_parsers.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.plugin_parsers</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -4008,7 +4086,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.parsers.provider_export_parser"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/parsers/provider_export_parser.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.provider_export_parser</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/parsers/provider_export_parser.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.provider_export_parser</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -4032,7 +4110,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.parsers.recovery_parsers"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/parsers/recovery_parsers.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.recovery_parsers</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/parsers/recovery_parsers.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.recovery_parsers</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -4056,7 +4134,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.parsers.shared_link_parser"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/parsers/shared_link_parser.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.shared_link_parser</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/parsers/shared_link_parser.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.shared_link_parser</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -4082,10 +4160,12 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.parsers.windows_parsers"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/parsers/windows_parsers.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.windows_parsers</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/parsers/windows_parsers.py" type="text/plain"><tt>ai_usage_evidence_analyzer.parsers.windows_parsers</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#Registry">Registry</a>
+    <a href="#'Evtx.Evtx'">'Evtx.Evtx'</a>
+ &#8226;   <a href="#Evtx">Evtx</a>
+ &#8226;   <a href="#Registry">Registry</a>
  &#8226;   <a href="#__future__">__future__</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.models">ai_usage_evidence_analyzer.models</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parser_registry">ai_usage_evidence_analyzer.parser_registry</a>
@@ -4097,6 +4177,7 @@ imports:
  &#8226;   <a href="#re">re</a>
  &#8226;   <a href="#struct">struct</a>
  &#8226;   <a href="#typing">typing</a>
+ &#8226;   <a href="#xml.etree.ElementTree">xml.etree.ElementTree</a>
 
   </div>
   <div class="import">
@@ -4110,7 +4191,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.partition_analysis"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/partition_analysis.py" type="text/plain"><tt>ai_usage_evidence_analyzer.partition_analysis</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/partition_analysis.py" type="text/plain"><tt>ai_usage_evidence_analyzer.partition_analysis</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -4134,7 +4215,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.persistence"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/persistence.py" type="text/plain"><tt>ai_usage_evidence_analyzer.persistence</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/persistence.py" type="text/plain"><tt>ai_usage_evidence_analyzer.persistence</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -4155,7 +4236,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.raw_inspector"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/raw_inspector.py" type="text/plain"><tt>ai_usage_evidence_analyzer.raw_inspector</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/raw_inspector.py" type="text/plain"><tt>ai_usage_evidence_analyzer.raw_inspector</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -4179,7 +4260,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.recovery"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/recovery.py" type="text/plain"><tt>ai_usage_evidence_analyzer.recovery</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/recovery.py" type="text/plain"><tt>ai_usage_evidence_analyzer.recovery</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -4207,7 +4288,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.repo_reality_check"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/repo_reality_check.py" type="text/plain"><tt>ai_usage_evidence_analyzer.repo_reality_check</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/repo_reality_check.py" type="text/plain"><tt>ai_usage_evidence_analyzer.repo_reality_check</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -4230,7 +4311,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.report_generator"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/report_generator.py" type="text/plain"><tt>ai_usage_evidence_analyzer.report_generator</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/report_generator.py" type="text/plain"><tt>ai_usage_evidence_analyzer.report_generator</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -4259,7 +4340,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.signatures"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/signatures.py" type="text/plain"><tt>ai_usage_evidence_analyzer.signatures</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/signatures.py" type="text/plain"><tt>ai_usage_evidence_analyzer.signatures</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -4271,7 +4352,9 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#ai_usage_evidence_analyzer.e01_handler">ai_usage_evidence_analyzer.e01_handler</a>
+    <a href="#ai_usage_evidence_analyzer.cli">ai_usage_evidence_analyzer.cli</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.e01_handler">ai_usage_evidence_analyzer.e01_handler</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.android_parsers">ai_usage_evidence_analyzer.parsers.android_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.browser_parsers">ai_usage_evidence_analyzer.parsers.browser_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.chatgpt_export_parser">ai_usage_evidence_analyzer.parsers.chatgpt_export_parser</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.content_parsers">ai_usage_evidence_analyzer.parsers.content_parsers</a>
@@ -4290,7 +4373,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.storage"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/storage.py" type="text/plain"><tt>ai_usage_evidence_analyzer.storage</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/storage.py" type="text/plain"><tt>ai_usage_evidence_analyzer.storage</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -4315,7 +4398,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.tool_registry"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/tool_registry.py" type="text/plain"><tt>ai_usage_evidence_analyzer.tool_registry</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/tool_registry.py" type="text/plain"><tt>ai_usage_evidence_analyzer.tool_registry</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#ai_usage_evidence_analyzer">ai_usage_evidence_analyzer</a>
@@ -4337,7 +4420,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.ui_checklist"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/ui_checklist.py" type="text/plain"><tt>ai_usage_evidence_analyzer.ui_checklist</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/ui_checklist.py" type="text/plain"><tt>ai_usage_evidence_analyzer.ui_checklist</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#ai_usage_evidence_analyzer">ai_usage_evidence_analyzer</a>
@@ -4357,7 +4440,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.validation"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/validation.py" type="text/plain"><tt>ai_usage_evidence_analyzer.validation</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/validation.py" type="text/plain"><tt>ai_usage_evidence_analyzer.validation</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -4381,7 +4464,7 @@ imported by:
 
 <div class="node">
   <a name="ai_usage_evidence_analyzer.voice_evidence"></a>
-  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/code/ai_usage_evidence_analyzer/voice_evidence.py" type="text/plain"><tt>ai_usage_evidence_analyzer.voice_evidence</tt></a>
+  <a target="code" href="///C:/UNCC/ITIS-5250-092%28Comp-For%29/Project/TRACE-AI-FR/ai_usage_evidence_analyzer/voice_evidence.py" type="text/plain"><tt>ai_usage_evidence_analyzer.voice_evidence</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#__future__">__future__</a>
@@ -8297,6 +8380,7 @@ imported by:
  &#8226;   <a href="#unittest.case">unittest.case</a>
  &#8226;   <a href="#unittest.util">unittest.util</a>
  &#8226;   <a href="#urllib.parse">urllib.parse</a>
+ &#8226;   <a href="#xml.etree.ElementTree">xml.etree.ElementTree</a>
  &#8226;   <a href="#yaml.representer">yaml.representer</a>
  &#8226;   <a href="#zoneinfo._zoneinfo">zoneinfo._zoneinfo</a>
 
@@ -8649,6 +8733,7 @@ imported by:
  &#8226;   <a href="#typing_inspection.typing_objects">typing_inspection.typing_objects</a>
  &#8226;   <a href="#unittest.case">unittest.case</a>
  &#8226;   <a href="#urllib.request">urllib.request</a>
+ &#8226;   <a href="#xml.etree.ElementTree">xml.etree.ElementTree</a>
  &#8226;   <a href="#zipfile._path">zipfile._path</a>
 
   </div>
@@ -8721,6 +8806,7 @@ imported by:
  &#8226;   <a href="#tarfile">tarfile</a>
  &#8226;   <a href="#weakref">weakref</a>
  &#8226;   <a href="#webbrowser">webbrowser</a>
+ &#8226;   <a href="#xml.etree.ElementInclude">xml.etree.ElementInclude</a>
 
   </div>
 
@@ -9086,6 +9172,7 @@ imported by:
  &#8226;   <a href="#ai_usage_evidence_analyzer.models">ai_usage_evidence_analyzer.models</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parser_registry">ai_usage_evidence_analyzer.parser_registry</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.ai_tool_scanner">ai_usage_evidence_analyzer.parsers.ai_tool_scanner</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.android_parsers">ai_usage_evidence_analyzer.parsers.android_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.antiforensics_parsers">ai_usage_evidence_analyzer.parsers.antiforensics_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.browser_parsers">ai_usage_evidence_analyzer.parsers.browser_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.c2pa_parser">ai_usage_evidence_analyzer.parsers.c2pa_parser</a>
@@ -18575,6 +18662,7 @@ imported by:
  &#8226;   <a href="#urllib.error">urllib.error</a>
  &#8226;   <a href="#urllib.request">urllib.request</a>
  &#8226;   <a href="#uuid">uuid</a>
+ &#8226;   <a href="#xml.etree.ElementTree">xml.etree.ElementTree</a>
  &#8226;   <a href="#xml.sax">xml.sax</a>
  &#8226;   <a href="#xml.sax.saxutils">xml.sax.saxutils</a>
  &#8226;   <a href="#xmlrpc.client">xmlrpc.client</a>
@@ -47725,6 +47813,7 @@ imported by:
  &#8226;   <a href="#ai_usage_evidence_analyzer.governance">ai_usage_evidence_analyzer.governance</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.llm_narrator">ai_usage_evidence_analyzer.llm_narrator</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.ai_tool_scanner">ai_usage_evidence_analyzer.parsers.ai_tool_scanner</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.android_parsers">ai_usage_evidence_analyzer.parsers.android_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.antiforensics_parsers">ai_usage_evidence_analyzer.parsers.antiforensics_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.browser_parsers">ai_usage_evidence_analyzer.parsers.browser_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.c2pa_parser">ai_usage_evidence_analyzer.parsers.c2pa_parser</a>
@@ -47955,6 +48044,7 @@ imported by:
     <a href="#ai_usage_evidence_analyzer.docx_parser">ai_usage_evidence_analyzer.docx_parser</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.e01_handler">ai_usage_evidence_analyzer.e01_handler</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.ai_tool_scanner">ai_usage_evidence_analyzer.parsers.ai_tool_scanner</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.android_parsers">ai_usage_evidence_analyzer.parsers.android_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.antiforensics_parsers">ai_usage_evidence_analyzer.parsers.antiforensics_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.browser_parsers">ai_usage_evidence_analyzer.parsers.browser_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.c2pa_parser">ai_usage_evidence_analyzer.parsers.c2pa_parser</a>
@@ -52246,7 +52336,9 @@ imported by:
   <a name="pyexpat"></a>
   <tt>pyexpat</tt> <span class="moduletype"><tt>C:\Users\hemal\AppData\Local\Programs\Python\Python313\DLLs\pyexpat.pyd</tt></span>  <div class="import">
 imported by:
-    <a href="#xml.parsers.expat">xml.parsers.expat</a>
+    <a href="#_elementtree">_elementtree</a>
+ &#8226;   <a href="#xml.etree.ElementTree">xml.etree.ElementTree</a>
+ &#8226;   <a href="#xml.parsers.expat">xml.parsers.expat</a>
 
   </div>
 
@@ -52388,6 +52480,7 @@ imported by:
  &#8226;   <a href="#ai_usage_evidence_analyzer.e01_handler">ai_usage_evidence_analyzer.e01_handler</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.engine">ai_usage_evidence_analyzer.engine</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.ai_tool_scanner">ai_usage_evidence_analyzer.parsers.ai_tool_scanner</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.android_parsers">ai_usage_evidence_analyzer.parsers.android_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.antiforensics_parsers">ai_usage_evidence_analyzer.parsers.antiforensics_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.browser_parsers">ai_usage_evidence_analyzer.parsers.browser_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.c2pa_parser">ai_usage_evidence_analyzer.parsers.c2pa_parser</a>
@@ -52542,6 +52635,8 @@ imported by:
  &#8226;   <a href="#urllib.parse">urllib.parse</a>
  &#8226;   <a href="#urllib.request">urllib.request</a>
  &#8226;   <a href="#warnings">warnings</a>
+ &#8226;   <a href="#xml.etree.ElementPath">xml.etree.ElementPath</a>
+ &#8226;   <a href="#xml.etree.ElementTree">xml.etree.ElementTree</a>
  &#8226;   <a href="#yaml.constructor">yaml.constructor</a>
  &#8226;   <a href="#yaml.reader">yaml.reader</a>
  &#8226;   <a href="#yaml.resolver">yaml.resolver</a>
@@ -53846,6 +53941,7 @@ imported by:
  &#8226;   <a href="#warnings">warnings</a>
  &#8226;   <a href="#weakref">weakref</a>
  &#8226;   <a href="#webbrowser">webbrowser</a>
+ &#8226;   <a href="#xml.etree.ElementTree">xml.etree.ElementTree</a>
  &#8226;   <a href="#xml.parsers.expat">xml.parsers.expat</a>
  &#8226;   <a href="#xml.sax">xml.sax</a>
  &#8226;   <a href="#xml.sax.saxutils">xml.sax.saxutils</a>
@@ -54764,6 +54860,7 @@ imported by:
  &#8226;   <a href="#ai_usage_evidence_analyzer.models">ai_usage_evidence_analyzer.models</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parser_registry">ai_usage_evidence_analyzer.parser_registry</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.ai_tool_scanner">ai_usage_evidence_analyzer.parsers.ai_tool_scanner</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.android_parsers">ai_usage_evidence_analyzer.parsers.android_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.antiforensics_parsers">ai_usage_evidence_analyzer.parsers.antiforensics_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.browser_parsers">ai_usage_evidence_analyzer.parsers.browser_parsers</a>
  &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.c2pa_parser">ai_usage_evidence_analyzer.parsers.c2pa_parser</a>
@@ -57528,6 +57625,7 @@ imported by:
  &#8226;   <a href="#pathlib._local">pathlib._local</a>
  &#8226;   <a href="#pydoc">pydoc</a>
  &#8226;   <a href="#urllib.request">urllib.request</a>
+ &#8226;   <a href="#xml.etree.ElementInclude">xml.etree.ElementInclude</a>
  &#8226;   <a href="#xml.sax.saxutils">xml.sax.saxutils</a>
  &#8226;   <a href="#xmlrpc.client">xmlrpc.client</a>
 
@@ -57859,6 +57957,7 @@ imported by:
  &#8226;   <a href="#unittest.runner">unittest.runner</a>
  &#8226;   <a href="#urllib.parse">urllib.parse</a>
  &#8226;   <a href="#urllib.request">urllib.request</a>
+ &#8226;   <a href="#xml.etree.ElementTree">xml.etree.ElementTree</a>
  &#8226;   <a href="#zipfile">zipfile</a>
  &#8226;   <a href="#zoneinfo._tzpath">zoneinfo._tzpath</a>
 
@@ -57914,6 +58013,7 @@ imported by:
  &#8226;   <a href="#pydantic.v1.utils">pydantic.v1.utils</a>
  &#8226;   <a href="#tempfile">tempfile</a>
  &#8226;   <a href="#unittest.signals">unittest.signals</a>
+ &#8226;   <a href="#xml.etree.ElementTree">xml.etree.ElementTree</a>
  &#8226;   <a href="#xml.sax.expatreader">xml.sax.expatreader</a>
  &#8226;   <a href="#zoneinfo._zoneinfo">zoneinfo._zoneinfo</a>
 
@@ -57983,8 +58083,121 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#xml.parsers">xml.parsers</a>
+    <a href="#xml.etree">xml.etree</a>
+ &#8226;   <a href="#xml.parsers">xml.parsers</a>
  &#8226;   <a href="#xml.sax">xml.sax</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="xml.etree"></a>
+  <a target="code" href="///C:/Users/hemal/AppData/Local/Programs/Python/Python313/Lib/xml/etree/__init__.py" type="text/plain"><tt>xml.etree</tt></a>
+<span class="moduletype">Package</span>  <div class="import">
+imports:
+    <a href="#xml">xml</a>
+ &#8226;   <a href="#xml.etree">xml.etree</a>
+ &#8226;   <a href="#xml.etree.ElementPath">xml.etree.ElementPath</a>
+ &#8226;   <a href="#xml.etree.ElementTree">xml.etree.ElementTree</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#xml.etree">xml.etree</a>
+ &#8226;   <a href="#xml.etree.ElementInclude">xml.etree.ElementInclude</a>
+ &#8226;   <a href="#xml.etree.ElementPath">xml.etree.ElementPath</a>
+ &#8226;   <a href="#xml.etree.ElementTree">xml.etree.ElementTree</a>
+ &#8226;   <a href="#xml.etree.cElementTree">xml.etree.cElementTree</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="xml.etree.ElementInclude"></a>
+  <a target="code" href="///C:/Users/hemal/AppData/Local/Programs/Python/Python313/Lib/xml/etree/ElementInclude.py" type="text/plain"><tt>xml.etree.ElementInclude</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#copy">copy</a>
+ &#8226;   <a href="#urllib.parse">urllib.parse</a>
+ &#8226;   <a href="#xml.etree">xml.etree</a>
+ &#8226;   <a href="#xml.etree.ElementTree">xml.etree.ElementTree</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#_elementtree">_elementtree</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="xml.etree.ElementPath"></a>
+  <a target="code" href="///C:/Users/hemal/AppData/Local/Programs/Python/Python313/Lib/xml/etree/ElementPath.py" type="text/plain"><tt>xml.etree.ElementPath</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#re">re</a>
+ &#8226;   <a href="#xml.etree">xml.etree</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#_elementtree">_elementtree</a>
+ &#8226;   <a href="#xml.etree">xml.etree</a>
+ &#8226;   <a href="#xml.etree.ElementTree">xml.etree.ElementTree</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="xml.etree.ElementTree"></a>
+  <a target="code" href="///C:/Users/hemal/AppData/Local/Programs/Python/Python313/Lib/xml/etree/ElementTree.py" type="text/plain"><tt>xml.etree.ElementTree</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#'collections.abc'">'collections.abc'</a>
+ &#8226;   <a href="#_elementtree">_elementtree</a>
+ &#8226;   <a href="#collections">collections</a>
+ &#8226;   <a href="#contextlib">contextlib</a>
+ &#8226;   <a href="#io">io</a>
+ &#8226;   <a href="#pyexpat">pyexpat</a>
+ &#8226;   <a href="#re">re</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#warnings">warnings</a>
+ &#8226;   <a href="#weakref">weakref</a>
+ &#8226;   <a href="#xml.etree">xml.etree</a>
+ &#8226;   <a href="#xml.etree.ElementPath">xml.etree.ElementPath</a>
+ &#8226;   <a href="#xml.parsers">xml.parsers</a>
+ &#8226;   <a href="#xml.parsers.expat">xml.parsers.expat</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#_elementtree">_elementtree</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.android_parsers">ai_usage_evidence_analyzer.parsers.android_parsers</a>
+ &#8226;   <a href="#ai_usage_evidence_analyzer.parsers.windows_parsers">ai_usage_evidence_analyzer.parsers.windows_parsers</a>
+ &#8226;   <a href="#xml.etree">xml.etree</a>
+ &#8226;   <a href="#xml.etree.ElementInclude">xml.etree.ElementInclude</a>
+ &#8226;   <a href="#xml.etree.cElementTree">xml.etree.cElementTree</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="xml.etree.cElementTree"></a>
+  <a target="code" href="///C:/Users/hemal/AppData/Local/Programs/Python/Python313/Lib/xml/etree/cElementTree.py" type="text/plain"><tt>xml.etree.cElementTree</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#xml.etree">xml.etree</a>
+ &#8226;   <a href="#xml.etree.ElementTree">xml.etree.ElementTree</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#_elementtree">_elementtree</a>
 
   </div>
 
@@ -58001,7 +58214,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#xml.parsers.expat">xml.parsers.expat</a>
+    <a href="#xml.etree.ElementTree">xml.etree.ElementTree</a>
+ &#8226;   <a href="#xml.parsers.expat">xml.parsers.expat</a>
  &#8226;   <a href="#xml.sax.expatreader">xml.sax.expatreader</a>
  &#8226;   <a href="#xmlrpc.client">xmlrpc.client</a>
 
@@ -58022,6 +58236,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#plistlib">plistlib</a>
+ &#8226;   <a href="#xml.etree.ElementTree">xml.etree.ElementTree</a>
  &#8226;   <a href="#xml.parsers">xml.parsers</a>
  &#8226;   <a href="#xml.sax.expatreader">xml.sax.expatreader</a>
  &#8226;   <a href="#xmlrpc.client">xmlrpc.client</a>

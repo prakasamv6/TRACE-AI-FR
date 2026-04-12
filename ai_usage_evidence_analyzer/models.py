@@ -33,6 +33,15 @@ class AIPlatform(str, Enum):
     META_AI = "Meta AI"
     GROK = "Grok"
     POE = "Poe"
+    ADOBE_FIREFLY = "Adobe Firefly"
+    CHECKR = "Checkr"
+    TIDIO = "Tidio"
+    LINDY = "Lindy"
+    SYNTHESIA = "Synthesia"
+    LATTICE_AI = "Lattice AI"
+    DATAROBOT = "DataRobot"
+    LEENA_AI = "Leena AI"
+    NEXOS_AI = "Nexos AI"
     UNKNOWN = "Unknown"
 
 
@@ -51,6 +60,9 @@ class AIModel(str, Enum):
     PERPLEXITY_ONLINE = "Perplexity Online"
     LLAMA_3 = "Llama 3"
     GROK_2 = "Grok-2"
+    FIREFLY_2 = "Firefly 2"
+    FIREFLY_3 = "Firefly 3"
+    SYNTHESIA_AI = "Synthesia AI"
     UNKNOWN = "Unknown"
 
 
@@ -110,6 +122,7 @@ class OSPlatform(str, Enum):
     MACOS = "macOS"
     LINUX = "Linux"
     IPHONE = "iPhone"
+    ANDROID = "Android"
     UNKNOWN = "Unknown"
 
 
