@@ -96,7 +96,7 @@ THEMES = {
     },
 }
 
-_current_theme = "dark"
+_current_theme = "light"
 _t = THEMES[_current_theme]
 BG       = _t["BG"]
 SURFACE  = _t["SURFACE"]
@@ -327,8 +327,8 @@ class TraceAIApp(tk.Tk):
         # View
         view_menu = tk.Menu(menubar, tearoff=0, bg=SURFACE, fg=TEXT,
                             activebackground=PRIMARY, activeforeground=TOPBAR)
-        self._theme_label_var = tk.StringVar(value="Switch to Light Theme")
-        view_menu.add_command(label="Switch to Light Theme",
+        self._theme_label_var = tk.StringVar(value="Switch to Dark Theme")
+        view_menu.add_command(label="Switch to Dark Theme",
                               command=self._toggle_theme)
         self._view_menu = view_menu
         menubar.add_cascade(label="  View  ", menu=view_menu)

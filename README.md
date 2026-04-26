@@ -5,8 +5,8 @@ TRACE-AI-FR (Transparent Reporting of AI-related Claims in Evidence: A Forensic 
 ## Start Here (Non-Technical Users)
 
 - Download first from GitHub: https://github.com/prakasamv6/TRACE-AI-FR
-- One-page handout: `HOW_TO_RUN_ONE_PAGE.md`
-- Printable PDF handout: `HOW_TO_RUN_ONE_PAGE.pdf`
+- One-page handout: `HOW_TO_RUN.md`
+- Printable PDF handout: `HOW_TO_RUN.pdf`
 - Read the step-by-step guide: `HOW_TO_RUN_LOCALLY.md`
 - Word version for sharing/printing: `HOW_TO_RUN_LOCALLY.docx`
 
@@ -65,8 +65,8 @@ python -m ai_usage_evidence_analyzer info
 
 - Main architecture details: see `ARCHITECTURE.md`
 - Quick usage guide: see `QUICK_START.md`
-- One-page handout: see `HOW_TO_RUN_ONE_PAGE.md`
-- One-page PDF handout: see `HOW_TO_RUN_ONE_PAGE.pdf`
+- One-page handout: see `HOW_TO_RUN.md`
+- One-page PDF handout: see `HOW_TO_RUN.pdf`
 - Local setup and run steps: see `HOW_TO_RUN_LOCALLY.md`
 - Word version of local run guide: see `HOW_TO_RUN_LOCALLY.docx`
 - Build notes: see `BUILD_SUCCESS.md`

@@ -1,9 +1,13 @@
 # -*- mode: python ; coding: utf-8 -*-
+import sys
+from pathlib import Path
+
 from PyInstaller.utils.hooks import collect_all
 
 datas = [('ai_usage_evidence_analyzer', 'ai_usage_evidence_analyzer')]
 binaries = []
 hiddenimports = [
+    '_tkinter',
     'ai_usage_evidence_analyzer',
     'ai_usage_evidence_analyzer.__main__',
     'ai_usage_evidence_analyzer.acquisition_bridge',
@@ -62,6 +66,33 @@ hiddenimports = [
 tmp_ret = collect_all('docx')
 datas += tmp_ret[0]; binaries += tmp_ret[1]; hiddenimports += tmp_ret[2]
 
+python_root = Path(sys.base_prefix)
+python_dlls = python_root / 'DLLs'
+python_tcl = python_root / 'tcl'
+
+tkinter_ext = python_dlls / '_tkinter.pyd'
+tcl_dll = python_dlls / 'tcl86t.dll'
+tk_dll = python_dlls / 'tk86t.dll'
+
+if tkinter_ext.exists():
+    binaries.append((str(tkinter_ext), '.'))
+if tcl_dll.exists():
+    binaries.append((str(tcl_dll), '.'))
+if tk_dll.exists():
+    binaries.append((str(tk_dll), '.'))
+if python_tcl.exists():
+    datas.append((str(python_tcl), 'tcl'))
+
+tcl_library = python_tcl / 'tcl8.6'
+tk_library = python_tcl / 'tk8.6'
+tcl_modules = python_tcl / 'tcl8'
+if tcl_library.exists():
+    datas.append((str(tcl_library), '_tcl_data'))
+if tk_library.exists():
+    datas.append((str(tk_library), '_tk_data'))
+if tcl_modules.exists():
+    datas.append((str(tcl_modules), 'tcl8'))
+
 
 a = Analysis(
     ['desktop_app.py'],
@@ -71,7 +102,7 @@ a = Analysis(
     hiddenimports=hiddenimports,
     hookspath=[],
     hooksconfig={},
-    runtime_hooks=[],
+    runtime_hooks=['pyinstaller_hooks/rthook_tkinter.py'],
     excludes=[
         'torch', 'torchvision', 'torchaudio',
         'scipy', 'pandas', 'matplotlib', 'mpl_toolkits',
@@ -88,6 +119,13 @@ a = Analysis(
     noarchive=False,
     optimize=0,
 )
+
+tkinter_package = python_root / 'Lib' / 'tkinter'
+if tkinter_package.exists():
+    for tkinter_module in tkinter_package.glob('*.py'):
+        module_name = tkinter_module.stem
+        import_name = 'tkinter' if module_name == '__init__' else f'tkinter.{module_name}'
+        a.pure.append((import_name, str(tkinter_module), 'PYMODULE'))
 pyz = PYZ(a.pure)
 
 exe = EXE(

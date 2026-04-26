@@ -56,6 +56,26 @@ cd dist
 .\TRACE-AI-FR.exe
 ```
 
+## Rebuild the Packaged App After Code Changes
+
+From the project root folder, run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\build_exe.ps1
+```
+
+This checks `desktop_app.py` syntax first. If the check succeeds, it rebuilds:
+
+```text
+dist\TRACE-AI-FR.exe
+```
+
+To rebuild automatically whenever Python, spec, YAML, or TOML files change, run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\build_exe.ps1 -Watch
+```
+
 ## Analyze Evidence (Simple Command)
 
 Use this command to run an analysis from PowerShell:
