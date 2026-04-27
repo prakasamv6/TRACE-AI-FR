@@ -1,0 +1,28 @@
+{
+  "version": "0.2",
+  "words": [
+    "activebackground",
+    "activeforeground",
+    "bordercolor",
+    "borderwidth",
+    "docx",
+    "fieldbackground",
+    "insertbackground",
+    "insertcolor",
+    "MEIPASS",
+    "Menlo",
+    "Neue",
+    "padx",
+    "pady",
+    "rowheight",
+    "Segoe",
+    "startfile",
+    "tearoff",
+    "textvariable",
+    "TOPBAR",
+    "troughcolor",
+    "wclass",
+    "xscrollcommand",
+    "yscrollcommand"
+  ]
+}

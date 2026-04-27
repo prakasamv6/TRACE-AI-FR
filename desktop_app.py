@@ -2,6 +2,10 @@
 TRACE-AI-FR Desktop Application
 Transparent Reporting of AI-related Claims in Evidence: A Forensic Reasoning Framework
 """
+# cSpell:words MEIPASS Neue Menlo Segoe Consolas startfile TOPBAR
+# cSpell:words fieldbackground bordercolor troughcolor rowheight insertcolor
+# cSpell:words insertbackground activebackground activeforeground tearoff
+# cSpell:words wclass padx pady textvariable yscrollcommand xscrollcommand
 import os
 import sys
 import json
@@ -15,12 +19,13 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox, scrolledtext, simpledialog
 from datetime import datetime
 from pathlib import Path
+from typing import Any
 
 # ---------------------------------------------------------------------------
 # Resolve package path so the app works both as script and bundled .exe / .app
 # ---------------------------------------------------------------------------
 if getattr(sys, "frozen", False):
-    _BASE = sys._MEIPASS
+    _BASE = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
 else:
     _BASE = os.path.dirname(os.path.abspath(__file__))
 
@@ -132,8 +137,17 @@ class TraceAIApp(tk.Tk):
         self.questions_docx_path: str = ""
         self.report: ForensicReport | None = None
         self._analysis_thread: threading.Thread | None = None
-        self._msg_queue: queue.Queue = queue.Queue()
+        self._msg_queue: queue.Queue[Any] = queue.Queue()
         self._polling: bool = False
+
+        self.evidence_var: tk.StringVar = tk.StringVar()
+        self.output_var: tk.StringVar = tk.StringVar()
+        self.questions_var: tk.StringVar = tk.StringVar()
+        self.case_var: tk.StringVar = tk.StringVar()
+        self.examiner_var: tk.StringVar = tk.StringVar()
+        self.org_var: tk.StringVar = tk.StringVar()
+        self.carving_var: tk.BooleanVar = tk.BooleanVar(value=False)
+        self.mode_var: tk.StringVar = tk.StringVar(value="auto")
 
         # Icon (optional, Windows only)
         try:
@@ -361,9 +375,17 @@ class TraceAIApp(tk.Tk):
         sep.pack(side="left", padx=4)
 
         # Buttons
-        btn_kw = dict(bg=SURFACE2, fg=TEXT, relief="flat",
-                      activebackground=PRIMARY, activeforeground=TOPBAR,
-                      font=(FONT_UI, 10), padx=10, pady=3, cursor="hand2")
+        btn_kw: dict[str, Any] = dict(
+            bg=SURFACE2,
+            fg=TEXT,
+            relief="flat",
+            activebackground=PRIMARY,
+            activeforeground=TOPBAR,
+            font=(FONT_UI, 10),
+            padx=10,
+            pady=3,
+            cursor="hand2",
+        )
 
         tk.Button(tb, text="📂 Open Evidence", command=self._open_evidence,
                   **btn_kw).pack(side="left", padx=2, pady=6)
@@ -423,18 +445,16 @@ class TraceAIApp(tk.Tk):
         cfg.pack(fill="x", padx=6, pady=(6, 3))
 
         rows = [
-            ("Evidence:", "evidence_var"),
-            ("Output:", "output_var"),
-            ("Questions:", "questions_var"),
-            ("Case Name:", "case_var"),
-            ("Examiner:", "examiner_var"),
-            ("Organization:", "org_var"),
+            ("Evidence:", "evidence_var", self.evidence_var),
+            ("Output:", "output_var", self.output_var),
+            ("Questions:", "questions_var", self.questions_var),
+            ("Case Name:", "case_var", self.case_var),
+            ("Examiner:", "examiner_var", self.examiner_var),
+            ("Organization:", "org_var", self.org_var),
         ]
-        for i, (label, attr) in enumerate(rows):
+        for i, (label, attr, var) in enumerate(rows):
             ttk.Label(cfg, text=label).grid(row=i, column=0, sticky="w",
                                             pady=3, padx=(0, 6))
-            var = tk.StringVar()
-            setattr(self, attr, var)
             if attr in ("evidence_var", "output_var", "questions_var"):
                 frm = ttk.Frame(cfg)
                 frm.grid(row=i, column=1, sticky="ew", pady=3)
@@ -458,11 +478,9 @@ class TraceAIApp(tk.Tk):
         opt_frm = ttk.Frame(cfg)
         opt_frm.grid(row=len(rows), column=0, columnspan=2, sticky="ew",
                      pady=(8, 0))
-        self.carving_var = tk.BooleanVar(value=False)
         ttk.Checkbutton(opt_frm, text="Enable carving",
                         variable=self.carving_var).pack(side="left")
 
-        self.mode_var = tk.StringVar(value="auto")
         ttk.Label(opt_frm, text="  Mode:").pack(side="left", padx=(12, 4))
         mode_cb = ttk.Combobox(opt_frm, textvariable=self.mode_var,
                                values=["auto", "e01", "mounted", "zip"],
@@ -1452,11 +1470,12 @@ class TraceAIApp(tk.Tk):
 
     @staticmethod
     def _human_size(nbytes: int) -> str:
+        size = float(nbytes)
         for unit in ("B", "KB", "MB", "GB"):
-            if nbytes < 1024:
-                return f"{nbytes:.0f} {unit}" if unit == "B" else f"{nbytes:.1f} {unit}"
-            nbytes /= 1024
-        return f"{nbytes:.1f} TB"
+            if size < 1024:
+                return f"{size:.0f} {unit}" if unit == "B" else f"{size:.1f} {unit}"
+            size /= 1024
+        return f"{size:.1f} TB"
 
     # ── Run analysis ──────────────────────────────────────────────────
     def _run_analysis(self):
@@ -1507,7 +1526,7 @@ class TraceAIApp(tk.Tk):
                     questions_docx_path=self.questions_docx_path,
                     # v4.0 defaults — GUI does not expose these yet
                     enable_voice_analysis=False,
-                    import_provider_exports=False,
+                    import_provider_exports="",
                     import_shared_links=False,
                     allow_report_fallback=True,
                 )
@@ -2025,10 +2044,15 @@ class TraceAIApp(tk.Tk):
                  highlightbackground=BORDER, highlightthickness=1
                  ).pack(fill="x", ipady=4)
 
-        result = {"confirmed": False}
+        confirmed_var = tk.BooleanVar(value=False)
+        result: dict[str, str] = {
+            "exam_name": "",
+            "matter": "",
+            "examiner": "",
+        }
 
         def _on_generate():
-            result["confirmed"] = True
+            confirmed_var.set(True)
             result["exam_name"] = exam_name_var.get().strip()
             result["matter"] = matter_var.get().strip()
             result["examiner"] = examiner_var.get().strip()
@@ -2056,7 +2080,7 @@ class TraceAIApp(tk.Tk):
 
         self.wait_window(dialog)
 
-        if not result["confirmed"]:
+        if not confirmed_var.get():
             return
 
         # ── Generate the Word report ──
